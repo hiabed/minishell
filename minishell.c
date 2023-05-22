@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 21:53:19 by mhassani          #+#    #+#             */
-/*   Updated: 2023/05/22 20:12:00 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/05/22 21:28:55 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,23 +43,34 @@ void	pipe_syntax_errors(char *cmd, int i)
 
 void	red_syntax_errors(char *cmd, int i)
 {
+	int error;
+	
 	i = 0;
+	error = 0;
 	while (cmd[i] == ' ' || cmd[i] == '\t')
 		i++;
-	while (cmd[i])
+	if ((cmd[i] == '>' || cmd[i] == '<') && (cmd[i + 1] == '>' || cmd[i
+			+ 1] == '<') && (cmd[i + 2] == '>' || cmd[i + 2] == '<'))
 	{
-		if (cmd[i] == '>' || cmd[i] == '<' )
-		{
-			while (cmd[i + 1] == ' ' || cmd[i + 1] == '\t')
-				i++;
-			if ((cmd[i + 1] == '\0' || cmd[i + 1] == '>'))
-			{
-				write(2, "minishell: syntax error\n", 24);
-				break ;
-			}
-		}
-		i++;
+		write(2, "minishell: syntax error\n", 24);
+		error++;
 	}
+		while (cmd[i])
+		{
+			if ((cmd[i] == '>' || cmd[i] == '<') && (cmd[i + 1] != '>' && cmd[i
+					+ 1] != '<'))
+			{
+				while (cmd[i + 1] == ' ' || cmd[i + 1] == '\t')
+					i++;
+				if ((cmd[i + 1] == '\0' || cmd[i + 1] == '>' || cmd[i
+					+ 1] == '<' || cmd[i + 1] == '|') && !error)
+				{
+					write(2, "minishell: syntax error\n", 24);
+					break ;
+				}
+			}
+			i++;
+		}
 }
 
 int	main(void)
@@ -71,7 +82,7 @@ int	main(void)
 
 	len = 0;
 	// Loop until the user enters "exit"
-	while (ft_strncmp(cmd, "exit", 4) != 0)
+	while (1)
 	{
 		cmd = readline("minishell-3.2$ ");
 		if (!cmd)
