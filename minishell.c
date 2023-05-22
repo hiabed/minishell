@@ -6,13 +6,13 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 21:53:19 by mhassani          #+#    #+#             */
-/*   Updated: 2023/05/22 18:14:06 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/05/22 20:12:00 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	syntax_errors(char *cmd, int i)
+void	pipe_syntax_errors(char *cmd, int i)
 {
 	int	error;
 
@@ -41,6 +41,27 @@ void	syntax_errors(char *cmd, int i)
 	}
 }
 
+void	red_syntax_errors(char *cmd, int i)
+{
+	i = 0;
+	while (cmd[i] == ' ' || cmd[i] == '\t')
+		i++;
+	while (cmd[i])
+	{
+		if (cmd[i] == '>' || cmd[i] == '<' )
+		{
+			while (cmd[i + 1] == ' ' || cmd[i + 1] == '\t')
+				i++;
+			if ((cmd[i + 1] == '\0' || cmd[i + 1] == '>'))
+			{
+				write(2, "minishell: syntax error\n", 24);
+				break ;
+			}
+		}
+		i++;
+	}
+}
+
 int	main(void)
 {
 	char	*cmd;
@@ -60,7 +81,8 @@ int	main(void)
 		}
 		add_history(cmd);
 		//printf("the cmd is: %s\n", cmd);
-		syntax_errors(cmd, i);
+		pipe_syntax_errors(cmd, i);
+		red_syntax_errors(cmd, i);
 		token = ft_split(cmd, '|');
 		i = 0;
 		while (token[i])
