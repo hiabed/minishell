@@ -6,24 +6,24 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 21:53:19 by mhassani          #+#    #+#             */
-/*   Updated: 2023/05/22 21:28:55 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/05/23 14:46:09 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	pipe_syntax_errors(char *cmd, int i)
+void	pipe_syntax_errors(char *cmd, t_data *data)
 {
-	int	error;
-
-	error = 0;
+	int i;
+	
+	data->error = 0;
 	i = 0;
 	while (cmd[i] == ' ' || cmd[i] == '\t')
 		i++;
 	if (cmd[i] == '|')
 	{
 		write(2, "minishell: syntax error\n", 24);
-		error++;
+		data->error++;
 	}
 	while (cmd[i])
 	{
@@ -31,9 +31,10 @@ void	pipe_syntax_errors(char *cmd, int i)
 		{
 			while (cmd[i + 1] == ' ' || cmd[i + 1] == '\t')
 				i++;
-			if ((cmd[i + 1] == '\0' || cmd[i + 1] == '|') && !error)
+			if ((cmd[i + 1] == '\0' || cmd[i + 1] == '|' || cmd[i + 3] == '>' || cmd[i + 3] == '<') && !data->error)
 			{
 				write(2, "minishell: syntax error\n", 24);
+				data->error++;
 				break ;
 			}
 		}
@@ -41,19 +42,18 @@ void	pipe_syntax_errors(char *cmd, int i)
 	}
 }
 
-void	red_syntax_errors(char *cmd, int i)
+void	red_syntax_errors(char *cmd, t_data *data)
 {
-	int error;
+	int i;
 	
 	i = 0;
-	error = 0;
 	while (cmd[i] == ' ' || cmd[i] == '\t')
 		i++;
 	if ((cmd[i] == '>' || cmd[i] == '<') && (cmd[i + 1] == '>' || cmd[i
-			+ 1] == '<') && (cmd[i + 2] == '>' || cmd[i + 2] == '<'))
+			+ 1] == '<') && (cmd[i + 2] == '>' || cmd[i + 2] == '<') && !data->error)
 	{
 		write(2, "minishell: syntax error\n", 24);
-		error++;
+		data->error++;
 	}
 		while (cmd[i])
 		{
@@ -63,7 +63,7 @@ void	red_syntax_errors(char *cmd, int i)
 				while (cmd[i + 1] == ' ' || cmd[i + 1] == '\t')
 					i++;
 				if ((cmd[i + 1] == '\0' || cmd[i + 1] == '>' || cmd[i
-					+ 1] == '<' || cmd[i + 1] == '|') && !error)
+					+ 1] == '<' || cmd[i + 1] == '|') && !data->error)
 				{
 					write(2, "minishell: syntax error\n", 24);
 					break ;
@@ -76,10 +76,11 @@ void	red_syntax_errors(char *cmd, int i)
 int	main(void)
 {
 	char	*cmd;
-	char	**token;
-	int		i;
+	// char	**token;
 	int		len;
-
+	t_data	*data;
+	
+	data = malloc(sizeof(t_data));
 	len = 0;
 	// Loop until the user enters "exit"
 	while (1)
@@ -92,22 +93,22 @@ int	main(void)
 		}
 		add_history(cmd);
 		//printf("the cmd is: %s\n", cmd);
-		pipe_syntax_errors(cmd, i);
-		red_syntax_errors(cmd, i);
-		token = ft_split(cmd, '|');
-		i = 0;
-		while (token[i])
-		{
-			printf("token [%d]: %s\n", i, token[i]);
-			i++;
-		}
-		i = 0;
-		while (token[i])
-		{
-			free(token[i]);
-			i++;
-		}
-		free(token);
+		pipe_syntax_errors(cmd, data);
+		red_syntax_errors(cmd, data);
+		// token = ft_split(cmd, '|');
+		// i = 0;
+		// while (token[i])
+		// {
+		// 	printf("token [%d]: %s\n", i, token[i]);
+		// 	i++;
+		// }
+		// i = 0;
+		// while (token[i])
+		// {
+		// 	free(token[i]);
+		// 	i++;
+		// }
+		// free(token);
 		// Free the memory allocated by readline
 		free(cmd);
 	}
