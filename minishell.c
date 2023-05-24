@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 21:53:19 by mhassani          #+#    #+#             */
-/*   Updated: 2023/05/24 18:29:34 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/05/24 20:27:43 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,11 @@ void	pipe_syntax_errors(char *cmd, t_data *data)
 	{
 		if (cmd[i] == '|')
 		{
-			while (cmd[i + 1] == ' ' || cmd[i + 1] == '\t')
+			i++;
+			while (cmd[i] == ' ' || cmd[i] == '\t')
 				i++;
-			if ((cmd[i + 1] == '\0' || cmd[i + 1] == '|' || cmd[i + 3] == '>'
-					|| cmd[i + 3] == '<') && !data->error)
+			if ((cmd[i] == '\0' || cmd[i] == '|' || cmd[i + 2] == '>'
+					|| cmd[i + 2] == '<') && !data->error)
 			{
 				write(2, "minishell: syntax error\n", 24);
 				data->error++;
