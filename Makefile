@@ -6,7 +6,7 @@ LIBFT = ./libft/libft.a
 
 OBJ = ${CFILES:.c=.o}
 
-CFLAGS = -Wall -Wextra -Werror #-fsanitize=address -g3
+CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g3
 
 CC = cc
 
