@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 21:53:19 by mhassani          #+#    #+#             */
-/*   Updated: 2023/05/25 13:09:46 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/05/25 13:10:40 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,23 @@ int	main(void)
 		i = 0;
 		while (token[i])
 		{
+			while(token[i][j] && token[i][j] != 34)
+				j++;
+			if(token[i][j] && token[i][j] == 34) //""
+			{
+				j++;
+				while(token[i][j] && token[i][j] != 34 && token[i][j] != '|')
+				{
+					if(token[i][j] == '|')
+					{
+						printf("hahaha\n");
+						printf("======> %c\n", token[i][j]);
+						j++;
+					}
+					j++;
+				}
+				j = 0;
+			}
 			//printf("token [%d]: %s\n", i, token[i]);
 			i++;
 		}
