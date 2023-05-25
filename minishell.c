@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 21:53:19 by mhassani          #+#    #+#             */
-/*   Updated: 2023/05/25 13:10:40 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/05/25 22:33:37 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,11 @@
 int	main(void)
 {
 	int		i;
-	int j = 0;
 	char	*cmd;
 	t_data	*data;
 	char	**token;
+	int		j;
 
-	i = 0;
 	// char	**token;
 	data = malloc(sizeof(t_data));
 	while (1)
@@ -32,38 +31,49 @@ int	main(void)
 			exit(EXIT_FAILURE);
 		}
 		add_history(cmd);
-		// printf("the cmd is: %s\n", cmd);
 		data->error = 0;
 		syntax_errors(cmd, data);
-		token = ft_split(cmd, '|');
 		i = 0;
-		while (token[i])
+		while (cmd[i])
 		{
-			while(token[i][j] && token[i][j] != 34)
-				j++;
-			if(token[i][j] && token[i][j] == 34) //""
+			if (cmd[i] == 34 || cmd[i] == 39)
 			{
-				j++;
-				while(token[i][j] && token[i][j] != 34 && token[i][j] != '|')
+				i++;
+				while (cmd[i] && cmd[i] != 34 && cmd[i] != 39)
 				{
-					if(token[i][j] == '|')
-					{
-						printf("hahaha\n");
-						printf("======> %c\n", token[i][j]);
-						j++;
-					}
-					j++;
+					if (cmd[i] == '|')
+						cmd[i] = -1;
+					i++;
 				}
-				j = 0;
+				if (cmd[i] && (cmd[i] == 34 || cmd[i] == 39))
+					i++;
 			}
-			//printf("token [%d]: %s\n", i, token[i]);
 			i++;
 		}
-		i = 0;
-		while (token[i])
+		token = ft_split(cmd, '|');
+		j = 0;
+		while (token[j])
 		{
-			free(token[i]);
-			i++;
+			i = 0;
+			while (token[j][i] && token[j][i] != '|')
+			{
+				if (token[j][i] == -1)
+					token[j][i] = '|';
+				i++;
+			}
+			j++;
+		}
+		j = 0;
+		while (token[j])
+		{
+			printf("token[%d] = %s\n", j, token[j]);
+			j++;
+		}
+		j = 0;
+		while (token[j])
+		{
+			free(token[j]);
+			j++;
 		}
 		free(token);
 		// Free the memory allocated by readline

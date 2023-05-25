@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 21:30:24 by mhassani          #+#    #+#             */
-/*   Updated: 2023/05/24 22:14:40 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/05/25 22:30:33 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ void	pipe_syntax_errors(char *cmd, t_data *data)
 			{
 				write(2, "minishell: syntax error\n", 24);
 				data->error++;
-				break ;
 			}
 		}
 		i++;
@@ -78,7 +77,6 @@ void	red_syntax_errors(char *cmd, t_data *data)
 			{
 				write(2, "minishell: syntax error\n", 24);
 				data->error++;
-				break ;
 			}
 			while (cmd[i] == ' ' || cmd[i] == '\t')
 				i++;
@@ -87,7 +85,6 @@ void	red_syntax_errors(char *cmd, t_data *data)
 			{
 				write(2, "minishell: syntax error\n", 24);
 				data->error++;
-				break ;
 			}
 		}
 		if (cmd[i] == '<')
@@ -99,7 +96,6 @@ void	red_syntax_errors(char *cmd, t_data *data)
 			{
 				write(2, "minishell: syntax error\n", 24);
 				data->error++;
-				break ;
 			}
 			while (cmd[i] == ' ' || cmd[i] == '\t')
 				i++;
@@ -108,7 +104,6 @@ void	red_syntax_errors(char *cmd, t_data *data)
 			{
 				write(2, "minishell: syntax error\n", 24);
 				data->error++;
-				break ;
 			}
 		}
 		i++;
@@ -168,7 +163,6 @@ void	cotes_syntax_errors(char *cmd, t_data *data)
 		{
 			write(2, "minishell: syntax error\n", 24);
 			data->error++;
-			break ;
 		}
 	}
 }
