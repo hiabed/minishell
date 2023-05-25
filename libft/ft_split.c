@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 18:44:31 by mhassani          #+#    #+#             */
-/*   Updated: 2023/05/19 16:03:53 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/05/25 13:09:23 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 static int	num_words(char const *s, char c)
 {
 	int	i;
+	int j;
 	int	n;
 
 	i = 0;
@@ -23,12 +24,18 @@ static int	num_words(char const *s, char c)
 	{
 		while (s[i] == c)
 			i++;
-		if (s[i])
+		while (s[i])
 		{
-			while (s[i] && s[i] != c)
+			while (s[i] && s[i] != c && s[i] != 34 && s[i] != 39)
 				i++;
-			n++;
+			if(s[i] && s[i] == 34 || s[i] == 39)
+				i++;
+			while(s[i] && s[i] != 34 && s[i] != 39)
+				i++;
+			if(s[i] && s[i] == 34 || s[i] == 39)
+				i++;
 		}
+		n++;
 	}
 	return (n);
 }
