@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 21:53:19 by mhassani          #+#    #+#             */
-/*   Updated: 2023/05/26 19:10:47 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/05/26 20:42:36 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,8 @@ void	replace_space_in_cotes(char *cmd)
 	}
 }
 
-void	split_with_space(char *cmd)
+char	**split_with_space(char **tokens)
 {
-	char	**token;
 	char	**words;
 	int		i;
 	int		j;
@@ -92,7 +91,6 @@ void	split_with_space(char *cmd)
 	k = 0;
 	i = 0;
 	j = 0;
-	token = split_with_pipe(cmd);
 	while (token[j])
 	{
 		words = ft_split(token[j], ' ');
@@ -100,24 +98,28 @@ void	split_with_space(char *cmd)
 		while (words[k])
 		{
 			i = 0;
-			while(words[k][i])
+			while (words[k][i] && words[k][i] != ' ')
 			{
-				if(words[k][i] == -2)
+				if (words[k][i] == -2)
 					words[k][i] = ' ';
 				i++;
 			}
-			printf("word[%d]: %s\n", k, words[k]);
+			// printf("word[%d]: %s\n", k, words[k]);
 			k++;
 		}
 		j++;
 	}
+	return (words);
 }
 
 int	main(void)
 {
 	char	*cmd;
 	t_data	*data;
+	char	**tokens;
+	int		i;
 
+	i = 0;
 	data = malloc(sizeof(t_data));
 	while (1)
 	{
@@ -131,9 +133,9 @@ int	main(void)
 		data->error = 0;
 		syntax_errors(cmd, data);
 		replace_pipe_in_cotes(cmd);
-		split_with_pipe(cmd);
+		tokens = split_with_pipe(cmd);
 		replace_space_in_cotes(cmd);
-		split_with_space(cmd);
+		split_with_space(tokens);
 		// Free the memory allocated by readline;
 		free(cmd);
 	}
