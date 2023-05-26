@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 21:30:24 by mhassani          #+#    #+#             */
-/*   Updated: 2023/05/25 22:53:40 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/05/26 15:12:57 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	red_syntax_errors(char *cmd, t_data *data)
 			i++;
 			if(cmd[i] == '>')
 				i++;
-			if(cmd[i] == '>')
+			if(cmd[i] == '>' && !data->error)
 			{
 				write(2, "minishell: syntax error\n", 24);
 				data->error++;
@@ -92,7 +92,7 @@ void	red_syntax_errors(char *cmd, t_data *data)
 			i++;
 			if(cmd[i] == '<')
 				i++;
-			if(cmd[i] == '<')
+			if(cmd[i] == '<' && !data->error)
 			{
 				write(2, "minishell: syntax error\n", 24);
 				data->error++;
