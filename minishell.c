@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 21:53:19 by mhassani          #+#    #+#             */
-/*   Updated: 2023/05/26 18:38:37 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/05/26 19:10:47 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,37 +93,24 @@ void	split_with_space(char *cmd)
 	i = 0;
 	j = 0;
 	token = split_with_pipe(cmd);
-		//===> [0]echo "hello-2world" <===| [1]cat-e Makefile
 	while (token[j])
 	{
 		words = ft_split(token[j], ' ');
-		while (words[j])
+		k = 0;
+		while (words[k])
 		{
-			printf("token[%d]: %s\n", j, words[j]);
-			j++;
+			i = 0;
+			while(words[k][i])
+			{
+				if(words[k][i] == -2)
+					words[k][i] = ' ';
+				i++;
+			}
+			printf("word[%d]: %s\n", k, words[k]);
+			k++;
 		}
 		j++;
 	}
-	j = 0;
-	while (token[j])
-	{
-		i = 0;
-		while (token[j][i] && token[j][i] != ' ')
-		{
-			if (token[j][i] == -2)
-				token[j][i] = ' ';
-			i++;
-		}
-		j++;
-	}
-
-	j = 0; //freeing memory;
-	while (words[j])
-	{
-		free(words[j]);
-		j++;
-	}
-	free(words);
 }
 
 int	main(void)
