@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 21:52:55 by mhassani          #+#    #+#             */
-/*   Updated: 2023/05/26 20:59:58 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/05/27 14:52:33 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,23 @@ typedef struct s_data
 	int	dcotes_in_cote;
 }		t_data;
 
+typedef struct s_token
+{
+	s_token *next;
+	char *cmd;
+	char *infile;
+	char *outfile;
+	char *append;
+	char *limiter;
+}	t_token;
+
 void	pipe_syntax_errors(char *cmd, t_data *data);
 void	red_syntax_errors(char *cmd, t_data *data);
 void	cotes_syntax_errors(char *cmd, t_data *data);
 void	syntax_errors(char *cmd, t_data *data);
-void	replace_pipe_in_cotes(char *cmd);
+void	replace_pipe_in_quotes(char *cmd);
 char	**split_with_pipe(char *cmd);
-void	replace_space_in_cotes(char *cmd);
+void	replace_space_in_quotes(char *cmd);
 char	**split_with_space(char *token);
 
 #endif
