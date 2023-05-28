@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 14:15:26 by mhassani          #+#    #+#             */
-/*   Updated: 2023/05/28 23:01:29 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/05/28 23:08:25 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,6 @@ int	cmd_lenght(const char *s)
 
 void	ft_fill_ptr(const char *s1, char *ptr, int i, int j)
 {
-	i = 0;
-	j = 0;
 	while (s1[i])
 	{
 		if ((s1[i] == '>' && s1[i + 1] == '>') || (s1[i] == '<' && s1[i
@@ -67,14 +65,16 @@ char	*ft_strdup(const char *s1)
 	ptr = (char *)malloc(cmd_lenght(s1) + 1);
 	if (ptr == NULL)
 		return (NULL);
+	i = 0;
+	j = 0;
 	ft_fill_ptr(s1, ptr, i, j);
 	return (ptr);
 }
 
-int	main(void)
-{
-	char	*ptr_2;
+// int	main(void)
+// {
+// 	char	*ptr_2;
 
-	ptr_2 = ft_strdup("hello>world");
-	printf("%s\n", ptr_2);
-}
+// 	ptr_2 = ft_strdup(">hello>>wo<rld<<");
+// 	printf("%s\n", ptr_2);
+// }
