@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 14:15:26 by mhassani          #+#    #+#             */
-/*   Updated: 2023/05/28 23:08:25 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/05/28 23:28:07 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,19 +30,30 @@ int	cmd_lenght(const char *s)
 	return (len);
 }
 
+void	double_red(const char *s1, char *ptr, int i, int j)
+{
+	ptr[j++] = ' ';
+	ptr[j++] = s1[i];
+	ptr[j++] = s1[i + 1];
+	ptr[j++] = ' ';
+	i++;
+}
+
 void	ft_fill_ptr(const char *s1, char *ptr, int i, int j)
 {
 	while (s1[i])
 	{
+		if (s1[i] == 34 || s1[i] == 39)
+		{
+			i++;
+			while (s1[i] && s1[i] != 34 && s1[i] != 39)
+				ptr[j++] = s1[i++];
+			if (s1[i] && (s1[i] == 34 || s1[i] == 39))
+				i++;
+		}
 		if ((s1[i] == '>' && s1[i + 1] == '>') || (s1[i] == '<' && s1[i
 					+ 1] == '<'))
-		{
-			ptr[j++] = ' ';
-			ptr[j++] = s1[i];
-			ptr[j++] = s1[i + 1];
-			ptr[j++] = ' ';
-			i++;
-		}
+			double_red(s1, ptr, i, j);
 		else if (s1[i] == '>' || s1[i] == '<')
 		{
 			ptr[j++] = ' ';
