@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 21:53:19 by mhassani          #+#    #+#             */
-/*   Updated: 2023/05/27 14:35:23 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/05/28 21:54:53 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,14 @@ int	main(void)
 {
 	char	*cmd;
 	t_data	*data;
+	t_token	*t;
 	char	**tokens;
 	char	**words;
 	int		i;
-	int j;
+	int		j;
 
 	data = malloc(sizeof(t_data));
+	t = malloc(sizeof(t_token));
 	while (1)
 	{
 		cmd = readline("minishell-3.2$ ");
@@ -33,23 +35,28 @@ int	main(void)
 		add_history(cmd);
 		data->error = 0;
 		syntax_errors(cmd, data);
-		replace_pipe_in_cotes(cmd);
-		tokens = split_with_pipe(cmd);
-		j = 0;
-		while(tokens[j])
+		if (data->error == 0)
 		{
-			printf("====>\n");	
-			replace_space_in_cotes(tokens[j]);
-			words = split_with_space(tokens[j]);
-			i = 0;
-			while(words[i])
+			replace_red(cmd);
+			replace_pipe_in_quotes(cmd);
+			tokens = split_with_pipe(cmd);
+			j = 0;
+			while (tokens[j])
 			{
-				printf("words[%d]: %s\n", i, words[i]);
-				i++;
+				printf("===>token[%d]: %s\n", j, tokens[j]);
+				t->token = &tokens[j];
+				replace_space_in_quotes(tokens[j]);
+				words = split_with_space(tokens[j]);
+				i = 0;
+				while (words[i])
+				{
+					printf("words[%d]: %s\n", i, words[i]);					
+					i++;
+				}
+				j++;
 			}
-			j++;
+			free(cmd);
 		}
-		free(cmd);
 	}
 	return (0);
 }

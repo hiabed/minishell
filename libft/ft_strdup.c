@@ -3,47 +3,78 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhassani <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 14:15:26 by mhassani          #+#    #+#             */
-/*   Updated: 2022/11/06 17:39:17 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/05/28 23:01:29 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strdup(const char *s1)
+int	cmd_lenght(const char *s)
 {
-	size_t	count;
-	char	*ptr;
-	size_t	i;
+	int	i;
+	int	count;
+	int	len;
 
-	count = ft_strlen(s1) + 1;
-	ptr = (char *)malloc(count * sizeof(char));
-	if (ptr == NULL)
-		return (NULL);
 	i = 0;
-	while (s1[i])
+	count = 0;
+	while (s[i])
 	{
-		*(ptr + i) = *(s1 + i);
+		if (s[i] == '>' || s[i] == '<')
+			count++;
 		i++;
 	}
-	ptr[i] = '\0';
+	len = (count * 2) + i;
+	return (len);
+}
+
+void	ft_fill_ptr(const char *s1, char *ptr, int i, int j)
+{
+	i = 0;
+	j = 0;
+	while (s1[i])
+	{
+		if ((s1[i] == '>' && s1[i + 1] == '>') || (s1[i] == '<' && s1[i
+					+ 1] == '<'))
+		{
+			ptr[j++] = ' ';
+			ptr[j++] = s1[i];
+			ptr[j++] = s1[i + 1];
+			ptr[j++] = ' ';
+			i++;
+		}
+		else if (s1[i] == '>' || s1[i] == '<')
+		{
+			ptr[j++] = ' ';
+			ptr[j++] = s1[i];
+			ptr[j++] = ' ';
+		}
+		else
+			ptr[j++] = s1[i];
+		i++;
+	}
+	ptr[j] = '\0';
+}
+
+char	*ft_strdup(const char *s1)
+{
+	char	*ptr;
+	size_t	i;
+	size_t	j;
+
+	ptr = (char *)malloc(cmd_lenght(s1) + 1);
+	if (ptr == NULL)
+		return (NULL);
+	ft_fill_ptr(s1, ptr, i, j);
 	return (ptr);
 }
 
-/*int	main()
+int	main(void)
 {
-	char *ptr_1;
-	ptr_1 = strdup("-2147483648");
+	char	*ptr_2;
 
-	printf("%s\n", ptr_1);
-
-
-
-	char *ptr_2;
-	ptr_2 = ft_strdup("hello world!");
-	
+	ptr_2 = ft_strdup("hello>world");
 	printf("%s\n", ptr_2);
-	return 0;
-}*/
+}

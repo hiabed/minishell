@@ -6,11 +6,33 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 14:34:41 by mhassani          #+#    #+#             */
-/*   Updated: 2023/05/27 14:52:52 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/05/28 21:54:30 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void replace_red(char *cmd)
+{
+    int i = 0;
+	ft_strdup(cmd);
+    while (cmd[i])
+    {
+        if (cmd[i] == 34 || cmd[i] == 39)
+        {
+            i++;
+            while (cmd[i] && cmd[i] != 34 && cmd[i] != 39)
+                i++;
+            if (cmd[i] && (cmd[i] == 34 || cmd[i] == 39))
+                i++;
+        }
+        if (cmd[i] && (cmd[i] == '>' || cmd[i] == '<'))
+        {
+			
+        }
+        i++;
+    }
+}
 
 void	replace_pipe_in_quotes(char *cmd)
 {
@@ -76,8 +98,8 @@ void	replace_space_in_quotes(char *tokens)
 			}
 			if (tokens[i] && (tokens[i] == 34 || tokens[i] == 39))
 				i++;
-			if(!tokens[i])
-				break;
+			if (!tokens[i])
+				break ;
 		}
 		i++;
 	}
@@ -85,9 +107,9 @@ void	replace_space_in_quotes(char *tokens)
 
 char	**split_with_space(char *token)
 {
-	char	**words;
-	int		i;
-	int		j;
+	char **words;
+	int i;
+	int j;
 
 	i = 0;
 	j = 0;
@@ -95,13 +117,19 @@ char	**split_with_space(char *token)
 	while (words[j])
 	{
 		i = 0;
-		while (words[j][i] && words[j][i] != ' ')
+		if (words[j][i] == 34 || words[j][i] == 39)
 		{
-			if (words[j][i] == -2)
-				words[j][i] = ' ';
-			i++;
+			while (words[j][i] && words[j][i] != ' ')
+			{
+				words[j][i] = words[j][i + 1];
+				if (words[j][i] == -2)
+					words[j][i] = ' ';
+				i++;
+			}
+			words[j][i - 2] = '\0';
 		}
-		j++;
+		else
+			j++;
 	}
 	return (words);
 }

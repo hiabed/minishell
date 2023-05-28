@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 18:20:53 by mhassani          #+#    #+#             */
-/*   Updated: 2023/02/25 18:37:21 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/05/28 23:02:20 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 {
 	t_list	*new;
 	t_list	*tmp;
-    
+
 	new = NULL;
 	while (lst)
 	{
