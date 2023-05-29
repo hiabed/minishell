@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 21:53:19 by mhassani          #+#    #+#             */
-/*   Updated: 2023/05/28 21:54:53 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/05/29 15:36:43 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int	main(void)
 {
 	char	*cmd;
+	char	*command;
 	t_data	*data;
 	t_token	*t;
 	char	**tokens;
@@ -37,25 +38,29 @@ int	main(void)
 		syntax_errors(cmd, data);
 		if (data->error == 0)
 		{
-			replace_red(cmd);
-			replace_pipe_in_quotes(cmd);
-			tokens = split_with_pipe(cmd);
+			// replace_red_in_quotes(cmd);
+			// printf("before cmd: %s\n", cmd);
+			command = ft_strdup(cmd); //add space before and after (< / >);
+			// bring_back(command);
+			// printf("after  cmd: %s\n", command);
+			replace_pipe_in_quotes(command);
+			tokens = split_with_pipe(command);
 			j = 0;
 			while (tokens[j])
 			{
 				printf("===>token[%d]: %s\n", j, tokens[j]);
-				t->token = &tokens[j];
 				replace_space_in_quotes(tokens[j]);
 				words = split_with_space(tokens[j]);
 				i = 0;
 				while (words[i])
 				{
-					printf("words[%d]: %s\n", i, words[i]);					
+					printf("words[%d]: %s\n", i, words[i]);
 					i++;
 				}
 				j++;
 			}
 			free(cmd);
+			free(command);
 		}
 	}
 	return (0);

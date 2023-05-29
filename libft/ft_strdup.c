@@ -6,13 +6,13 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 14:15:26 by mhassani          #+#    #+#             */
-/*   Updated: 2023/05/28 23:28:07 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/05/29 15:37:10 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	cmd_lenght(const char *s)
+int	cmd_lenght(char *s)
 {
 	int	i;
 	int	count;
@@ -30,30 +30,26 @@ int	cmd_lenght(const char *s)
 	return (len);
 }
 
-void	double_red(const char *s1, char *ptr, int i, int j)
-{
-	ptr[j++] = ' ';
-	ptr[j++] = s1[i];
-	ptr[j++] = s1[i + 1];
-	ptr[j++] = ' ';
-	i++;
-}
-
-void	ft_fill_ptr(const char *s1, char *ptr, int i, int j)
+void	ft_fill_ptr(char *s1, char *ptr, int i, int j)
 {
 	while (s1[i])
 	{
-		if (s1[i] == 34 || s1[i] == 39)
+		if(s1[i] == 34)
 		{
-			i++;
-			while (s1[i] && s1[i] != 34 && s1[i] != 39)
+			ptr[j++] = s1[i++];
+			while(s1[i] != 34)
 				ptr[j++] = s1[i++];
-			if (s1[i] && (s1[i] == 34 || s1[i] == 39))
-				i++;
+			ptr[j++] = s1[i++];
 		}
 		if ((s1[i] == '>' && s1[i + 1] == '>') || (s1[i] == '<' && s1[i
-					+ 1] == '<'))
-			double_red(s1, ptr, i, j);
+				+ 1] == '<'))
+		{
+			ptr[j++] = ' ';
+			ptr[j++] = s1[i];
+			ptr[j++] = s1[i + 1];
+			ptr[j++] = ' ';
+			i++;
+		}
 		else if (s1[i] == '>' || s1[i] == '<')
 		{
 			ptr[j++] = ' ';
@@ -67,7 +63,7 @@ void	ft_fill_ptr(const char *s1, char *ptr, int i, int j)
 	ptr[j] = '\0';
 }
 
-char	*ft_strdup(const char *s1)
+char	*ft_strdup(char *s1)
 {
 	char	*ptr;
 	size_t	i;
@@ -84,8 +80,5 @@ char	*ft_strdup(const char *s1)
 
 // int	main(void)
 // {
-// 	char	*ptr_2;
-
-// 	ptr_2 = ft_strdup(">hello>>wo<rld<<");
-// 	printf("%s\n", ptr_2);
+// 	printf("%s\n", ft_strdup(">hello>>wo<rld<<"));
 // }

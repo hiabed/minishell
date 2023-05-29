@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 21:52:55 by mhassani          #+#    #+#             */
-/*   Updated: 2023/05/28 22:54:54 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/05/29 14:56:10 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,9 @@ void						cotes_syntax_errors(char *cmd, t_data *data);
 void						syntax_errors(char *cmd, t_data *data);
 void						replace_pipe_in_quotes(char *cmd);
 char						**split_with_pipe(char *cmd);
-void						replace_space_in_quotes(char *cmd);
+void						replace_space_in_quotes(char *token);
 char						**split_with_space(char *token);
-void						replace_red(char *cmd);
+void						replace_red_in_quotes(char *cmd);
+void						bring_back(char *cmd);
 
 #endif
