@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 21:53:19 by mhassani          #+#    #+#             */
-/*   Updated: 2023/05/30 16:12:25 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/05/30 18:06:55 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,17 +44,19 @@ int	main(void)
 			replace_pipe_in_quotes(command);
 			tokens = split_with_pipe(command);
 			j = 0;
-			k = 0;
-			t->arg = malloc((sizeof(char *) * 100));
-			t->red = malloc(sizeof(t_redirection));
+			t->red = malloc(sizeof(t_redirection) * 100);
+			
 			while (tokens[j])
 			{
 				// printf("===>token[%d]: %s\n", j, tokens[j]);
 				replace_space_in_quotes(tokens[j]);
 				words = split_with_space(tokens[j]);
+				t->arg = malloc((sizeof(char *)) * 100);
 				i = 0;
+				k = 0;
 				while (words[i])
 				{
+					t->red->file = malloc(sizeof(char) * 100);
 					// printf("words[%d]: %s\n", i, words[i]); //hello
 					if (words[i][0] == '>' && words[i][1] == '>')
 					{
@@ -67,7 +69,7 @@ int	main(void)
 					{
 						t->red->redirection = 3;
 						t->red->limiter = ft_strdup(words[i + 1]);
-						printf("here-Doc: %s\n", t->red->limiter);
+						printf("limiter: %s\n", t->red->limiter);
 						data->flag++;
 					}
 					else if (words[i][0] == '<')
@@ -103,8 +105,9 @@ int	main(void)
 					i++;
 				}
 				t->next = malloc(sizeof(t_token));
-				t = t->next;
+				data->flag = 0;
 				k = 0;
+				t = t->next;
 				j++;
 			}
 			free(cmd);
