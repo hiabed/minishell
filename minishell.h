@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 21:52:55 by mhassani          #+#    #+#             */
-/*   Updated: 2023/05/29 14:56:10 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/05/30 16:10:57 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ typedef struct s_data
 {
 	int						i;
 	int						error;
+	int						flag;
 	int						cote_in_dcotes;
 	int						dcotes_in_cote;
 }							t_data;
@@ -31,17 +32,17 @@ typedef struct s_data
 typedef struct s_redirection
 {
 	struct s_redirection	*next;
-	int						red;
+	int						redirection;
 	char					*file;
 	char					*limiter;
 }							t_redirection;
 
 typedef struct s_token
 {
-	struct s_token			*next;
-	char					**token;
+	t_redirection			*red;
 	char					*cmd;
 	char					**arg;
+	struct s_token			*next;
 }							t_token;
 
 void						pipe_syntax_errors(char *cmd, t_data *data);
