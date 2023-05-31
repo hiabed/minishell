@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 21:53:19 by mhassani          #+#    #+#             */
-/*   Updated: 2023/05/31 17:06:43 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/05/31 23:53:06 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,12 @@ int	main(void)
 	int		i;
 	int		j;
 	int		k;
+	int		c;
 
+	c = 0;
 	data = malloc(sizeof(t_data));
-	tc_arg = 0;
 	t = malloc(sizeof(t_token));
+	ptr = t;
 	while (1)
 	{
 		cmd = readline("minishell-3.2$ ");
@@ -36,7 +38,6 @@ int	main(void)
 			printf("exit\n");
 			exit(EXIT_FAILURE);
 		}
-		ptr = t;
 		add_history(cmd);
 		data->error = 0;
 		data->flag = 0;
@@ -101,7 +102,6 @@ int	main(void)
 						{
 							// printf("k: %d\n", k);
 							t->arg[k] = ft_strdup(words[i]);
-							c_args++;
 							// printf("k: %d\n", k);
 							// printf("t->arg[%d]: %s\n", k, t->arg[k]);
 							k++;
@@ -112,32 +112,32 @@ int	main(void)
 				data->flag = 0;
 				k = 0;
 				t = t->next;
+				t->next = NULL;
 				j++;
 			}
-			t->next = NULL;
-			free(cmd);
-			free(command);
 		}
-		break ;
-	}
-	while (ptr->next)
-	{
-		i = 0;
-		printf("cmd ptr: %s\n", ptr->cmd);
-		while (i < c_arg)
+		while (ptr->next)
 		{
-			printf("args count: %d\n", c_arg);
-			printf("arg ptr[%d]: %s\n", i, ptr->arg[i]);
-			i++;
+			i = 0;
+			if(ptr->cmd)
+				printf("cmd ptr: %s\n", ptr->cmd);
+			while (ptr->arg[i])
+			{
+				printf("arg ptr[%d]: %s\n", i, ptr->arg[i]);
+				i++;
+			}
+			// while (ptr->red->next)
+			// {
+			// 	printf("oyoyoyoyo\n");
+			// 	printf("red: %s\n", t->red->file);
+			// 	ptr->red = ptr->red->next;
+			// }
+			ptr = ptr->next;
 		}
-		while(ptr->red->next)
-		{
-			printf("red: %s\n", t->red->file);
-			ptr->red = ptr->red->next;
-		}
-		// i++;
-		// printf("file: %s\n", ptr->red->file);
-		ptr = ptr->next;
+		free(cmd);
+		free(command);
 	}
+	free(data);
+	free(t);
 	return (0);
 }
