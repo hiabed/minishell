@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 21:53:19 by mhassani          #+#    #+#             */
-/*   Updated: 2023/05/31 14:47:41 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/05/31 14:49:59 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,7 @@ int	main(void)
 		printf("arg ptr: %s\n", ptr->arg[i]);
 		i++;
 		// printf("file: %s\n", ptr->red->file);
+		ptr = ptr->red->next;
 		ptr = ptr->next;
 	}
 	return (0);
