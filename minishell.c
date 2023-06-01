@@ -6,11 +6,108 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 21:53:19 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/01 19:05:58 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/01 23:26:11 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+char	**ft_arg(char **words)
+{
+	char	**args;
+	int		i;
+	int		k;
+
+	i = 0;
+	k = 0;
+	while (words[i])
+	{
+		if (words[i][0] == '>' || words[i][0] == '<')
+			i = i + 2;
+		else if (i == 0)
+			i++;
+		else
+		{
+			k++;
+			i++;
+		}
+	}
+	args = malloc(sizeof(char *) * (k + 1));
+	i = 0;
+	k = 0;
+	while (words[i])
+	{
+		if (words[i][0] == '>' || words[i][0] == '<')
+			i = i + 2;
+		else if (i == 0)
+			i++;
+		else
+			args[k++] = words[i++];
+	}
+	args[k] = NULL;
+	return (args);
+}
+
+char	*ft_cmd(char **words)
+{
+	if (words[0] && words[0][0] != '>' && words[0][0] != '<')
+		return (words[0]);
+	return (NULL);
+}
+
+t_token	*ft_lstnew_token(char **words)
+{
+	t_token	*head;
+	int		i;
+
+	i = 0;
+	head = malloc(sizeof(t_token));
+	if (!head)
+		return (NULL);
+	head->cmd = ft_cmd(words);
+	head->arg = ft_arg(words);
+	//head->red = linked list red;
+	head->next = NULL;
+	return (head);
+}
+
+// void	ft_lstadd_token(t_token **lst, t_token *new)
+// {
+// 	t_token	*ptr;
+
+// 	ptr = *lst;
+// 	if (!(*lst))
+// 	{
+// 		*lst = new;
+// 		return ;
+// 	}
+// 	while (ptr->next)
+// 		ptr = ptr->next;
+// 	ptr->next = new;
+// }
+
+void    ft_lstadd_token(t_token **lst, t_token *new)
+{
+    t_token    *ptr;
+
+    if (lst && new)
+    {
+        if (*lst)
+        {
+            ptr = *lst;
+            while (ptr->next)
+                ptr = ptr->next;
+			//printf("here1\n");
+            ptr->next = new;
+        }
+        else
+		{
+			//printf("here2\n");
+			
+            *lst = new;
+		}
+    }
+}
 
 int	main(void)
 {
@@ -21,11 +118,9 @@ int	main(void)
 	t_data	*data;
 	t_token	*t;
 	t_token	*ptr;
-	t_token *clone;
-	int		i;
 	int		j;
-	int		k;
 	int		c;
+	t_token	*data2;
 
 	t = NULL;
 	c = 0;
@@ -33,6 +128,7 @@ int	main(void)
 	while (1)
 	{
 		cmd = readline("minishell-3.2$ ");
+		ptr = NULL;
 		if (!cmd)
 		{
 			printf("exit\n");
@@ -48,94 +144,26 @@ int	main(void)
 			replace_pipe_in_quotes(command);
 			tokens = split_with_pipe(command);
 			j = 0;
-			t = malloc(sizeof(t_token));
-			clone = t;
 			while (tokens[j])
 			{
 				printf("===>token[%d]: %s\n", j, tokens[j]);
 				replace_space_in_quotes(tokens[j]);
 				words = split_with_space(tokens[j]);
-				k = 0;
-				i = 0;
-				t->next = NULL;
-				t->arg = malloc((sizeof(char *)) * 100);
-				while (words[i])
-				{
-					t->red = malloc(sizeof(t_redirection) * 100);
-					// printf("words[%d]: %s\n", i, words[i]); //hello
-					if (words[i][0] == '>' && words[i][1] == '>')
-					{
-						t->red->redirection = 2;
-						t->red->file = ft_strdup(words[i + 1]);
-						// printf("append: %s\n", t->red->file);
-						data->flag++;
-					}
-					else if (words[i][0] == '<' && words[i][1] == '<')
-					{
-						t->red->redirection = 3;
-						t->red->limiter = ft_strdup(words[i + 1]);
-						// printf("limiter: %s\n", t->red->limiter);
-						data->flag++;
-					}
-					else if (words[i][0] == '<')
-					{
-						t->red->redirection = 0;
-						t->red->file = ft_strdup(words[i + 1]);
-						// printf("infile: %s\n", t->red->file);
-						data->flag++;
-					}
-					else if (words[i][0] == '>')
-					{
-						t->red->redirection = 1;
-						t->red->file = ft_strdup(words[i + 1]);
-						// printf("outfile: %s\n", t->red->file);
-						data->flag++;
-					}
-					else
-					{
-						if (i == 0)
-						{
-							// printf("here\n");
-							t->cmd = malloc(sizeof(char) * 100);
-							t->cmd = ft_strdup(words[i]);
-							// printf("t->cmd: %s\n", t->cmd);
-						}
-						else if (i != 0 && !data->flag)
-						{
-							t->arg[k] = malloc(sizeof(char) * 100);
-							t->arg[k] = ft_strdup(words[i]);
-							// printf("t->arg[%d]: %s\n", k, t->arg[k]);
-							k++;
-						}
-					}
-					i++;
-				}
-				data->flag = 0;
-				ptr = malloc(sizeof(t_token)); //creat new node;
-				t->next = ptr; // Set t->next point to the new node
-				t = t->next;
+				ft_lstadd_token(&ptr, ft_lstnew_token(words));
 				j++;
 			}
-		}
-
-		i = 0;
-		while (clone->next)
-		{
-			if (clone->cmd)
-				printf("cmd ptr: %s\n", clone->cmd);
-			while (clone->arg[i])
+			data2 = ptr;
+			while(data2)
 			{
-				printf("arg clone[%d]: %s\n", i, clone->arg[i]);
-				i++;
+				j = 0;
+				printf("cmd: %s\n", data2->cmd);
+				while(data2->arg[j])
+				{
+					printf("arg: %s\n", data2->arg[j]);
+					j++;
+				}
+				data2 = data2->next;
 			}
-			i = 0;
-			// while (clone->red->next)
-			// {
-			// 	printf("oyoyoyoyo\n");
-			// 	printf("red: %s\n", t->red->file);
-			// 	clone->red = clone->red->next;
-			// }
-			clone = clone->next;
 		}
 	}
 	free(cmd);
