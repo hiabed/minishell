@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 21:53:19 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/01 16:40:13 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/01 16:41:04 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,6 @@ int	main(void)
 			}
 			// while (ptr->red->next)
 			// {
-			// 	printf("oyoyoyoyo\n");
 			// 	printf("red: %s\n", t->red->file);
 			// 	ptr->red = ptr->red->next;
 			// }
