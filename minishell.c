@@ -6,17 +6,16 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 21:53:19 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/01 23:28:24 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/02 16:25:43 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	**ft_arg(char **words)
+int	count_redirections(char **words)
 {
-	char	**args;
-	int		i;
-	int		k;
+	int	i;
+	int	k;
 
 	i = 0;
 	k = 0;
@@ -32,6 +31,16 @@ char	**ft_arg(char **words)
 			i++;
 		}
 	}
+	return (k);
+}
+
+char	**ft_arg(char **words)
+{
+	char	**args;
+	int		i;
+	int		k;
+
+	k = count_redirections(words);
 	args = malloc(sizeof(char *) * (k + 1));
 	i = 0;
 	k = 0;
@@ -55,6 +64,27 @@ char	*ft_cmd(char **words)
 	return (NULL);
 }
 
+t_redirection	*ft_redirections(char **words)
+{
+	int				i;
+	t_redirection	*head;
+
+	i = 0;
+	while (words[i])
+	{
+		if (words[i][0] == '>' || words[i][0] == '<')
+		{
+			
+			ft_lstadd_token(&head, )
+		}
+		else if (i == 0)
+			i++;
+		else
+			i++;
+	}
+	return (head);
+}
+
 t_token	*ft_lstnew_token(char **words)
 {
 	t_token	*head;
@@ -66,47 +96,24 @@ t_token	*ft_lstnew_token(char **words)
 		return (NULL);
 	head->cmd = ft_cmd(words);
 	head->arg = ft_arg(words);
-	//head->red = linked list red;
+	head->red = ft_redirections(words);
 	head->next = NULL;
 	return (head);
 }
 
-// void	ft_lstadd_token(t_token **lst, t_token *new)
-// {
-// 	t_token	*ptr;
-
-// 	ptr = *lst;
-// 	if (!(*lst))
-// 	{
-// 		*lst = new;
-// 		return ;
-// 	}
-// 	while (ptr->next)
-// 		ptr = ptr->next;
-// 	ptr->next = new;
-// }
-
-void    ft_lstadd_token(t_token **lst, t_token *new)
+void	ft_lstadd_token(t_token **lst, t_token *new)
 {
-    t_token    *ptr;
+	t_token	*ptr;
 
-    if (lst && new)
-    {
-        if (*lst)
-        {
-            ptr = *lst;
-            while (ptr->next)
-                ptr = ptr->next;
-			//printf("here1\n");
-            ptr->next = new;
-        }
-        else
-		{
-			//printf("here2\n");
-			
-            *lst = new;
-		}
-    }
+	ptr = *lst;
+	if (!(*lst))
+	{
+		*lst = new;
+		return ;
+	}
+	while (ptr->next)
+		ptr = ptr->next;
+	ptr->next = new;
 }
 
 int	main(void)
@@ -153,14 +160,19 @@ int	main(void)
 				j++;
 			}
 			data2 = ptr;
-			while(data2)
+			while (data2)
 			{
 				j = 0;
 				printf("cmd: %s\n", data2->cmd);
-				while(data2->arg[j])
+				while (data2->arg[j])
 				{
 					printf("arg: %s\n", data2->arg[j]);
 					j++;
+				}
+				while(data2->red)
+				{
+					printf("%s\n", data2->red->file);
+					data2->red = data2->red->next;
 				}
 				data2 = data2->next;
 			}

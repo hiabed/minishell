@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 21:52:55 by mhassani          #+#    #+#             */
-/*   Updated: 2023/05/31 17:15:13 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/02 15:59:59 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,5 +56,10 @@ void						replace_space_in_quotes(char *token);
 char						**split_with_space(char *token);
 void						replace_red_in_quotes(char *cmd);
 void						bring_back(char *cmd);
+int							count_redirections(char **words);
+char						**ft_arg(char **words);
+char						*ft_cmd(char **words);
+t_token						*ft_lstnew_token(char **words);
+void						ft_lstadd_token(t_token **lst, t_token *new);
 
 #endif
