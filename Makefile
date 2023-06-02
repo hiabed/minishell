@@ -1,12 +1,12 @@
 NAME = minishell
 
-CFILES = minishell.c syntax_errors.c split.c
+CFILES = minishell.c syntax_errors.c split.c redirections.c
 
 LIBFT = ./libft/libft.a
 
 OBJ = ${CFILES:.c=.o}
 
-CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g3
+CFLAGS = -Wall -Wextra -Werror #-fsanitize=address -g3
 
 CC = cc
 
@@ -21,5 +21,5 @@ clean:
 fclean: clean
 	${RM} ${NAME}
 
-re : fclean
+re : fclean all
 	

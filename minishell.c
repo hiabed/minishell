@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 21:53:19 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/02 16:25:43 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/02 22:49:32 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,43 +64,6 @@ char	*ft_cmd(char **words)
 	return (NULL);
 }
 
-t_redirection	*ft_redirections(char **words)
-{
-	int				i;
-	t_redirection	*head;
-
-	i = 0;
-	while (words[i])
-	{
-		if (words[i][0] == '>' || words[i][0] == '<')
-		{
-			
-			ft_lstadd_token(&head, )
-		}
-		else if (i == 0)
-			i++;
-		else
-			i++;
-	}
-	return (head);
-}
-
-t_token	*ft_lstnew_token(char **words)
-{
-	t_token	*head;
-	int		i;
-
-	i = 0;
-	head = malloc(sizeof(t_token));
-	if (!head)
-		return (NULL);
-	head->cmd = ft_cmd(words);
-	head->arg = ft_arg(words);
-	head->red = ft_redirections(words);
-	head->next = NULL;
-	return (head);
-}
-
 void	ft_lstadd_token(t_token **lst, t_token *new)
 {
 	t_token	*ptr;
@@ -116,6 +79,22 @@ void	ft_lstadd_token(t_token **lst, t_token *new)
 	ptr->next = new;
 }
 
+t_token	*ft_lstnew_token(char **words)
+{
+	t_token	*head;
+	int		i;
+
+	i = 0;
+	head = malloc(sizeof(t_token));
+	if (!head)
+		return (NULL);
+	head->red = ft_redirections(words);
+	head->cmd = ft_cmd(words);
+	head->arg = ft_arg(words);
+	head->next = NULL;
+	return (head);
+}
+
 int	main(void)
 {
 	char	*cmd;
@@ -123,15 +102,13 @@ int	main(void)
 	char	**tokens;
 	char	**words;
 	t_data	*data;
-	t_token	*t;
 	t_token	*ptr;
-	int		j;
-	int		c;
 	t_token	*data2;
+	int		j;
 
-	t = NULL;
-	c = 0;
 	data = malloc(sizeof(t_data));
+	if (!data)
+		return (0);
 	while (1)
 	{
 		cmd = readline("minishell-3.2$ ");
@@ -153,7 +130,7 @@ int	main(void)
 			j = 0;
 			while (tokens[j])
 			{
-				printf("===>token[%d]: %s\n", j, tokens[j]);
+				// printf("===>token[%d]: %s\n", j, tokens[j]);
 				replace_space_in_quotes(tokens[j]);
 				words = split_with_space(tokens[j]);
 				ft_lstadd_token(&ptr, ft_lstnew_token(words));
@@ -169,9 +146,11 @@ int	main(void)
 					printf("arg: %s\n", data2->arg[j]);
 					j++;
 				}
-				while(data2->red)
+				while (data2->red)
 				{
-					printf("%s\n", data2->red->file);
+					printf("type: %d\n", data2->red->type);
+					printf("limiter: %s\n", data2->red->limiter);
+					printf("file: %s\n", data2->red->file);
 					data2->red = data2->red->next;
 				}
 				data2 = data2->next;
@@ -181,6 +160,5 @@ int	main(void)
 	free(cmd);
 	free(command);
 	free(data);
-	free(t);
 	return (0);
 }
