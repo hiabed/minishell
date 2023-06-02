@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 22:14:50 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/02 23:00:50 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/02 23:44:18 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,27 +27,23 @@ void	ft_lstadd_red(t_redirection **lst, t_redirection *new)
 	ptr->next = new;
 }
 
-char	*ft_file_name(char **words)
+char	*ft_file_name(char **words, int type)
 {
 	int	i;
 
 	i = 0;
-	if (words[i][0] == '>' && words[i][1] == '>')
-		return (words[i + 1]);
-	else if (words[i][0] == '<')
-		return (words[i + 1]);
-	else if (words[i][0] == '>')
+	if (words[i] && words[i + 1] && (type == 1 || type == 2 || type == 3))
 		return (words[i + 1]);
 	return (NULL);
 }
 
-char	*ft_limiter_name(char **words)
+char	*ft_limiter_name(char **words, int type)
 {
 	int	i;
 
 	i = 0;
-	if (words[i][0] == '<' && words[i][1] == '<')
-		return (words[i]);
+	if (words[i] && words[i + 1] && type == 4)
+		return (words[i + 1]);
 	return (NULL);
 }
 
@@ -67,15 +63,16 @@ int	ft_number_type(char **words)
 t_redirection	*ft_lstnew_red(char **words)
 {
 	t_redirection	*red_node;
-	int				i;
+	int				count;
+    
 
-	i = 0;
+	count = 0;
 	red_node = malloc(sizeof(t_redirection));
 	if (!red_node)
 		return (NULL);
-	red_node->limiter = ft_limiter_name(words);
-	red_node->file = ft_file_name(words);
 	red_node->type = ft_number_type(words);
+	red_node->limiter = ft_limiter_name(words, red_node->type);
+	red_node->file = ft_file_name(words, red_node->type);
 	red_node->next = NULL;
 	return (red_node);
 }
@@ -84,7 +81,10 @@ t_redirection	*ft_redirections(char **words)
 {
 	int i = 0;
 	t_redirection *lst;
+    t_redirection *ptr;
     lst = NULL;
+    ptr = malloc(sizeof(t_redirection));
+    ptr->type = 0;
 	while (words[i])
 	{
 		ft_lstadd_red(&lst, ft_lstnew_red(&words[i]));

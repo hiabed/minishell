@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 21:53:19 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/02 22:49:32 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/02 23:45:56 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,5 +160,7 @@ int	main(void)
 	free(cmd);
 	free(command);
 	free(data);
+	free(data2);
+	free(ptr);
 	return (0);
 }

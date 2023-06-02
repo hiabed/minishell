@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 21:52:55 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/02 23:00:14 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/02 23:36:47 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,8 @@ t_token						*ft_lstnew_token(char **words);
 void						ft_lstadd_token(t_token **lst, t_token *new);
 void	ft_lstadd_red(t_redirection **lst,
 					t_redirection *new);
-char						*ft_file_name(char **words);
-char						*ft_limiter_name(char **words);
+char						*ft_file_name(char **words, int type);
+char						*ft_limiter_name(char **words, int type);
 int							ft_number_type(char **words);
 t_redirection				*ft_lstnew_red(char **words);
 t_redirection				*ft_redirections(char **words);
