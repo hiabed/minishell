@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 21:53:19 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/03 14:45:33 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/03 15:42:50 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,18 +39,23 @@ char	**ft_arg(char **words)
 	char	**args;
 	int		i;
 	int		k;
+	int		cmd;
 
 	k = count_redirections(words);
 	args = malloc(sizeof(char *) * (k + 1));
 	i = 0;
 	k = 0;
+	cmd = 0;
 	while (words[i])
 	{
-		if (words[i][0] == '>' || words[i][0] == '<')
+		while (words[i] && (words[i][0] == '>' || words[i][0] == '<'))
 			i = i + 2;
-		else if (i == 0)
+		if (words[i] && (words[i][0] != '>' && words[i][0] != '<'))
+		{
+			cmd++;
 			i++;
-		else
+		}
+		while (words[i] && (cmd > 0) && (words[i][0] != '>' && words[i][0] != '<'))
 			args[k++] = words[i++];
 	}
 	args[k] = NULL;
@@ -59,8 +64,18 @@ char	**ft_arg(char **words)
 
 char	*ft_cmd(char **words)
 {
-	if (words[0] && words[0][0] != '>' && words[0][0] != '<')
-		return (words[0]);
+	int	i;
+
+	i = 0;
+	if (words[i] && words[i][0] != '>' && words[i][0] != '<')
+		return (words[i]);
+	while (words[i])
+	{
+		if (words[i] && (words[i][0] == '>' || words[i][0] == '<'))
+			i = i + 2;
+		if (words[i] && (words[i][0] != '>' && words[i][0] != '<'))
+			return (words[i]);
+	}
 	return (NULL);
 }
 
