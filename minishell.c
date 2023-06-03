@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 21:53:19 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/03 15:42:50 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/03 17:16:41 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,6 +140,7 @@ int	main(void)
 		if (data->error == 0)
 		{
 			command = ft_strdup(cmd); //add space before and after (< / >);
+			free(cmd);
 			replace_pipe_in_quotes(command);
 			tokens = split_with_pipe(command);
 			j = 0;
@@ -160,6 +161,7 @@ int	main(void)
 				while (data2->arg[j])
 				{
 					printf("arg: %s\n", data2->arg[j]);
+					free(data2->arg[j]);
 					j++;
 				}
 				while (data2->red)
@@ -167,16 +169,22 @@ int	main(void)
 					printf("type: %d\n", data2->red->type);
 					printf("limiter: %s\n", data2->red->limiter);
 					printf("file: %s\n", data2->red->file);
+					free(data2->red->limiter);
+					free(data2->red->file);
 					data2->red = data2->red->next;
 				}
+				free(data2->cmd);
+				free(data2->arg);
+				free(data2->red);
+				free(data2);
 				data2 = data2->next;
 			}
 		}
 	}
-	free(cmd);
 	free(command);
 	free(data);
 	free(data2);
 	free(ptr);
+	system("leaks minishell");
 	return (0);
 }
