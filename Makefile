@@ -6,14 +6,14 @@ LIBFT = ./libft/libft.a
 
 OBJ = ${CFILES:.c=.o}
 
-CFLAGS = -Wall -Wextra -Werror #-fsanitize=address -g3
+CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g3
 
 CC = cc
 
 all : ${NAME}
 
 ${NAME} : ${OBJ}
-	${CC} ${CFLAGS} ${OBJ} ${LIBFT} -lreadline -o ${NAME}
+	${CC} ${OBJ} ${CFLAGS} ${LIBFT} -lreadline -o ${NAME}
 
 clean:
 	${RM} ${OBJ}

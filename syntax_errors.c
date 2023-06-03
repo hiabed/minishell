@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 21:30:24 by mhassani          #+#    #+#             */
-/*   Updated: 2023/05/27 23:55:53 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/03 18:30:13 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,24 +125,24 @@ void	cotes_syntax_errors(char *cmd, t_data *data)
 	{
 		while (cmd[i] && cmd[i] != 39 && cmd[i] != 34) //(') && ("")
 			i++;
-		if (cmd[i] == 34) //(");
+		if (cmd[i] && cmd[i] == 34) //(");
 		{
 			dcotes++;
 			i++;
-			while (cmd[i] && cmd[i] != 34) // != (");
+			while (cmd[i] && cmd[i] && cmd[i] != 34) // != (");
 			{
-				if (cmd[i] == 39)
+				if (cmd[i] && cmd[i] == 39)
 					cotes++;
 				i++;
 			}
-			if (cmd[i] == 34) // == (");
+			if (cmd[i] && cmd[i] == 34) // == (");
 			{
 				dcotes = 0;
 				cotes = 0;
 				i++;
 			}
 		}
-		if (cmd[i] == 39) //(');
+		if (cmd[i] && cmd[i] == 39) //(');
 		{
 			cotes++;
 			i++;
@@ -152,7 +152,7 @@ void	cotes_syntax_errors(char *cmd, t_data *data)
 					dcotes++;
 				i++;
 			}
-			if (cmd[i] == 39) // == (');
+			if (cmd[i] && cmd[i] == 39) // == (');
 			{
 				cotes = 0;
 				dcotes = 0;

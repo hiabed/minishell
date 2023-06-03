@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 21:53:19 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/03 18:11:40 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/03 21:14:40 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,6 @@ int	main(void)
 		if (data->error == 0)
 		{
 			command = ft_strdup(cmd); //add space before and after (< / >);
-			free(cmd);
 			replace_pipe_in_quotes(command);
 			tokens = split_with_pipe(command);
 			j = 0;
@@ -149,12 +148,9 @@ int	main(void)
 				// printf("===>token[%d]: %s\n", j, tokens[j]);
 				replace_space_in_quotes(tokens[j]);
 				words = split_with_space(tokens[j]);
-				free(tokens[j]);
 				ft_lstadd_token(&ptr, ft_lstnew_token(words));
-				free(words);
 				j++;
 			}
-			free(tokens);
 			data2 = ptr;
 			while (data2)
 			{
@@ -180,8 +176,8 @@ int	main(void)
 				data2 = data2->next;
 			}
 		}
-		free(data2);
 	}
+	free(cmd);
 	free(command);
 	system("leaks minishell");
 	return (0);
