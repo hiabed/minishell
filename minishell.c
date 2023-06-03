@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 21:53:19 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/02 23:45:56 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/03 14:45:33 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,6 +140,7 @@ int	main(void)
 			while (data2)
 			{
 				j = 0;
+				printf("------------\n");
 				printf("cmd: %s\n", data2->cmd);
 				while (data2->arg[j])
 				{

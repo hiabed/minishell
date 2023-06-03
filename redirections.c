@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 22:14:50 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/02 23:44:18 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/03 14:49:31 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,7 @@ int	ft_number_type(char **words)
 t_redirection	*ft_lstnew_red(char **words)
 {
 	t_redirection	*red_node;
-	int				count;
-    
-
-	count = 0;
+	
 	red_node = malloc(sizeof(t_redirection));
 	if (!red_node)
 		return (NULL);
@@ -87,7 +84,8 @@ t_redirection	*ft_redirections(char **words)
     ptr->type = 0;
 	while (words[i])
 	{
-		ft_lstadd_red(&lst, ft_lstnew_red(&words[i]));
+		if(words[i][0] == '>' || words[i][0] == '<')
+			ft_lstadd_red(&lst, ft_lstnew_red(&words[i]));
 		i++;
 	}
 	return (lst);
