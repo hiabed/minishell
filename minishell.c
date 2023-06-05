@@ -6,11 +6,33 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 21:53:19 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/03 21:42:45 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/05 17:18:08 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+char	**remove_quotes(char **words)
+{
+	int	i;
+	int	j;
+	int	add;
+
+	add = 0;
+	j = 0;
+	//remove double quotes from begin and end;
+	while (words[j])
+	{
+		i = 0;
+		while(words[j][i])
+		{
+
+			i++;
+		}
+		j++;
+	}
+	return (words);
+}
 
 int	count_redirections(char **words)
 {
@@ -55,7 +77,8 @@ char	**ft_arg(char **words)
 			cmd++;
 			i++;
 		}
-		while (words[i] && (cmd > 0) && (words[i][0] != '>' && words[i][0] != '<'))
+		while (words[i] && (cmd > 0) && (words[i][0] != '>'
+				&& words[i][0] != '<'))
 			args[k++] = words[i++];
 	}
 	args[k] = NULL;
@@ -148,6 +171,7 @@ int	main(void)
 				// printf("===>token[%d]: %s\n", j, tokens[j]);
 				replace_space_in_quotes(tokens[j]);
 				words = split_with_space(tokens[j]);
+				remove_quotes(words);
 				ft_lstadd_token(&ptr, ft_lstnew_token(words));
 				j++;
 			}
@@ -160,7 +184,6 @@ int	main(void)
 				while (data2->arg[j])
 				{
 					printf("arg: %s\n", data2->arg[j]);
-					free(data2->arg[j]);
 					j++;
 				}
 				while (data2->red)
@@ -170,9 +193,6 @@ int	main(void)
 					printf("file: %s\n", data2->red->file);
 					data2->red = data2->red->next;
 				}
-				free(data2->cmd);
-				free(data2->arg);
-				free(data2->red);
 				data2 = data2->next;
 			}
 		}
