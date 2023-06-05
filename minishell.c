@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 21:53:19 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/05 17:18:08 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/05 17:42:27 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,7 @@ char	**remove_quotes(char **words)
 {
 	int	i;
 	int	j;
-	int	add;
 
-	add = 0;
 	j = 0;
 	//remove double quotes from begin and end;
 	while (words[j])
@@ -26,8 +24,26 @@ char	**remove_quotes(char **words)
 		i = 0;
 		while(words[j][i])
 		{
-
-			i++;
+			if(words[j][i] == '\"')
+			{
+				i++;
+				while(words[j][i] && words[j][i] != '\"')
+				{
+					words[j][i - 1] = words[j][i];
+					i++;
+				}
+				words[j][i - 1] = '\0';
+			}
+			else if(words[j][i] == '\'')
+			{
+				i++;
+				while(words[j][i] && words[j][i] != '\'')
+				{
+					words[j][i - 1] = words[j][i];
+					i++;
+				}
+				words[j][i - 1] = '\0';
+			}
 		}
 		j++;
 	}
