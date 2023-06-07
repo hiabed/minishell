@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 14:34:41 by mhassani          #+#    #+#             */
-/*   Updated: 2023/05/29 15:47:16 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/07 20:29:32 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ void	replace_pipe_in_quotes(char *cmd)
 			if (!cmd[i])
 				break ;
 		}
-		i++;
+		else
+			i++;
 	}
 }
 
@@ -65,6 +66,7 @@ void	replace_space_in_quotes(char *token)
 	int	i;
 
 	i = 0;
+	// printf("token: %s\n", token);
 	while (token[i])
 	{
 		if (token[i] == 34 || token[i] == 39)
@@ -81,8 +83,10 @@ void	replace_space_in_quotes(char *token)
 			if (!token[i])
 				break ;
 		}
-		i++;
+		else
+			i++;
 	}
+	
 }
 
 char	**split_with_space(char *token)

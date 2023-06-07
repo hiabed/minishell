@@ -6,57 +6,137 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 21:53:19 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/05 17:42:27 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/07 21:27:52 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	**remove_quotes(char **words)
+int	count_strings(char *words)
 {
 	int	i;
-	int	j;
+	int	count;
 
-	j = 0;
-	//remove double quotes from begin and end;
-	while (words[j])
+	count = 0;
+	i = 0;
+	while (words[i])
 	{
-		i = 0;
-		while(words[j][i])
+		if (words[i] == '\"' && words[i + 1] == '\"')
 		{
-			if(words[j][i] == '\"')
-			{
-				i++;
-				while(words[j][i] && words[j][i] != '\"')
-				{
-					words[j][i - 1] = words[j][i];
-					i++;
-				}
-				words[j][i - 1] = '\0';
-			}
-			else if(words[j][i] == '\'')
-			{
-				i++;
-				while(words[j][i] && words[j][i] != '\'')
-				{
-					words[j][i - 1] = words[j][i];
-					i++;
-				}
-				words[j][i - 1] = '\0';
-			}
+			count++;
+			i = i + 2;
 		}
-		j++;
+		else if ((words[i] == '\"' && words[i + 1] != '\"'))
+		{
+			i++;
+			while (words[i] && words[i] != '\"')
+				i++;
+			count++;
+			i++;
+		}
+		else
+		{
+			while (words[i] && words[i] != '\"')
+				i++;
+			count++;
+		}
 	}
-	return (words);
+	return (count);
 }
 
-int	count_redirections(char **words)
+int	quotes_len(char *words)
+{
+	int	i;
+	int	count;
+
+	count = 0;
+	i = 0;
+	while (words[i] && words[i] != '\"')
+	{
+		count++;
+		i++;
+	}
+	return (count);
+}
+
+char	**strings_without_quotes(char *words)
+{
+	int		i;
+	int		j;
+	int		k;
+	char	**empty_str;
+	empty_str = malloc((count_strings(words) + 1) * sizeof(char *));
+	k = 0;
+	i = 0;
+	while (words[i])
+	{
+		if (words[i] == '\"' && words[i + 1] == '\"')
+		{
+			empty_str[k] = malloc(1);
+			empty_str[k][0] = '\0';
+			k++;
+			i = i + 2;
+		}
+		else if ((words[i] == '\"' && words[i + 1] != '\"'))
+		{
+			j = 0;
+			i++;
+			empty_str[k] = malloc(quotes_len(&words[i]) + 1);
+			while (words[i] && words[i] != '\"')
+				empty_str[k][j++] = words[i++];
+			empty_str[k][j] = '\0';
+			k++;
+			i++;
+		}
+		else
+		{
+			j = 0;
+			empty_str[k] = malloc(quotes_len(&words[i]) + 1);
+			while (words[i] && words[i] != '\"')
+				empty_str[k][j++] = words[i++];
+			empty_str[k][j] = '\0';
+			k++;
+		}
+	}
+	empty_str[k] = NULL;
+	return (empty_str);
+}
+
+char	*join_empty_strings(char *words)
+{
+	int		i;
+	char	*joined_string;
+	char	**to_be_joined;
+	char	*temp;
+
+	i = 0;
+	joined_string = NULL;
+	to_be_joined = strings_without_quotes(words);
+	// printf("%s\n", to_be_joined[0]);
+	if (to_be_joined[i])
+	{
+		// Start with the first string
+		joined_string = to_be_joined[i];
+		// Iterate from the second string onwards
+		while (to_be_joined[i + 1])
+		{
+			temp = ft_strjoin(joined_string, to_be_joined[i + 1]);
+			joined_string = temp;
+			i++;
+		}
+	}
+	// printf("joined_string: %s\n", joined_string);
+	return (joined_string);
+}
+
+int	count_args(char **words)
 {
 	int	i;
 	int	k;
 
 	i = 0;
 	k = 0;
+	printf("wordsss[%d]: %s\n", i, words[i]);
 	while (words[i])
 	{
 		if (words[i][0] == '>' || words[i][0] == '<')
@@ -79,16 +159,18 @@ char	**ft_arg(char **words)
 	int		k;
 	int		cmd;
 
-	k = count_redirections(words);
+	k = count_args(words);
 	args = malloc(sizeof(char *) * (k + 1));
 	i = 0;
 	k = 0;
 	cmd = 0;
+	if(!words[i])
+		return NULL;
 	while (words[i])
 	{
 		while (words[i] && (words[i][0] == '>' || words[i][0] == '<'))
 			i = i + 2;
-		if (!cmd && words[i] && (words[i][0] != '>' && words[i][0] != '<'))
+		if (!cmd && (words[i][0] != '>' && words[i][0] != '<'))
 		{
 			cmd++;
 			i++;
@@ -98,6 +180,12 @@ char	**ft_arg(char **words)
 			args[k++] = words[i++];
 	}
 	args[k] = NULL;
+	i = 0;
+	while(args[i])
+	{
+		args[i] = join_empty_strings(args[i]);
+		i++;
+	}
 	return (args);
 }
 
@@ -107,13 +195,25 @@ char	*ft_cmd(char **words)
 
 	i = 0;
 	if (words[i] && words[i][0] != '>' && words[i][0] != '<')
+	{
+		printf("==>1\n");
+		words[i] = join_empty_strings(words[i]);
 		return (words[i]);
+	}
 	while (words[i])
 	{
-		if (words[i] && (words[i][0] == '>' || words[i][0] == '<'))
-			i = i + 2;
-		if (words[i] && (words[i][0] != '>' && words[i][0] != '<'))
+		if (words[i][0] == '\"')
+		{
+			printf("2\n");
+			words[i] = join_empty_strings(words[i]);
 			return (words[i]);
+		}
+		if (words[i][0] != '>' && words[i][0] != '<')
+		{
+			printf("==>3\n");
+			words[i] = join_empty_strings(words[i]);
+			return (words[i]);
+		}
 	}
 	return (NULL);
 }
@@ -158,6 +258,7 @@ int	main(void)
 	t_data	*data;
 	t_token	*ptr;
 	t_token	*data2;
+	// int		i;
 	int		j;
 
 	data = malloc(sizeof(t_data));
@@ -187,7 +288,13 @@ int	main(void)
 				// printf("===>token[%d]: %s\n", j, tokens[j]);
 				replace_space_in_quotes(tokens[j]);
 				words = split_with_space(tokens[j]);
-				remove_quotes(words);
+				// remove_quotes(words);
+				// i = 0;
+				// while (words[i])
+				// {
+				// 	words[i] = join_empty_strings(words[i]);
+				// 	i++;
+				// }
 				ft_lstadd_token(&ptr, ft_lstnew_token(words));
 				j++;
 			}

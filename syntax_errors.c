@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 21:30:24 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/03 18:30:13 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/07 18:39:59 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	pipe_syntax_errors(char *cmd, t_data *data)
 			if (cmd[i] == 34 || cmd[i] == 39) // == (");
                 i++;
 		}
-		if (cmd[i] == '|')
+		else if (cmd[i] == '|')
 		{
 			i++;
 			while (cmd[i] == ' ' || cmd[i] == '\t')
@@ -47,7 +47,8 @@ void	pipe_syntax_errors(char *cmd, t_data *data)
 				data->error++;
 			}
 		}
-		i++;
+		else
+			i++;
 	}
 }
 
@@ -68,7 +69,7 @@ void	red_syntax_errors(char *cmd, t_data *data)
 			if (cmd[i] == 34 || cmd[i] == 39) // == (");
                 i++;
 		}
-		if (cmd[i] == '>')
+		else if (cmd[i] == '>')
 		{
 			i++;
 			if(cmd[i] == '>')
@@ -78,7 +79,7 @@ void	red_syntax_errors(char *cmd, t_data *data)
 				write(2, "minishell: syntax error\n", 24);
 				data->error++;
 			}
-			while (cmd[i] == ' ' || cmd[i] == '\t')
+			while (cmd[i] && (cmd[i] == ' ' || cmd[i] == '\t'))
 				i++;
 			if ((cmd[i] == '\0' || cmd[i] == '>' || cmd[i] == '<'
 					|| cmd[i] == '|') && !data->error)
@@ -87,7 +88,7 @@ void	red_syntax_errors(char *cmd, t_data *data)
 				data->error++;
 			}
 		}
-		if (cmd[i] == '<')
+		else if (cmd[i] == '<')
 		{
 			i++;
 			if(cmd[i] == '<')
@@ -123,7 +124,7 @@ void	cotes_syntax_errors(char *cmd, t_data *data)
     in_out = 0;
 	while (cmd[i])
 	{
-		while (cmd[i] && cmd[i] != 39 && cmd[i] != 34) //(') && ("")
+		while (cmd[i] && cmd[i] != 39 && cmd[i] != 34) //!= (') && != ("")
 			i++;
 		if (cmd[i] && cmd[i] == 34) //(");
 		{
