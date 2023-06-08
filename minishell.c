@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 21:53:19 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/08 15:47:44 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/08 17:27:48 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,7 @@ int	main(void)
 	t_token	*data2;
 	int		j;
 
-	// int		i;
+	int		i;
 	data = malloc(sizeof(t_data));
 	if (!data)
 		return (0);
@@ -166,12 +166,17 @@ int	main(void)
 				replace_space_in_quotes(tokens[j]);
 				words = split_with_space(tokens[j]);
 				// remove_quotes(words);
-				// i = 0;
-				// while (words[i])
-				// {
-				// 	words[i] = join_empty_strings(words[i]);
-				// 	i++;
-				// }
+				i = 0;
+				while (words[i])
+				{
+					syntax_errors(words[i], data);
+					printf("words[%d]: %s\n", i, words[i]);
+					if(data->error > 0)
+						break;
+					i++;
+				}
+				// if(data->error > 0)
+				// 	break;
 				ft_lstadd_token(&ptr, ft_lstnew_token(words));
 				j++;
 			}

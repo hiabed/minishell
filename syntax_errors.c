@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 21:30:24 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/08 15:43:42 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/08 17:25:18 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,8 @@ void	red_syntax_errors(char *cmd, t_data *data)
 				data->error++;
 			}
 		}
-		i++;
+		else
+			i++;
 	}
 }
 
