@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 21:53:19 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/07 21:27:52 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/08 14:47:11 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ char	**strings_without_quotes(char *words)
 	int		j;
 	int		k;
 	char	**empty_str;
+
 	empty_str = malloc((count_strings(words) + 1) * sizeof(char *));
 	k = 0;
 	i = 0;
@@ -136,11 +137,11 @@ int	count_args(char **words)
 
 	i = 0;
 	k = 0;
-	printf("wordsss[%d]: %s\n", i, words[i]);
+	// printf("wordsss[%d]: %s\n", i, words[i]);
 	while (words[i])
 	{
-		if (words[i][0] == '>' || words[i][0] == '<')
-			i = i + 2;
+		if (words[i] && (words[i][0] == '>' || words[i][0] == '<'))
+			i++;
 		else if (i == 0)
 			i++;
 		else
@@ -157,31 +158,24 @@ char	**ft_arg(char **words)
 	char	**args;
 	int		i;
 	int		k;
-	int		cmd;
+	int		j;
 
 	k = count_args(words);
+	i = 0;
+	j = 0;
 	args = malloc(sizeof(char *) * (k + 1));
-	i = 0;
-	k = 0;
-	cmd = 0;
-	if(!words[i])
-		return NULL;
-	while (words[i])
+	while (words[i] && k)
 	{
-		while (words[i] && (words[i][0] == '>' || words[i][0] == '<'))
-			i = i + 2;
-		if (!cmd && (words[i][0] != '>' && words[i][0] != '<'))
-		{
-			cmd++;
+		if(i == 0)
 			i++;
-		}
-		while (words[i] && (cmd > 0) && (words[i][0] != '>'
-				&& words[i][0] != '<'))
-			args[k++] = words[i++];
+		if (words[i + 1] && (words[i][0] == '>' || words[i][0] == '<'))
+			i = i + 2;
+		while (words[i] && k)
+			args[j++] = words[i++];
 	}
-	args[k] = NULL;
+	args[j] = NULL;
 	i = 0;
-	while(args[i])
+	while (args[i])
 	{
 		args[i] = join_empty_strings(args[i]);
 		i++;
@@ -258,9 +252,9 @@ int	main(void)
 	t_data	*data;
 	t_token	*ptr;
 	t_token	*data2;
-	// int		i;
 	int		j;
 
+	// int		i;
 	data = malloc(sizeof(t_data));
 	if (!data)
 		return (0);
