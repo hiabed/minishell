@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 21:52:55 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/07 20:23:51 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/08 14:52:51 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,5 +68,9 @@ char						*ft_limiter_name(char **words, int type);
 int							ft_number_type(char **words);
 t_redirection				*ft_lstnew_red(char **words);
 t_redirection				*ft_redirections(char **words);
+int							count_strings(char *words);
+int							quotes_len(char *words);
+char						**strings_without_quotes(char *words);
+char						*join_empty_strings(char *words);
 
 #endif

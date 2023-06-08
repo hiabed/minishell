@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 22:14:50 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/03 14:49:31 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/08 14:49:52 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,10 @@ char	*ft_file_name(char **words, int type)
 
 	i = 0;
 	if (words[i] && words[i + 1] && (type == 1 || type == 2 || type == 3))
+	{
+		words[i + 1] = join_empty_strings(words[i + 1]);
 		return (words[i + 1]);
+	}
 	return (NULL);
 }
 
@@ -43,7 +46,10 @@ char	*ft_limiter_name(char **words, int type)
 
 	i = 0;
 	if (words[i] && words[i + 1] && type == 4)
+	{
+		words[i + 1] = join_empty_strings(words[i + 1]);
 		return (words[i + 1]);
+	}
 	return (NULL);
 }
 
