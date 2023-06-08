@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 22:14:50 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/08 21:30:49 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/08 21:56:34 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	ft_number_type(char **words)
 		return (2);
 	else if (words[0][0] == '>')
 		return (1);
-	return (0);
+	return 0;
 }
 
 t_redirection	*ft_lstnew_red(char **words)
@@ -86,7 +86,7 @@ t_redirection	*ft_redirections(char **words)
 	int i = 0;
 	t_redirection *lst;
 	lst = NULL;
-	while (words[i])
+	while (words[i] && words[i + 1])
 	{
 		if (words[i][0] == '>' || words[i][0] == '<')
 			ft_lstadd_red(&lst, ft_lstnew_red(&words[i]));

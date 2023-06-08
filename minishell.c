@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 21:53:19 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/08 21:29:19 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/08 22:06:06 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	count_strings(char *words)
 	return (count);
 }
 
-int	quotes_len(char *words)
+int	word_len(char *words)
 {
 	int	i;
 	int	count;
@@ -94,7 +94,10 @@ char	**strings_without_quotes(char *words)
 			j = 0;
 			empty_str[k] = malloc(quotes_len(&words[i]) + 1);
 			while (words[i] && words[i] != '\"')
+			{
+				printf("haha\n");
 				empty_str[k][j++] = words[i++];
+			}
 			empty_str[k][j] = '\0';
 			k++;
 		}
@@ -137,7 +140,6 @@ int	main(void)
 	t_token	*data2;
 	int		j;
 
-	// int		i;
 	data = malloc(sizeof(t_data));
 	if (!data)
 		return (0);
