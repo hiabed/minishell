@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 22:14:50 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/08 14:49:52 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/08 21:30:49 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ char	*ft_file_name(char **words, int type)
 	if (words[i] && words[i + 1] && (type == 1 || type == 2 || type == 3))
 	{
 		words[i + 1] = join_empty_strings(words[i + 1]);
+		printf("3\n");
 		return (words[i + 1]);
 	}
 	return (NULL);
@@ -69,7 +70,7 @@ int	ft_number_type(char **words)
 t_redirection	*ft_lstnew_red(char **words)
 {
 	t_redirection	*red_node;
-	
+
 	red_node = malloc(sizeof(t_redirection));
 	if (!red_node)
 		return (NULL);
@@ -84,13 +85,10 @@ t_redirection	*ft_redirections(char **words)
 {
 	int i = 0;
 	t_redirection *lst;
-    t_redirection *ptr;
-    lst = NULL;
-    ptr = malloc(sizeof(t_redirection));
-    ptr->type = 0;
+	lst = NULL;
 	while (words[i])
 	{
-		if(words[i][0] == '>' || words[i][0] == '<')
+		if (words[i][0] == '>' || words[i][0] == '<')
 			ft_lstadd_red(&lst, ft_lstnew_red(&words[i]));
 		i++;
 	}

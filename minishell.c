@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 21:53:19 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/08 18:28:46 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/08 21:29:19 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,6 @@ int	main(void)
 	while (1)
 	{
 		cmd = readline("minishell-3.2$ ");
-		ptr = NULL;
 		if (!cmd)
 		{
 			printf("exit\n");
@@ -160,6 +159,7 @@ int	main(void)
 			replace_pipe_in_quotes(cmd);
 			tokens = split_with_pipe(cmd);
 			j = 0;
+			ptr = NULL;
 			while (tokens[j])
 			{
 				// printf("===>token[%d]: %s\n", j, tokens[j]);
