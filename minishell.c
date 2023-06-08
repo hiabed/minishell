@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 21:53:19 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/08 17:27:48 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/08 18:00:43 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,53 +153,50 @@ int	main(void)
 		add_history(cmd);
 		data->error = 0;
 		data->flag = 0;
-		syntax_errors(cmd, data);
-		if (data->error == 0)
+
+		command = ft_strdup(cmd); //add space before and after (< / >);
+		replace_pipe_in_quotes(command);
+		tokens = split_with_pipe(command);
+		j = 0;
+		while (tokens[j])
 		{
-			command = ft_strdup(cmd); //add space before and after (< / >);
-			replace_pipe_in_quotes(command);
-			tokens = split_with_pipe(command);
-			j = 0;
-			while (tokens[j])
+			// printf("===>token[%d]: %s\n", j, tokens[j]);
+			replace_space_in_quotes(tokens[j]);
+			words = split_with_space(tokens[j]);
+			// remove_quotes(words);
+			i = 0;
+			while (words[i])
 			{
-				// printf("===>token[%d]: %s\n", j, tokens[j]);
-				replace_space_in_quotes(tokens[j]);
-				words = split_with_space(tokens[j]);
-				// remove_quotes(words);
-				i = 0;
-				while (words[i])
-				{
-					syntax_errors(words[i], data);
-					printf("words[%d]: %s\n", i, words[i]);
-					if(data->error > 0)
-						break;
-					i++;
-				}
-				// if(data->error > 0)
-				// 	break;
-				ft_lstadd_token(&ptr, ft_lstnew_token(words));
+				syntax_errors(words[i], data);
+				printf("words[%d]: %s\n", i, words[i]);
+				if(data->error > 0)
+					break;
+				i++;
+			}
+			if(data->error > 0)
+				break;
+			ft_lstadd_token(&ptr, ft_lstnew_token(words));
+			j++;
+		}
+		data2 = ptr;
+		while (data2)
+		{
+			j = 0;
+			printf("------------\n");
+			printf("cmd: %s\n", data2->cmd);
+			while (data2->arg[j])
+			{
+				printf("arg: %s\n", data2->arg[j]);
 				j++;
 			}
-			data2 = ptr;
-			while (data2)
+			while (data2->red)
 			{
-				j = 0;
-				printf("------------\n");
-				printf("cmd: %s\n", data2->cmd);
-				while (data2->arg[j])
-				{
-					printf("arg: %s\n", data2->arg[j]);
-					j++;
-				}
-				while (data2->red)
-				{
-					printf("type: %d\n", data2->red->type);
-					printf("limiter: %s\n", data2->red->limiter);
-					printf("file: %s\n", data2->red->file);
-					data2->red = data2->red->next;
-				}
-				data2 = data2->next;
+				printf("type: %d\n", data2->red->type);
+				printf("limiter: %s\n", data2->red->limiter);
+				printf("file: %s\n", data2->red->file);
+				data2->red = data2->red->next;
 			}
+			data2 = data2->next;
 		}
 	}
 	free(cmd);
