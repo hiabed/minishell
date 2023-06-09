@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 21:53:19 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/08 21:29:19 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/09 19:33:16 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,20 @@
 int	count_strings(char *words)
 {
 	int	i;
+	int	j;
 	int	count;
 
+	j = ft_strlen(words);
 	count = 0;
 	i = 0;
-	while (words[i])
+	while (words[i] && words[i + 1])
 	{
-		if (words[i] == '\"' && words[i + 1] == '\"')
+		if (words[i + 1] && words[i] == '\"' && words[i + 1] == '\"')
 		{
 			count++;
 			i = i + 2;
 		}
-		else if ((words[i] == '\"' && words[i + 1] != '\"'))
+		else if (words[i + 1] && (words[i] == '\"' && words[i + 1] != '\"'))
 		{
 			i++;
 			while (words[i] && words[i] != '\"')
@@ -34,7 +36,7 @@ int	count_strings(char *words)
 			count++;
 			i++;
 		}
-		else
+		else if (words[i] != '\"')
 		{
 			while (words[i] && words[i] != '\"')
 				i++;
@@ -64,17 +66,18 @@ char	**strings_without_quotes(char *words)
 	int		i;
 	int		j;
 	int		k;
-	char	**empty_str;
+	char	**no_quotes_str;
 
-	empty_str = malloc((count_strings(words) + 1) * sizeof(char *));
+	printf("count strings: %d\n", count_strings(words));
+	no_quotes_str = malloc((count_strings(words) + 1) * sizeof(char *));
 	k = 0;
 	i = 0;
-	while (words[i])
+	while (words[i] && words[i + 1])
 	{
 		if (words[i] == '\"' && words[i + 1] == '\"')
 		{
-			empty_str[k] = malloc(1);
-			empty_str[k][0] = '\0';
+			no_quotes_str[k] = malloc(1);
+			no_quotes_str[k][0] = '\0';
 			k++;
 			i = i + 2;
 		}
@@ -82,25 +85,25 @@ char	**strings_without_quotes(char *words)
 		{
 			j = 0;
 			i++;
-			empty_str[k] = malloc(quotes_len(&words[i]) + 1);
+			no_quotes_str[k] = malloc(quotes_len(&words[i]) + 1);
 			while (words[i] && words[i] != '\"')
-				empty_str[k][j++] = words[i++];
-			empty_str[k][j] = '\0';
+				no_quotes_str[k][j++] = words[i++];
+			no_quotes_str[k][j] = '\0';
 			k++;
 			i++;
 		}
 		else
 		{
 			j = 0;
-			empty_str[k] = malloc(quotes_len(&words[i]) + 1);
+			no_quotes_str[k] = malloc(quotes_len(&words[i]) + 1);
 			while (words[i] && words[i] != '\"')
-				empty_str[k][j++] = words[i++];
-			empty_str[k][j] = '\0';
+				no_quotes_str[k][j++] = words[i++];
+			no_quotes_str[k][j] = '\0';
 			k++;
 		}
 	}
-	empty_str[k] = NULL;
-	return (empty_str);
+	no_quotes_str[k] = NULL;
+	return (no_quotes_str);
 }
 
 char	*join_empty_strings(char *words)
@@ -153,16 +156,15 @@ int	main(void)
 		data->error = 0;
 		data->flag = 0;
 		syntax_errors(cmd, data);
-		if(!data->error)
+		if (!data->error)
 		{
 			command = ft_strdup(cmd); //add space before and after (< / >);
-			replace_pipe_in_quotes(cmd);
-			tokens = split_with_pipe(cmd);
+			replace_pipe_in_quotes(command);
+			tokens = split_with_pipe(command);
 			j = 0;
 			ptr = NULL;
 			while (tokens[j])
 			{
-				// printf("===>token[%d]: %s\n", j, tokens[j]);
 				replace_space_in_quotes(tokens[j]);
 				words = split_with_space(tokens[j]);
 				ft_lstadd_token(&ptr, ft_lstnew_token(words));

@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 14:15:26 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/08 18:13:16 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/09 19:31:47 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@ int	cmd_lenght(char *s)
 		{
 			i++;
 			while(s[i] && (s[i] != 34 && s[i] != 39))
-				i++;
-			if(s[i] == 34 || s[i] == 39)
 				i++;
 		}
 		if (s[i] == '>' || s[i] == '<')
@@ -49,14 +47,13 @@ void	ft_fill_ptr(char *s1, char *ptr, int i, int j)
 				ptr[j++] = s1[i++];
 			ptr[j++] = s1[i];
 		}
-		if ((s1[i] == '>' && s1[i + 1] == '>') || (s1[i] == '<' && s1[i
+		else if ((s1[i] == '>' && s1[i + 1] == '>') || (s1[i] == '<' && s1[i
 				+ 1] == '<'))
 		{
 			ptr[j++] = ' ';
+			ptr[j++] = s1[i++];
 			ptr[j++] = s1[i];
-			ptr[j++] = s1[i + 1];
 			ptr[j++] = ' ';
-			i++;
 		}
 		else if (s1[i] == '>' || s1[i] == '<')
 		{
