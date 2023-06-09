@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 15:45:14 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/09 21:51:09 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/09 23:23:36 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,20 +16,20 @@ int	count_args(char **words)
 {
 	int	i;
 	int	k;
+	int	cmd;
 
+	cmd = 0;
 	i = 0;
 	k = 0;
 	while (words[i])
 	{
-		if (i == 0)
+		if (words[i + 1] && (words[i][0] == '>' || words[i][0] == '<'))
 			i++;
-		else if (words[i + 1] && (words[i][0] == '>' || words[i][0] == '<'))
-			i = i + 2;
-		else
-		{
+		else if (!cmd && words[i][0] != '>' && words[i][0] != '<')
+			cmd++;
+		else if(cmd && (words[i][0] != '>' && words[i][0] != '<'))
 			k++;
-			i++;
-		}
+		i++;
 	}
 	return (k);
 }
@@ -51,11 +51,10 @@ char	**ft_arg(char **words)
 	{
 		if (words[i + 1] && (words[i][0] == '>' || words[i][0] == '<'))
 			i++;
-		else if (i == 0)
+		else if (!cmd && words[i][0] != '>' && words[i][0] != '<')
 			cmd++;
-		else if (words[i] && j < k)
+		else if(cmd && (words[i][0] != '>' && words[i][0] != '<'))
 		{
-			words[i] = join_empty_strings(words[i]);
 			args[j++] = words[i];
 		}
 		i++;
@@ -71,21 +70,17 @@ char	*ft_cmd(char **words)
 	i = 0;
 	if (words[i] && words[i][0] != '>' && words[i][0] != '<')
 	{
-		words[i] = join_empty_strings(words[i]);
 		return (words[i]);
 	}
 	while (words[i])
 	{
-		if (words[i][0] == '\"')
-		{
-			words[i] = join_empty_strings(words[i]);
-			return (words[i]);
-		}
 		if (words[i][0] != '>' && words[i][0] != '<')
 		{
-			words[i] = join_empty_strings(words[i]);
 			return (words[i]);
 		}
+		if (words[i + 1] && (words[i][0] != '>' || words[i][0] != '<'))
+			i++;
+		i++;
 	}
 	return (NULL);
 }
@@ -108,15 +103,14 @@ void	ft_lstadd_token(t_token **lst, t_token *new)
 t_token	*ft_lstnew_token(char **words)
 {
 	t_token *head;
-	int i;
 
-	i = 0;
 	head = malloc(sizeof(t_token));
 	if (!head)
 		return (NULL);
-	head->red = ft_redirections(words);
 	head->cmd = ft_cmd(words);
 	head->arg = ft_arg(words);
+	head->red = ft_redirections(words);
+	// words[i] = join_empty_strings(words[i]);
 	head->next = NULL;
 	return (head);
 }

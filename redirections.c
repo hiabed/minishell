@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 22:14:50 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/09 20:54:14 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/09 23:15:10 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,7 @@ char	*ft_file_name(char *words, int type)
 	int	i;
 
 	i = 0;
-	printf("words[iiii]: %s\n", words);
-	if (words && (type == 1 || type == 2 || type == 3))
+	if (words[i] && (type == 1 || type == 2 || type == 3))
 	{
 		words = join_empty_strings(words);
 		return (words);
@@ -43,7 +42,10 @@ char	*ft_file_name(char *words, int type)
 
 char	*ft_limiter_name(char *words, int type)
 {
-	if (words && type == 4)
+	int	i;
+
+	i = 0;
+	if (words[i] && type == 4)
 	{
 		words = join_empty_strings(words);
 		return (words);
@@ -78,17 +80,31 @@ t_redirection	*ft_lstnew_red(char **words)
 	red_node->next = NULL;
 	return (red_node);
 }
+void	ft_print(char **s)
+{
+	int	i;
+
+	i = 0;
+	while (s[i])
+	{
+		printf("str == %s\n", s[i]);
+		i++;
+	}
+	printf("last str == %s\n", s[i]);
+}
 
 t_redirection	*ft_redirections(char **words)
 {
 	t_redirection *lst;
 	lst = NULL;
-	while (*words)
+	int i;
+	
+	i = 0;
+	while (words[i])
 	{
-		if (*words[0] == '>' || *words[0] == '<')
-			ft_lstadd_red(&lst, ft_lstnew_red(words));
-		if(*words)
-			words++;
+		if (words[i][0] == '>' || words[i][0] == '<')
+			ft_lstadd_red(&lst, ft_lstnew_red(&words[i]));
+		i++;
 	}
 	return (lst);
 }
