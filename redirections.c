@@ -6,11 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 22:14:50 by mhassani          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2023/06/09 16:45:59 by mhassani         ###   ########.fr       */
-=======
-/*   Updated: 2023/06/08 21:56:34 by mhassani         ###   ########.fr       */
->>>>>>> e316377081825232a8b738fc065a9ab888e0e55e
+/*   Updated: 2023/06/09 20:54:14 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +32,7 @@ char	*ft_file_name(char *words, int type)
 	int	i;
 
 	i = 0;
+	printf("words[iiii]: %s\n", words);
 	if (words && (type == 1 || type == 2 || type == 3))
 	{
 		words = join_empty_strings(words);
@@ -58,20 +55,13 @@ int	ft_number_type(char *words)
 {
 	if (words[0] == '<' && words[1] == '<')
 		return (4);
-	if (words[0] == '>' && words[1] == '>')
+	else if (words[0] == '>' && words[1] == '>')
 		return (3);
 	else if (words[0] == '<')
 		return (2);
 	else if (words[0] == '>')
-	{
-		printf("hhhhhhhh\n");
 		return (1);
-<<<<<<< HEAD
-	}
 	return (0);
-=======
-	return 0;
->>>>>>> e316377081825232a8b738fc065a9ab888e0e55e
 }
 
 t_redirection	*ft_lstnew_red(char **words)
@@ -81,7 +71,6 @@ t_redirection	*ft_lstnew_red(char **words)
 	red_node = malloc(sizeof(t_redirection));
 	if (!red_node)
 		return (NULL);
-	printf("words[i]: %s\n", *words);
 	red_node->type = ft_number_type(*words);
 	words++;
 	red_node->limiter = ft_limiter_name(*words, red_node->type);
@@ -94,18 +83,12 @@ t_redirection	*ft_redirections(char **words)
 {
 	t_redirection *lst;
 	lst = NULL;
-<<<<<<< HEAD
 	while (*words)
-=======
-	while (words[i] && words[i + 1])
->>>>>>> e316377081825232a8b738fc065a9ab888e0e55e
 	{
 		if (*words[0] == '>' || *words[0] == '<')
-		{
-			printf("first words[i]: %s\n", *words);
 			ft_lstadd_red(&lst, ft_lstnew_red(words));
-		}
-		words++;
+		if(*words)
+			words++;
 	}
 	return (lst);
 }

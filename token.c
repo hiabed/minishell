@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 15:45:14 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/09 17:51:31 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/09 21:51:09 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,27 +44,23 @@ char	**ft_arg(char **words)
 
 	cmd = 0;
 	k = count_args(words);
-	printf("k: %d\n", k);
 	i = 0;
 	j = 0;
 	args = malloc(sizeof(char *) * (k + 1));
 	while (words[i] && k)
 	{
-		if (i == 0)
-			cmd++;
-		else if (words[i + 1] && (words[i][0] == '>' || words[i][0] == '<'))
+		if (words[i + 1] && (words[i][0] == '>' || words[i][0] == '<'))
 			i++;
+		else if (i == 0)
+			cmd++;
 		else if (words[i] && j < k)
+		{
+			words[i] = join_empty_strings(words[i]);
 			args[j++] = words[i];
+		}
 		i++;
 	}
 	args[j] = NULL;
-	i = 0;
-	while (args[i])
-	{
-		args[i] = join_empty_strings(args[i]);
-		i++;
-	}
 	return (args);
 }
 

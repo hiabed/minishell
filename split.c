@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 14:34:41 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/09 19:14:21 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/09 20:55:19 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	replace_pipe_in_quotes(char *cmd)
 	int	i;
 
 	i = 0;
-	printf("%s\n", cmd);
 	while (cmd[i])
 	{
 		if (cmd[i] == 34 || cmd[i] == 39)
@@ -70,7 +69,6 @@ void	replace_space_in_quotes(char *token)
 	int	i;
 
 	i = 0;
-	// printf("token: %s\n", token);
 	while (token[i])
 	{
 		if (token[i] == 34 || token[i] == 39)

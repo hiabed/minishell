@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 21:53:19 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/09 19:35:19 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/09 20:42:32 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ char	**strings_without_quotes(char *words)
 	int		k;
 	char	**no_quotes_str;
 
-	printf("count strings: %d\n", count_strings(words));
 	no_quotes_str = malloc((count_strings(words) + 1) * sizeof(char *));
 	k = 0;
 	i = 0;
@@ -85,7 +84,7 @@ char	**strings_without_quotes(char *words)
 		{
 			j = 0;
 			i++;
-			no_quotes_str[k] = malloc(quotes_len(&words[i]) + 1);
+			no_quotes_str[k] = malloc(word_len(&words[i]) + 1);
 			while (words[i] && words[i] != '\"')
 				no_quotes_str[k][j++] = words[i++];
 			no_quotes_str[k][j] = '\0';
@@ -95,10 +94,10 @@ char	**strings_without_quotes(char *words)
 		else
 		{
 			j = 0;
-			no_quotes_str[k] = malloc(quotes_len(&words[i]) + 1);
+			no_quotes_str[k] = malloc(word_len(&words[i]) + 1);
 			while (words[i] && words[i] != '\"')
-				empty_str[k][j++] = words[i++];
-			empty_str[k][j] = '\0';
+				no_quotes_str[k][j++] = words[i++];
+			no_quotes_str[k][j] = '\0';
 			k++;
 		}
 	}
