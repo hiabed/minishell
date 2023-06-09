@@ -6,7 +6,11 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 22:14:50 by mhassani          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2023/06/09 16:45:59 by mhassani         ###   ########.fr       */
+=======
+/*   Updated: 2023/06/08 21:56:34 by mhassani         ###   ########.fr       */
+>>>>>>> e316377081825232a8b738fc065a9ab888e0e55e
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +66,12 @@ int	ft_number_type(char *words)
 	{
 		printf("hhhhhhhh\n");
 		return (1);
+<<<<<<< HEAD
 	}
 	return (0);
+=======
+	return 0;
+>>>>>>> e316377081825232a8b738fc065a9ab888e0e55e
 }
 
 t_redirection	*ft_lstnew_red(char **words)
@@ -86,7 +94,11 @@ t_redirection	*ft_redirections(char **words)
 {
 	t_redirection *lst;
 	lst = NULL;
+<<<<<<< HEAD
 	while (*words)
+=======
+	while (words[i] && words[i + 1])
+>>>>>>> e316377081825232a8b738fc065a9ab888e0e55e
 	{
 		if (*words[0] == '>' || *words[0] == '<')
 		{

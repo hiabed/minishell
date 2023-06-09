@@ -6,7 +6,11 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 21:52:55 by mhassani          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2023/06/09 16:42:11 by mhassani         ###   ########.fr       */
+=======
+/*   Updated: 2023/06/08 22:06:15 by mhassani         ###   ########.fr       */
+>>>>>>> e316377081825232a8b738fc065a9ab888e0e55e
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +73,7 @@ int							ft_number_type(char *words);
 t_redirection				*ft_lstnew_red(char **words);
 t_redirection				*ft_redirections(char **words);
 int							count_strings(char *words);
-int							quotes_len(char *words);
+int							word_len(char *words);
 char						**strings_without_quotes(char *words);
 char						*join_empty_strings(char *words);
 
