@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 21:53:19 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/09 22:23:05 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/09 23:34:43 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,9 +173,14 @@ int	main(void)
 			{
 				j = 0;
 				printf("------------\n");
-				printf("cmd: %s\n", data2->cmd);
+				if(data2->cmd)
+				{
+					data2->cmd = join_empty_strings(data2->cmd);
+					printf("cmd: %s\n", data2->cmd);
+				}
 				while (data2->arg[j])
 				{
+					data2->arg[j] = join_empty_strings(data2->arg[j]);
 					printf("arg: %s\n", data2->arg[j]);
 					j++;
 				}

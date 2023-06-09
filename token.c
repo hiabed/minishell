@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 15:45:14 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/09 23:23:36 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/09 23:37:07 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,7 @@ char	**ft_arg(char **words)
 		else if (!cmd && words[i][0] != '>' && words[i][0] != '<')
 			cmd++;
 		else if(cmd && (words[i][0] != '>' && words[i][0] != '<'))
-		{
 			args[j++] = words[i];
-		}
 		i++;
 	}
 	args[j] = NULL;
@@ -75,9 +73,7 @@ char	*ft_cmd(char **words)
 	while (words[i])
 	{
 		if (words[i][0] != '>' && words[i][0] != '<')
-		{
 			return (words[i]);
-		}
 		if (words[i + 1] && (words[i][0] != '>' || words[i][0] != '<'))
 			i++;
 		i++;
@@ -110,7 +106,6 @@ t_token	*ft_lstnew_token(char **words)
 	head->cmd = ft_cmd(words);
 	head->arg = ft_arg(words);
 	head->red = ft_redirections(words);
-	// words[i] = join_empty_strings(words[i]);
 	head->next = NULL;
 	return (head);
 }

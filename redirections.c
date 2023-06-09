@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 22:14:50 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/09 23:15:10 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/09 23:37:15 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ t_redirection	*ft_lstnew_red(char **words)
 	red_node->next = NULL;
 	return (red_node);
 }
+
 void	ft_print(char **s)
 {
 	int	i;

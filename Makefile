@@ -13,15 +13,12 @@ CC = cc
 all : ${NAME}
 
 ${NAME} : ${OBJ}
-	make -C libft
 	${CC} ${OBJ} ${CFLAGS} ${LIBFT} -lreadline -o ${NAME}
 
 clean:
-	make clean -C libft
 	${RM} ${OBJ}
 
 fclean: clean
-	make fclean -C libft
 	${RM} ${NAME}
 
 re : fclean all
