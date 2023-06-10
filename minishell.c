@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 21:53:19 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/09 23:34:43 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/10 15:37:08 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ char	**strings_without_quotes(char *words)
 	return (no_quotes_str);
 }
 
-char	*join_empty_strings(char *words)
+char	*join_strings(char *words)
 {
 	int		i;
 	char	*joined_string;
@@ -175,12 +175,12 @@ int	main(void)
 				printf("------------\n");
 				if(data2->cmd)
 				{
-					data2->cmd = join_empty_strings(data2->cmd);
+					data2->cmd = join_strings(data2->cmd);
 					printf("cmd: %s\n", data2->cmd);
 				}
 				while (data2->arg[j])
 				{
-					data2->arg[j] = join_empty_strings(data2->arg[j]);
+					data2->arg[j] = join_strings(data2->arg[j]);
 					printf("arg: %s\n", data2->arg[j]);
 					j++;
 				}
