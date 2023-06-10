@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 21:53:19 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/10 23:01:24 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/10 23:51:41 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ int	count_strings(char *words)
 	i = 0;
 	while (words[i] && words[i + 1])
 	{
-		if (words[i + 1] && ((words[i] == '\"' && words[i + 1] == '\"') || (words[i] == '\'' && words[i + 1] == '\'')))
+		if (words[i + 1] && ((words[i] == '\"' && words[i + 1] == '\"')
+				|| (words[i] == '\'' && words[i + 1] == '\'')))
 		{
 			count++;
 			i = i + 2;
@@ -67,7 +68,7 @@ int	word_len(char *words)
 	return (count);
 }
 
-int word_len_single(char *words)
+int	word_len_single(char *words)
 {
 	int	i;
 	int	count;
@@ -82,7 +83,7 @@ int word_len_single(char *words)
 	return (count);
 }
 
-int len(char *words)
+int	len(char *words)
 {
 	int	i;
 	int	count;
@@ -103,20 +104,24 @@ char	**strings_without_quotes(char *words, char **envp)
 	int		j;
 	int		k;
 	char	**no_quotes_str;
+	char	*expand;
+	int		size;
 
+	expand = NULL;
 	no_quotes_str = malloc((count_strings(words) + 1) * sizeof(char *));
 	k = 0;
 	i = 0;
 	while (words[i] && words[i + 1])
 	{
-		if ((words[i] == '\"' && words[i + 1] == '\"') || (words[i] == '\'' && words[i + 1] == '\''))
+		if ((words[i] == '\"' && words[i + 1] == '\"') || (words[i] == '\''
+				&& words[i + 1] == '\''))
 		{
 			no_quotes_str[k] = malloc(1);
 			no_quotes_str[k][0] = '\0';
 			k++;
 			i = i + 2;
 		}
-		else if ((words[i] == '\"' && words[i + 1] != '\"'))      //=> i should check for expand;
+		else if ((words[i] == '\"' && words[i + 1] != '\"'))       //=> i should check for expand;
 		{
 			j = 0;
 			i++;
@@ -124,11 +129,22 @@ char	**strings_without_quotes(char *words, char **envp)
 			while (words[i] && words[i] != '\"')
 				no_quotes_str[k][j++] = words[i++];
 			no_quotes_str[k][j] = '\0';
-			ft_expand(no_quotes_str[k], envp);
+			if (ft_expand(no_quotes_str[k], envp))
+			{
+				j = 0;
+				int l = 0;
+				size = ft_strlen(ft_expand(no_quotes_str[k], envp));
+				char *expand = ft_expand(no_quotes_str[k], envp);
+				no_quotes_str[k] = malloc(size + 1);
+				while (expand[l])
+					no_quotes_str[k][j++] = expand[l++];
+				no_quotes_str[k][j] = '\0';
+				printf("no_quotes_str: %s\n", no_quotes_str[k]);
+			}
 			k++;
 			i++;
 		}
-		else if ((words[i] == '\'' && words[i + 1] != '\''))     //=> i should not check for expand;
+		else if ((words[i] == '\'' && words[i + 1] != '\''))    //=> i should not check for expand;
 		{
 			j = 0;
 			i++;
@@ -139,7 +155,7 @@ char	**strings_without_quotes(char *words, char **envp)
 			k++;
 			i++;
 		}
-		else if (words[i] != '\"' && words[i] != '\'')       //=> i should check for expand;
+		else if (words[i] != '\"' && words[i] != '\'')      //=> i should check for expand;
 		{
 			j = 0;
 			no_quotes_str[k] = malloc(len(&words[i]) + 1);
@@ -186,6 +202,7 @@ int	main(int ac, char **av, char **envp)
 	t_token	*ptr;
 	t_token	*data2;
 	int		j;
+
 	ac = 0;
 	av = NULL;
 	data = malloc(sizeof(t_data));
@@ -222,7 +239,7 @@ int	main(int ac, char **av, char **envp)
 			{
 				j = 0;
 				printf("------------\n");
-				if(data2->cmd)
+				if (data2->cmd)
 				{
 					data2->cmd = join_strings(data2->cmd, envp);
 					printf("cmd: %s\n", data2->cmd);

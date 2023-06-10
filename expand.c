@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 17:59:21 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/10 22:59:42 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/10 23:18:30 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ char	*ft_value(char *envp)
 	value = NULL;
 	while (envp[i] && envp[i] != '=')
 		i++;
+    i++;
 	j = i;
 	while (envp[j])
 		j++;
@@ -69,9 +70,7 @@ char	*ft_expand(char *no_quotes, char **envp)
 		while (envp[j])
 		{
 			if (!strcmp(ft_key(envp[j]), &no_quotes[i]))
-			{
-				printf("mhassani\n");
-			}
+                return ft_value(envp[j]);
 			j++;
 		}
 	}
