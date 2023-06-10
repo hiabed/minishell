@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 14:34:41 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/09 20:55:19 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/10 14:34:46 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,7 @@ void	replace_pipe_in_quotes(char *cmd)
 			if (cmd[i] && (cmd[i] == 34 || cmd[i] == 39))
 				i++;
 			if (!cmd[i])
-			{
-				printf("sdfdfhjkjk\n");
 				break ;
-			}
 		}
 		else
 			i++;
