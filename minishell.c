@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 21:53:19 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/10 15:56:26 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/10 16:55:43 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,13 @@
 int	count_strings(char *words)
 {
 	int	i;
-	int	j;
 	int	count;
 
-	j = ft_strlen(words);
 	count = 0;
 	i = 0;
 	while (words[i] && words[i + 1])
 	{
-		if (words[i + 1] && words[i] == '\"' && words[i + 1] == '\"')
+		if (words[i + 1] && ((words[i] == '\"' && words[i + 1] == '\"') || (words[i] == '\'' && words[i + 1] == '\'')))
 		{
 			count++;
 			i = i + 2;
@@ -36,9 +34,17 @@ int	count_strings(char *words)
 			count++;
 			i++;
 		}
-		else if (words[i] != '\"')
+		else if (words[i + 1] && (words[i] == '\'' && words[i + 1] != '\''))
 		{
-			while (words[i] && words[i] != '\"')
+			i++;
+			while (words[i] && words[i] != '\'')
+				i++;
+			count++;
+			i++;
+		}
+		else if (words[i] != '\"' && words[i] != '\'')
+		{
+			while (words[i] && (words[i] != '\"' && words[i] != '\''))
 				i++;
 			count++;
 		}
@@ -61,6 +67,36 @@ int	word_len(char *words)
 	return (count);
 }
 
+int world_len_single(char *words)
+{
+	int	i;
+	int	count;
+
+	count = 0;
+	i = 0;
+	while (words[i] && words[i] != '\'')
+	{
+		count++;
+		i++;
+	}
+	return (count);
+}
+
+int len(char *words)
+{
+	int	i;
+	int	count;
+
+	count = 0;
+	i = 0;
+	while (words[i] && words[i] != '\'' && words[i] != '\"')
+	{
+		count++;
+		i++;
+	}
+	return (count);
+}
+
 char	**strings_without_quotes(char *words)
 {
 	int		i;
@@ -73,7 +109,7 @@ char	**strings_without_quotes(char *words)
 	i = 0;
 	while (words[i] && words[i + 1])
 	{
-		if (words[i] == '\"' && words[i + 1] == '\"')
+		if ((words[i] == '\"' && words[i + 1] == '\"') || (words[i] == '\'' && words[i + 1] == '\''))
 		{
 			no_quotes_str[k] = malloc(1);
 			no_quotes_str[k][0] = '\0';
@@ -91,11 +127,22 @@ char	**strings_without_quotes(char *words)
 			k++;
 			i++;
 		}
-		else
+		else if ((words[i] == '\'' && words[i + 1] != '\''))
 		{
 			j = 0;
-			no_quotes_str[k] = malloc(word_len(&words[i]) + 1);
-			while (words[i] && words[i] != '\"')
+			i++;
+			no_quotes_str[k] = malloc(word_len_single(&words[i]) + 1);
+			while (words[i] && words[i] != '\'')
+				no_quotes_str[k][j++] = words[i++];
+			no_quotes_str[k][j] = '\0';
+			k++;
+			i++;
+		}
+		else if (words[i] != '\"' && words[i] != '\'')
+		{
+			j = 0;
+			no_quotes_str[k] = malloc(len(&words[i]) + 1);
+			while (words[i] && words[i] != '\"' && words[i] != '\'')
 				no_quotes_str[k][j++] = words[i++];
 			no_quotes_str[k][j] = '\0';
 			k++;
