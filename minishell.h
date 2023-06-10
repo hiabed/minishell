@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 19:52:02 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/10 15:47:29 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/10 17:47:13 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,5 @@ int							count_strings(char *words);
 int							word_len(char *words);
 char						**strings_without_quotes(char *words);
 char						*join_strings(char *words);
-int							count_strings_single(char *words);
-int							word_len_single(char *words);
-char						**strings_without_single_quotes(char *words);
-char						*join_strings_single(char *words);
 
 #endif

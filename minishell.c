@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 21:53:19 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/10 16:55:43 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/10 17:49:00 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	word_len(char *words)
 	return (count);
 }
 
-int world_len_single(char *words)
+int word_len_single(char *words)
 {
 	int	i;
 	int	count;
