@@ -1,6 +1,6 @@
 NAME = minishell
 
-CFILES = minishell.c syntax_errors.c split.c redirections.c token.c
+CFILES = minishell.c syntax_errors.c split.c redirections.c token.c expand.c
 
 LIBFT = ./libft/libft.a
 

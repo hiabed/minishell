@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 21:53:19 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/10 17:49:00 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/10 23:00:51 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ int len(char *words)
 	return (count);
 }
 
-char	**strings_without_quotes(char *words)
+char	**strings_without_quotes(char *words, char **envp)
 {
 	int		i;
 	int		j;
@@ -116,7 +116,7 @@ char	**strings_without_quotes(char *words)
 			k++;
 			i = i + 2;
 		}
-		else if ((words[i] == '\"' && words[i + 1] != '\"'))
+		else if ((words[i] == '\"' && words[i + 1] != '\"'))      //=> i should check for expand;
 		{
 			j = 0;
 			i++;
@@ -124,10 +124,11 @@ char	**strings_without_quotes(char *words)
 			while (words[i] && words[i] != '\"')
 				no_quotes_str[k][j++] = words[i++];
 			no_quotes_str[k][j] = '\0';
+			ft_expand(no_quotes_str[k], envp);
 			k++;
 			i++;
 		}
-		else if ((words[i] == '\'' && words[i + 1] != '\''))
+		else if ((words[i] == '\'' && words[i + 1] != '\''))     //=> i should not check for expand;
 		{
 			j = 0;
 			i++;
@@ -138,7 +139,7 @@ char	**strings_without_quotes(char *words)
 			k++;
 			i++;
 		}
-		else if (words[i] != '\"' && words[i] != '\'')
+		else if (words[i] != '\"' && words[i] != '\'')       //=> i should check for expand;
 		{
 			j = 0;
 			no_quotes_str[k] = malloc(len(&words[i]) + 1);
@@ -152,7 +153,7 @@ char	**strings_without_quotes(char *words)
 	return (no_quotes_str);
 }
 
-char	*join_strings(char *words)
+char	*join_strings(char *words, char **envp)
 {
 	int		i;
 	char	*joined_string;
@@ -161,7 +162,7 @@ char	*join_strings(char *words)
 
 	i = 0;
 	joined_string = NULL;
-	to_be_joined = strings_without_quotes(words);
+	to_be_joined = strings_without_quotes(words, envp);
 	if (to_be_joined[i])
 	{
 		joined_string = to_be_joined[i];
@@ -175,7 +176,7 @@ char	*join_strings(char *words)
 	return (joined_string);
 }
 
-int	main(void)
+int	main(int ac, char **av, char **envp)
 {
 	char	*cmd;
 	char	*command;
@@ -185,7 +186,8 @@ int	main(void)
 	t_token	*ptr;
 	t_token	*data2;
 	int		j;
-
+	ac = 0;
+	av = NULL;
 	data = malloc(sizeof(t_data));
 	if (!data)
 		return (0);
@@ -212,7 +214,7 @@ int	main(void)
 			{
 				replace_space_in_quotes(tokens[j]);
 				words = split_with_space(tokens[j]);
-				ft_lstadd_token(&ptr, ft_lstnew_token(words));
+				ft_lstadd_token(&ptr, ft_lstnew_token(words, envp));
 				j++;
 			}
 			data2 = ptr;
@@ -222,12 +224,12 @@ int	main(void)
 				printf("------------\n");
 				if(data2->cmd)
 				{
-					data2->cmd = join_strings(data2->cmd);
+					data2->cmd = join_strings(data2->cmd, envp);
 					printf("cmd: %s\n", data2->cmd);
 				}
 				while (data2->arg[j])
 				{
-					data2->arg[j] = join_strings(data2->arg[j]);
+					data2->arg[j] = join_strings(data2->arg[j], envp);
 					printf("arg: %s\n", data2->arg[j]);
 					j++;
 				}

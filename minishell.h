@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 19:52:02 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/10 17:47:13 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/10 22:24:52 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,18 +59,20 @@ void						bring_back(char *cmd);
 int							count_args(char **words);
 char						**ft_arg(char **words);
 char						*ft_cmd(char **words);
-t_token						*ft_lstnew_token(char **words);
+t_token						*ft_lstnew_token(char **words, char **envp);
 void						ft_lstadd_token(t_token **lst, t_token *new);
 void	ft_lstadd_red(t_redirection **lst,
 					t_redirection *new);
-char						*ft_file_name(char *words, int type);
-char						*ft_limiter_name(char *words, int type);
+char						*ft_file_name(char *words, char **envp, int type);
+char						*ft_limiter_name(char *words, char **envp,
+								int type);
 int							ft_number_type(char *words);
-t_redirection				*ft_lstnew_red(char **words);
-t_redirection				*ft_redirections(char **words);
+t_redirection				*ft_lstnew_red(char **words, char **envp);
+t_redirection				*ft_redirections(char **words, char **envp);
 int							count_strings(char *words);
 int							word_len(char *words);
-char						**strings_without_quotes(char *words);
-char						*join_strings(char *words);
+char						**strings_without_quotes(char *words, char **envp);
+char						*join_strings(char *words, char **envp);
+char						*ft_expand(char *no_quotes, char **envp);
 
 #endif
