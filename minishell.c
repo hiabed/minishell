@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 21:53:19 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/10 23:51:41 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/12 23:26:34 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ char	**strings_without_quotes(char *words, char **envp)
 			k++;
 			i = i + 2;
 		}
-		else if ((words[i] == '\"' && words[i + 1] != '\"'))       //=> i should check for expand;
+		else if ((words[i] == '\"' && words[i + 1] != '\"'))       //=> i should check for expand; 
 		{
 			j = 0;
 			i++;
@@ -129,22 +129,21 @@ char	**strings_without_quotes(char *words, char **envp)
 			while (words[i] && words[i] != '\"')
 				no_quotes_str[k][j++] = words[i++];
 			no_quotes_str[k][j] = '\0';
-			if (ft_expand(no_quotes_str[k], envp))
+			if (ft_expand_value(no_quotes_str[k], envp))
 			{
 				j = 0;
 				int l = 0;
-				size = ft_strlen(ft_expand(no_quotes_str[k], envp));
-				char *expand = ft_expand(no_quotes_str[k], envp);
+				size = (ft_strlen(ft_expand_value(no_quotes_str[k], envp)) + 1);
+				char *expand = ft_expand_value(no_quotes_str[k], envp);
 				no_quotes_str[k] = malloc(size + 1);
 				while (expand[l])
 					no_quotes_str[k][j++] = expand[l++];
 				no_quotes_str[k][j] = '\0';
-				printf("no_quotes_str: %s\n", no_quotes_str[k]);
 			}
 			k++;
 			i++;
 		}
-		else if ((words[i] == '\'' && words[i + 1] != '\''))    //=> i should not check for expand;
+		else if ((words[i] == '\'' && words[i + 1] != '\''))
 		{
 			j = 0;
 			i++;
@@ -162,6 +161,17 @@ char	**strings_without_quotes(char *words, char **envp)
 			while (words[i] && words[i] != '\"' && words[i] != '\'')
 				no_quotes_str[k][j++] = words[i++];
 			no_quotes_str[k][j] = '\0';
+			if (ft_expand_value(no_quotes_str[k], envp))
+			{
+				j = 0;
+				int l = 0;
+				size = (ft_strlen(ft_expand_value(no_quotes_str[k], envp)) + 1);
+				char *expand = ft_expand_value(no_quotes_str[k], envp);
+				no_quotes_str[k] = malloc(size + 1);
+				while (expand[l])
+					no_quotes_str[k][j++] = expand[l++];
+				no_quotes_str[k][j] = '\0';
+			}
 			k++;
 		}
 	}
@@ -177,7 +187,7 @@ char	*join_strings(char *words, char **envp)
 	char	*temp;
 
 	i = 0;
-	joined_string = NULL;
+	joined_string = words;
 	to_be_joined = strings_without_quotes(words, envp);
 	if (to_be_joined[i])
 	{
@@ -189,6 +199,7 @@ char	*join_strings(char *words, char **envp)
 			i++;
 		}
 	}
+	printf("joined string: %s\n", joined_string);
 	return (joined_string);
 }
 
@@ -222,7 +233,7 @@ int	main(int ac, char **av, char **envp)
 		syntax_errors(cmd, data);
 		if (!data->error)
 		{
-			command = ft_strdup(cmd); //add space before and after (< / >);
+			command = space_arround_red(cmd); //add space before and after (< / >);
 			replace_pipe_in_quotes(command);
 			tokens = split_with_pipe(command);
 			j = 0;
@@ -246,6 +257,7 @@ int	main(int ac, char **av, char **envp)
 				}
 				while (data2->arg[j])
 				{
+					printf("j: %d\n", j);
 					data2->arg[j] = join_strings(data2->arg[j], envp);
 					printf("arg: %s\n", data2->arg[j]);
 					j++;

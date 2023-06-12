@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 19:52:02 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/10 22:24:52 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/11 22:45:25 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,13 @@ int							count_strings(char *words);
 int							word_len(char *words);
 char						**strings_without_quotes(char *words, char **envp);
 char						*join_strings(char *words, char **envp);
-char						*ft_expand(char *no_quotes, char **envp);
+char						*space_arround_red(char *s1);
+void						ft_fill_ptr(char *s1, char *ptr, int i, int j);
+int							cmd_lenght(char *s);
+char						*ft_key(char *envp);
+char						*ft_value(char *envp);
+char						*ft_expand_value(char *no_quotes, char **envp);
+char						*ft_expand_key(char *no_quotes, char **envp);
+int							before_dollar_len(char *no_quotes);
 
 #endif

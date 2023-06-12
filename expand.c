@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 17:59:21 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/10 23:18:30 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/12 23:27:53 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ char	*ft_value(char *envp)
 	value = NULL;
 	while (envp[i] && envp[i] != '=')
 		i++;
-    i++;
+	i++;
 	j = i;
 	while (envp[j])
 		j++;
@@ -57,7 +57,58 @@ char	*ft_value(char *envp)
 	return (value);
 }
 
-char	*ft_expand(char *no_quotes, char **envp)
+int	before_dollar_len(char *no_quotes)
+{
+	int	i;
+
+	i = 0;
+	while (no_quotes[i] && no_quotes[i] != '$')
+		i++;
+	return (i);
+}
+
+char	*ft_expand_value(char *no_quotes, char **envp)
+{
+	int		i;
+	int		j;
+	int		k;
+	char	*chars;
+	char	*value;
+	char	*result;
+
+	k = 0;
+	i = 0;
+	j = 0;
+	value = NULL;
+	chars = malloc(before_dollar_len(no_quotes) + 1);
+	if (no_quotes[i] == '$' && (no_quotes[i + 1] == '+' || no_quotes[i
+			+ 1] == '.'))
+		return (NULL);
+	while (no_quotes[i]) //abcd$USER
+	{
+		if (no_quotes[i] == '$')
+		{
+			i++;
+			while (envp[j])
+			{
+				if (!strcmp(ft_key(envp[j]), &no_quotes[i]))
+					value = ft_value(envp[j]);
+				j++;
+			}
+			break ;
+		}
+		else
+			chars[k++] = no_quotes[i];
+		i++;
+	}
+	chars[k] = '\0';
+	if (!value)
+		return (chars);
+	result = ft_strjoin(chars, value);
+	return (result);
+}
+
+char	*ft_expand_key(char *no_quotes, char **envp)
 {
 	int i = 0;
 	int j = 0;
@@ -70,7 +121,7 @@ char	*ft_expand(char *no_quotes, char **envp)
 		while (envp[j])
 		{
 			if (!strcmp(ft_key(envp[j]), &no_quotes[i]))
-                return ft_value(envp[j]);
+				return (ft_key(envp[j]));
 			j++;
 		}
 	}
