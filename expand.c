@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 17:59:21 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/12 23:27:53 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/13 18:05:25 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,31 +67,95 @@ int	before_dollar_len(char *no_quotes)
 	return (i);
 }
 
+// int	ft_var_before_quote(char *no_quotes)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	while (no_quotes[i] && no_quotes[i] != '\'')
+// 		i++;
+// 	if (no_quotes[i] == '\'')
+// 		return (1);
+// 	else
+// 		return (0);
+// 	return (0);
+// }
+
+char	*ft_extract_key(char *no_quotes)
+{
+	int		i;
+	int		j;
+	char	*var;
+
+	i = 0;
+	j = 0;
+	while (no_quotes[i] && no_quotes[i] != '\'' && no_quotes[i] != '+'
+		&& no_quotes[i] != '.')
+		i++;
+	var = malloc(i + 1);
+	i = 0;
+	while (no_quotes[i] && no_quotes[i] != '\'' && no_quotes[i] != '+'
+		&& no_quotes[i] != '.')
+		var[i++] = no_quotes[j++];
+	var[i] = '\0';
+	return (var);
+}
+
+char	*after_expand(char *no_quotes)
+{
+	int		i;
+	int		j;
+	char	*var;
+	int		len;
+
+	len = 0;
+	i = 0;
+	j = 0;
+	while (no_quotes[i] && no_quotes[i] != '\'' && no_quotes[i] != '+'
+		&& no_quotes[i] != '.') //check for single quote for now, and will add other symbols if needed;
+		i++;
+	len = ft_strlen(&no_quotes[i]);
+	var = malloc(len + 1);
+	while (no_quotes[i])
+		var[j++] = no_quotes[i++];
+	var[j] = '\0';
+	return (var);
+}
+
 char	*ft_expand_value(char *no_quotes, char **envp)
 {
 	int		i;
 	int		j;
 	int		k;
+	int		l;
 	char	*chars;
 	char	*value;
 	char	*result;
 
+	l = 0;
 	k = 0;
 	i = 0;
 	j = 0;
 	value = NULL;
 	chars = malloc(before_dollar_len(no_quotes) + 1);
-	if (no_quotes[i] == '$' && (no_quotes[i + 1] == '+' || no_quotes[i
-			+ 1] == '.'))
+	if (no_quotes[i] == '$' && !no_quotes[i + 1])
 		return (NULL);
-	while (no_quotes[i]) //abcd$USER
+	else if (no_quotes[i] == '$' && no_quotes[i + 1] == '?')
+	{
+		//should handle for exit status;
+	}
+	else if (no_quotes[i] == '$' && (no_quotes[i + 1] == '+' || no_quotes[i
+				+ 1] == '.' || no_quotes[i + 1] == '\''))
+		return (NULL);
+	while (no_quotes[i])
 	{
 		if (no_quotes[i] == '$')
 		{
 			i++;
+			l++;
 			while (envp[j])
 			{
-				if (!strcmp(ft_key(envp[j]), &no_quotes[i]))
+				if (!strcmp(ft_key(envp[j]), ft_extract_key(&no_quotes[i])))
 					value = ft_value(envp[j]);
 				j++;
 			}
@@ -105,6 +169,8 @@ char	*ft_expand_value(char *no_quotes, char **envp)
 	if (!value)
 		return (chars);
 	result = ft_strjoin(chars, value);
+	if (after_expand(&no_quotes[i]))
+		result = ft_strjoin(result, after_expand(&no_quotes[i]));
 	return (result);
 }
 

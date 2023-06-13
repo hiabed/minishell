@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 21:53:19 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/12 23:26:34 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/13 16:33:38 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,7 +199,6 @@ char	*join_strings(char *words, char **envp)
 			i++;
 		}
 	}
-	printf("joined string: %s\n", joined_string);
 	return (joined_string);
 }
 
