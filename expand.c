@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 17:59:21 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/13 18:05:25 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/13 19:14:57 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,8 @@ char	*after_expand(char *no_quotes)
 	i = 0;
 	j = 0;
 	while (no_quotes[i] && no_quotes[i] != '\'' && no_quotes[i] != '+'
-		&& no_quotes[i] != '.') //check for single quote for now, and will add other symbols if needed;
+		&& no_quotes[i] != '.') //check for single quote for now,
+		and will add other symbols if needed;
 		i++;
 	len = ft_strlen(&no_quotes[i]);
 	var = malloc(len + 1);
@@ -124,18 +125,16 @@ char	*after_expand(char *no_quotes)
 
 char	*ft_expand_value(char *no_quotes, char **envp)
 {
-	int		i;
-	int		j;
-	int		k;
-	int		l;
 	char	*chars;
 	char	*value;
 	char	*result;
+	int		i;
+	int		j;
+	int		k;
 
-	l = 0;
-	k = 0;
 	i = 0;
 	j = 0;
+	k = 0;
 	value = NULL;
 	chars = malloc(before_dollar_len(no_quotes) + 1);
 	if (no_quotes[i] == '$' && !no_quotes[i + 1])
@@ -152,7 +151,6 @@ char	*ft_expand_value(char *no_quotes, char **envp)
 		if (no_quotes[i] == '$')
 		{
 			i++;
-			l++;
 			while (envp[j])
 			{
 				if (!strcmp(ft_key(envp[j]), ft_extract_key(&no_quotes[i])))
@@ -172,6 +170,44 @@ char	*ft_expand_value(char *no_quotes, char **envp)
 	if (after_expand(&no_quotes[i]))
 		result = ft_strjoin(result, after_expand(&no_quotes[i]));
 	return (result);
+}
+
+char	*ft_check_for_expand(char *no_quotes, char **envp)
+	//check if i the variable able to be expanded;
+{
+	char *chars;
+	int value;
+	char *result;
+	int i;
+	int j;
+	int k;
+
+	i = 0;
+	j = 0;
+	k = 0;
+	value = NULL;
+	chars = malloc(before_dollar_len(no_quotes) + 1);
+	while (no_quotes[i])
+	{
+		if (no_quotes[i] == '$')
+		{
+			i++;
+			while (envp[j])
+			{
+				if (!strcmp(ft_key(envp[j]), ft_extract_key(&no_quotes[i])))
+					value = 1;
+				j++;
+			}
+			break ;
+		}
+		else
+			chars[k++] = no_quotes[i];
+		i++;
+	}
+	chars[k] = '\0';
+	if (!value)
+		return (1);
+	return (2);
 }
 
 char	*ft_expand_key(char *no_quotes, char **envp)
