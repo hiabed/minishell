@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 21:53:19 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/14 17:20:57 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/15 18:29:23 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,6 @@ char	**strings_without_quotes(char *words, char **envp)
 			while (words[i] && words[i] != '\"')
 				no_quotes_str[k][j++] = words[i++];
 			no_quotes_str[k][j] = '\0';
-			//aaa'$USER'aaa$USER;
 			if (ft_expand_value(no_quotes_str[k], envp))
 			{
 				j = 0;

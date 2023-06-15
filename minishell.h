@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 19:52:02 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/15 17:00:07 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/15 18:30:55 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,10 +79,9 @@ int							cmd_lenght(char *s);
 char						*ft_key(char *envp);
 char						*ft_value(char *envp, char *no_quotes);
 char						*ft_expand_value(char *no_quotes, char **envp);
-char						*ft_expand_key(char *no_quotes, char **envp);
 int							before_dollar_len(char *no_quotes);
 int							ft_strcmp(char *s1, char *s2);
-char						*print_not_expanded(char *no_quotes);
+char						*print_not_expanded_dollars(char *no_quotes);
 char						*after_expand(char *no_quotes);
 char						*print_expanded_dollars(char *no_quotes);
 int							num_dollars(char *no_quotes);
