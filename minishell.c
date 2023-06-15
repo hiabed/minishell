@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 21:53:19 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/13 20:08:41 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/14 17:20:57 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,6 @@ int	len(char *words)
 	}
 	return (count);
 }
-
-char *
 
 char	**strings_without_quotes(char *words, char **envp)
 {
