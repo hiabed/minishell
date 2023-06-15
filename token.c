@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 15:45:14 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/12 18:11:20 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/15 20:33:15 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,7 @@ char	*ft_cmd(char **words)
 
 	i = 0;
 	if (words[i] && words[i][0] != '>' && words[i][0] != '<')
-	{
 		return (words[i]);
-	}
 	while (words[i])
 	{
 		if (words[i][0] != '>' && words[i][0] != '<')

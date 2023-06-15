@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 21:53:19 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/15 18:29:23 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/15 21:19:51 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,6 +202,37 @@ char	*join_strings(char *words, char **envp)
 	return (joined_string);
 }
 
+void	print_info(t_token *ptr, char **envp)
+{
+	int j;
+	t_token *data;
+	data = ptr;
+	while (data)
+	{
+		j = 0;
+		printf("------------\n");
+		if (data->cmd)
+		{
+			data->cmd = join_strings(data->cmd, envp);
+			printf("cmd: %s\n", data->cmd);
+		}
+		while (data->arg[j])
+		{
+			data->arg[j] = join_strings(data->arg[j], envp);
+			printf("arg: %s\n", data->arg[j]);
+			j++;
+		}
+		while (data->red)
+		{
+			printf("type: %d\n", data->red->type);
+			printf("limiter: %s\n", data->red->limiter);
+			printf("file: %s\n", data->red->file);
+			data->red = data->red->next;
+		}
+		data = data->next;
+	}
+}
+
 int	main(int ac, char **av, char **envp)
 {
 	char	*cmd;
@@ -210,8 +241,7 @@ int	main(int ac, char **av, char **envp)
 	char	**words;
 	t_data	*data;
 	t_token	*ptr;
-	t_token	*data2;
-	int		j;
+	int		i;
 
 	ac = 0;
 	av = NULL;
@@ -235,42 +265,17 @@ int	main(int ac, char **av, char **envp)
 			command = space_arround_red(cmd); //add space before and after (< / >);
 			replace_pipe_in_quotes(command);
 			tokens = split_with_pipe(command);
-			j = 0;
+			i = 0;
 			ptr = NULL;
-			while (tokens[j])
+			while (tokens[i])
 			{
-				replace_space_in_quotes(tokens[j]);
-				words = split_with_space(tokens[j]);
+				replace_space_in_quotes(tokens[i]);
+				words = split_with_space(tokens[i]);
 				ft_lstadd_token(&ptr, ft_lstnew_token(words, envp));
-				j++;
-			}
-			data2 = ptr;
-			while (data2)
-			{
-				j = 0;
-				printf("------------\n");
-				if (data2->cmd)
-				{
-					data2->cmd = join_strings(data2->cmd, envp);
-					printf("cmd: %s\n", data2->cmd);
-				}
-				while (data2->arg[j])
-				{
-					printf("j: %d\n", j);
-					data2->arg[j] = join_strings(data2->arg[j], envp);
-					printf("arg: %s\n", data2->arg[j]);
-					j++;
-				}
-				while (data2->red)
-				{
-					printf("type: %d\n", data2->red->type);
-					printf("limiter: %s\n", data2->red->limiter);
-					printf("file: %s\n", data2->red->file);
-					data2->red = data2->red->next;
-				}
-				data2 = data2->next;
+				i++;
 			}
 		}
+		print_info(ptr, envp);
 	}
 	free(cmd);
 	free(command);
