@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 14:15:26 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/11 16:55:41 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/16 18:30:35 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,17 @@ void	ft_fill_ptr(char *s1, char *ptr, int i, int j)
 {
 	while (s1[i])
 	{
-		if(s1[i] == 34 || s1[i] == 39)
+		if(s1[i] == '\"')
 		{
 			ptr[j++] = s1[i++];
-			while(s1[i] && (s1[i] != 34 && s1[i] != 39))
+			while(s1[i] && s1[i] != '\"')
+				ptr[j++] = s1[i++];
+			ptr[j++] = s1[i];
+		}
+		else if(s1[i] == '\'')
+		{
+			ptr[j++] = s1[i++];
+			while(s1[i] && s1[i] != '\'')
 				ptr[j++] = s1[i++];
 			ptr[j++] = s1[i];
 		}

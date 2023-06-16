@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 17:59:21 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/16 15:36:18 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/16 16:56:51 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,7 +204,6 @@ char	*ft_expand_value(char *no_quotes, char **envp)
 				{
 					if (!ft_strcmp(env_key(envp[j]), ft_extract_key(&no_quotes[i])))
 					{
-						printf("here\n");
 						value = env_value(envp[j], &no_quotes[i]);
 						value = ft_strjoin(dollars, value);
 						if (!temp)

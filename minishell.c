@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 21:53:19 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/15 22:55:54 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/16 17:59:37 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,29 +19,31 @@ int	count_strings(char *words)
 
 	count = 0;
 	i = 0;
-	while (words[i] && words[i + 1])
+	while (words[i])
 	{
 		if (words[i + 1] && ((words[i] == '\"' && words[i + 1] == '\"')
 				|| (words[i] == '\'' && words[i + 1] == '\'')))
 		{
-			count++;
 			i = i + 2;
+			count++;
 		}
-		else if (words[i + 1] && (words[i] == '\"' && words[i + 1] != '\"'))
+		else if (words[i] == '\"' && words[i + 1] != '\"')
 		{
 			i++;
 			while (words[i] && words[i] != '\"')
 				i++;
+			if(words[i])
+				i++;
 			count++;
-			i++;
 		}
-		else if (words[i + 1] && (words[i] == '\'' && words[i + 1] != '\''))
+		else if (words[i] == '\'' && words[i + 1] != '\'')
 		{
 			i++;
 			while (words[i] && words[i] != '\'')
 				i++;
+			if(words[i])
+				i++;
 			count++;
-			i++;
 		}
 		else if (words[i] != '\"' && words[i] != '\'')
 		{
@@ -111,7 +113,7 @@ char	**strings_without_quotes(char *words, char **envp)
 	no_quotes_str = malloc((count_strings(words) + 1) * sizeof(char *));
 	k = 0;
 	i = 0;
-	while (words[i] && words[i + 1])
+	while (words[i])
 	{
 		if ((words[i] == '\"' && words[i + 1] == '\"') || (words[i] == '\''
 				&& words[i + 1] == '\''))
@@ -141,7 +143,8 @@ char	**strings_without_quotes(char *words, char **envp)
 				no_quotes_str[k][j] = '\0';
 			}
 			k++;
-			i++;
+			if(words[i])
+				i++;
 		}
 		else if ((words[i] == '\'' && words[i + 1] != '\''))
 		{
@@ -152,7 +155,8 @@ char	**strings_without_quotes(char *words, char **envp)
 				no_quotes_str[k][j++] = words[i++];
 			no_quotes_str[k][j] = '\0';
 			k++;
-			i++;
+			if(words[i])
+				i++;
 		}
 		else if (words[i] != '\"' && words[i] != '\'')      //=> i should check for expand;
 		{

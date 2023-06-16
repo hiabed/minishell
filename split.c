@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 14:34:41 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/10 14:34:46 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/16 18:28:26 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,30 @@ void	replace_pipe_in_quotes(char *cmd)
 	i = 0;
 	while (cmd[i])
 	{
-		if (cmd[i] == 34 || cmd[i] == 39)
+		if (cmd[i] == '\"')
 		{
 			i++;
-			while (cmd[i] && cmd[i] != 34 && cmd[i] != 39)
+			while (cmd[i] && cmd[i] != '\"')
 			{
 				if (cmd[i] == '|')
 					cmd[i] = -1;
 				i++;
 			}
-			if (cmd[i] && (cmd[i] == 34 || cmd[i] == 39))
+			if (cmd[i] && cmd[i] == '\"')
+				i++;
+			if (!cmd[i])
+				break ;
+		}
+		if (cmd[i] == '\'')
+		{
+			i++;
+			while (cmd[i] && cmd[i] != '\'')
+			{
+				if (cmd[i] == '|')
+					cmd[i] = -1;
+				i++;
+			}
+			if (cmd[i] && cmd[i] == '\'')
 				i++;
 			if (!cmd[i])
 				break ;
@@ -68,16 +82,30 @@ void	replace_space_in_quotes(char *token)
 	i = 0;
 	while (token[i])
 	{
-		if (token[i] == 34 || token[i] == 39)
+		if (token[i] == '\"')
 		{
 			i++;
-			while (token[i] && token[i] != 34 && token[i] != 39)
+			while (token[i] && token[i] != '\"')
 			{
 				if (token[i] == ' ')
 					token[i] = -2;
 				i++;
 			}
-			if (token[i] && (token[i] == 34 || token[i] == 39))
+			if (token[i] && token[i] == '\"')
+				i++;
+			if (!token[i])
+				break ;
+		}
+		if (token[i] == '\'')
+		{
+			i++;
+			while (token[i] && token[i] != '\'')
+			{
+				if (token[i] == ' ')
+					token[i] = -2;
+				i++;
+			}
+			if (token[i] && token[i] == '\'')
 				i++;
 			if (!token[i])
 				break ;
@@ -118,10 +146,10 @@ void	replace_red_in_quotes(char *cmd)
 	i = 0;
 	while (cmd[i])
 	{
-		if (cmd[i] == 34 || cmd[i] == 39)
+		if (cmd[i] == '\"')
 		{
 			i++;
-			while (cmd[i] && cmd[i] != 34 && cmd[i] != 39)
+			while (cmd[i] && cmd[i] != '\"')
 			{
 				if (cmd[i] == '>')
 					cmd[i] = -1;
@@ -139,7 +167,33 @@ void	replace_red_in_quotes(char *cmd)
 				}
 				i++;
 			}
-			if (cmd[i] && (cmd[i] == 34 || cmd[i] == 39))
+			if (cmd[i] && cmd[i] == '\"')
+				i++;
+			if (!cmd[i])
+				break ;
+		}
+		else if (cmd[i] == '\'')
+		{
+			i++;
+			while (cmd[i] && cmd[i] != '\'')
+			{
+				if (cmd[i] == '>')
+					cmd[i] = -1;
+				if(cmd[i] == '<')
+					cmd[i] = -2;
+				if (cmd[i] == '>' && cmd[i + 1] == '>')
+				{
+					cmd[i++] = -3;
+					cmd[i] = -3;
+				}
+				if (cmd[i] == '<' && cmd[i + 1] == '<')
+				{
+					cmd[i++] = -4;
+					cmd[i] = -4;
+				}
+				i++;
+			}
+			if (cmd[i] && cmd[i] == '\'')
 				i++;
 			if (!cmd[i])
 				break ;
