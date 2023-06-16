@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 21:53:19 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/15 21:19:51 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/15 22:55:54 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,6 +171,7 @@ char	**strings_without_quotes(char *words, char **envp)
 				while (expand[l])
 					no_quotes_str[k][j++] = expand[l++];
 				no_quotes_str[k][j] = '\0';
+				j = 1;
 			}
 			k++;
 		}
@@ -204,23 +205,23 @@ char	*join_strings(char *words, char **envp)
 
 void	print_info(t_token *ptr, char **envp)
 {
-	int j;
+	int i;
 	t_token *data;
 	data = ptr;
 	while (data)
 	{
-		j = 0;
+		i = 0;
 		printf("------------\n");
 		if (data->cmd)
 		{
 			data->cmd = join_strings(data->cmd, envp);
 			printf("cmd: %s\n", data->cmd);
 		}
-		while (data->arg[j])
+		while (data->arg[i])
 		{
-			data->arg[j] = join_strings(data->arg[j], envp);
-			printf("arg: %s\n", data->arg[j]);
-			j++;
+			data->arg[i] = join_strings(data->arg[i], envp);
+			printf("arg: %s\n", data->arg[i]);
+			i++;
 		}
 		while (data->red)
 		{
@@ -274,8 +275,8 @@ int	main(int ac, char **av, char **envp)
 				ft_lstadd_token(&ptr, ft_lstnew_token(words, envp));
 				i++;
 			}
+			print_info(ptr, envp);
 		}
-		print_info(ptr, envp);
 	}
 	free(cmd);
 	free(command);

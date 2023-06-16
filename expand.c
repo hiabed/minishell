@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 17:59:21 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/15 18:31:29 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/16 15:36:18 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,12 @@
 
 char	*print_not_expanded_dollars(char *no_quotes)
 {
-	int i = 0;
-	int j = 0;
-	char *print_var;
+	int		i;
+	int		j;
+	char	*print_var;
+
+	i = 0;
+	j = 0;
 	while (no_quotes[i] && no_quotes[i] == '$')
 		i++;
 	while (no_quotes[i] && no_quotes[i] != '$')
@@ -33,9 +36,12 @@ char	*print_not_expanded_dollars(char *no_quotes)
 
 char	*print_expanded_dollars(char *no_quotes)
 {
-	int i = 0;
-	int j = 0;
-	char *print_dollars;
+	int		i;
+	int		j;
+	char	*print_dollars;
+
+	i = 0;
+	j = 0;
 	while (no_quotes[i] && no_quotes[i] == '$')
 		i++;
 	i--;
@@ -47,7 +53,7 @@ char	*print_expanded_dollars(char *no_quotes)
 	return (print_dollars);
 }
 
-char	*ft_key(char *envp)
+char	*env_key(char *envp)
 {
 	int		i;
 	int		j;
@@ -66,7 +72,7 @@ char	*ft_key(char *envp)
 	return (key);
 }
 
-char	*ft_value(char *envp, char *no_quotes)
+char	*env_value(char *envp, char *no_quotes)
 {
 	int		i;
 	int		j;
@@ -125,10 +131,10 @@ char	*ft_extract_key(char *no_quotes)
 
 char	*after_expand(char *no_quotes)
 {
-	int i;
-	int j;
-	char *var;
-	int len;
+	int		i;
+	int		j;
+	char	*var;
+	int		len;
 
 	len = 0;
 	i = 0;
@@ -156,19 +162,19 @@ int	num_dollars(char *no_quotes)
 		count++;
 		i++;
 	}
-	return count;
+	return (count);
 }
 
 char	*ft_expand_value(char *no_quotes, char **envp)
 {
-	char	*chars;
-	char	*value;
-	char	*result;
-	char	*temp;
-	char	*dollars;
-	int		i;
-	int		j;
-	int		k;
+	char *chars;
+	char *value;
+	char *result;
+	char *temp;
+	char *dollars;
+	int i;
+	int j;
+	int k;
 
 	dollars = NULL;
 	temp = NULL;
@@ -178,13 +184,12 @@ char	*ft_expand_value(char *no_quotes, char **envp)
 	chars = malloc(before_dollar_len(no_quotes) + 1);
 	if (no_quotes[i] == '$' && !no_quotes[i + 1])
 		return (NULL);
-	else if (no_quotes[i] == '$' && (no_quotes[i + 1] == '+' || no_quotes[i
-				+ 1] == '.' || no_quotes[i + 1] == '\''))
-		return (NULL);
+	// else if (no_quotes[i] == '$' && (no_quotes[i + 1] == '+' || no_quotes[i
+	// 			+ 1] == '.' || no_quotes[i + 1] == '\''))
+	// 	return (NULL);
 	while (no_quotes[i] && no_quotes[i] != '$')
 		chars[k++] = no_quotes[i++];
 	chars[k] = '\0';
-	k = 0;
 	while (no_quotes[i])
 	{
 		if (no_quotes[i] == '$')
@@ -197,9 +202,10 @@ char	*ft_expand_value(char *no_quotes, char **envp)
 				j = 0;
 				while (envp[j])
 				{
-					if (!ft_strcmp(ft_key(envp[j]), ft_extract_key(&no_quotes[i])))
+					if (!ft_strcmp(env_key(envp[j]), ft_extract_key(&no_quotes[i])))
 					{
-						value = ft_value(envp[j], &no_quotes[i]);
+						printf("here\n");
+						value = env_value(envp[j], &no_quotes[i]);
 						value = ft_strjoin(dollars, value);
 						if (!temp)
 							result = ft_strjoin(chars, value);
@@ -212,7 +218,7 @@ char	*ft_expand_value(char *no_quotes, char **envp)
 			}
 			else
 			{
-				dollars =  ft_strjoin(print_not_expanded_dollars(&no_quotes[i]), ft_extract_key(&no_quotes[i]));
+				dollars = ft_strjoin(print_not_expanded_dollars(&no_quotes[i]), ft_extract_key(&no_quotes[i]));
 				if (!temp)
 					result = ft_strjoin(chars, dollars);
 				else
@@ -223,6 +229,12 @@ char	*ft_expand_value(char *no_quotes, char **envp)
 			}
 		}
 		i++;
+	}
+	if(!temp)
+	{
+		temp = malloc(1);
+		temp[0] = '\0';
+		temp = ft_strjoin(chars, dollars);
 	}
 	return (temp);
 }

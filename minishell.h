@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 19:52:02 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/15 18:30:55 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/15 22:09:58 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,8 @@ char						*join_strings(char *words, char **envp);
 char						*space_arround_red(char *s1);
 void						ft_fill_ptr(char *s1, char *ptr, int i, int j);
 int							cmd_lenght(char *s);
-char						*ft_key(char *envp);
-char						*ft_value(char *envp, char *no_quotes);
+char						*env_key(char *envp);
+char						*env_value(char *envp, char *no_quotes);
 char						*ft_expand_value(char *no_quotes, char **envp);
 int							before_dollar_len(char *no_quotes);
 int							ft_strcmp(char *s1, char *s2);
