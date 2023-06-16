@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 22:14:50 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/10 20:50:45 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/16 22:21:10 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,20 +34,20 @@ char	*ft_file_name(char *words, char **envp, int type)
 	i = 0;
 	if (words[i] && (type == 1 || type == 2 || type == 3))
 	{
-		words = join_strings(words, envp);
+		words = join_strings_to_be_one(words, envp);
 		return (words);
 	}
 	return (NULL);
 }
 
-char	*ft_limiter_name(char *words, char **envp, int type)
+char	*ft_limiter_name(char *words, int type)
 {
 	int	i;
 
 	i = 0;
 	if (words[i] && type == 4)
 	{
-		words = join_strings(words, envp);
+		words = join_heredoc_to_be_one(words);
 		return (words);
 	}
 	return (NULL);
@@ -75,7 +75,7 @@ t_redirection	*ft_lstnew_red(char **words, char **envp)
 		return (NULL);
 	red_node->type = ft_number_type(*words);
 	words++;
-	red_node->limiter = ft_limiter_name(*words, envp, red_node->type);
+	red_node->limiter = ft_limiter_name(*words, red_node->type);
 	red_node->file = ft_file_name(*words, envp, red_node->type);
 	red_node->next = NULL;
 	return (red_node);

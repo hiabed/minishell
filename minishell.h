@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 19:52:02 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/15 22:09:58 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/16 22:20:37 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,15 +64,14 @@ void						ft_lstadd_token(t_token **lst, t_token *new);
 void	ft_lstadd_red(t_redirection **lst,
 					t_redirection *new);
 char						*ft_file_name(char *words, char **envp, int type);
-char						*ft_limiter_name(char *words, char **envp,
-								int type);
+char						*ft_limiter_name(char *words, int type);
 int							ft_number_type(char *words);
 t_redirection				*ft_lstnew_red(char **words, char **envp);
 t_redirection				*ft_redirections(char **words, char **envp);
 int							count_strings(char *words);
 int							word_len(char *words);
 char						**strings_without_quotes(char *words, char **envp);
-char						*join_strings(char *words, char **envp);
+char						*join_strings_to_be_one(char *words, char **envp);
 char						*space_arround_red(char *s1);
 void						ft_fill_ptr(char *s1, char *ptr, int i, int j);
 int							cmd_lenght(char *s);
@@ -85,5 +84,7 @@ char						*print_not_expanded_dollars(char *no_quotes);
 char						*after_expand(char *no_quotes);
 char						*print_expanded_dollars(char *no_quotes);
 int							num_dollars(char *no_quotes);
+char						**heredoc_without_quotes(char *words);
+char						*join_heredoc_to_be_one(char *words);
 
 #endif
