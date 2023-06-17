@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 17:59:21 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/16 16:56:51 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/17 23:11:09 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,6 +172,7 @@ char	*ft_expand_value(char *no_quotes, char **envp)
 	char *result;
 	char *temp;
 	char *dollars;
+	char *status;
 	int i;
 	int j;
 	int k;
@@ -184,9 +185,15 @@ char	*ft_expand_value(char *no_quotes, char **envp)
 	chars = malloc(before_dollar_len(no_quotes) + 1);
 	if (no_quotes[i] == '$' && !no_quotes[i + 1])
 		return (NULL);
-	// else if (no_quotes[i] == '$' && (no_quotes[i + 1] == '+' || no_quotes[i
-	// 			+ 1] == '.' || no_quotes[i + 1] == '\''))
-	// 	return (NULL);
+	else if (no_quotes[i] == '$' && no_quotes[i + 1] == '?')
+	{
+		status = ft_itoa(exit_status);
+		return status;
+	}
+	else if (no_quotes[i] == '$' && no_quotes[i + 1] == '_')
+	{
+		return NULL;
+	}
 	while (no_quotes[i] && no_quotes[i] != '$')
 		chars[k++] = no_quotes[i++];
 	chars[k] = '\0';

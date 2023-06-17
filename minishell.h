@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 19:52:02 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/16 22:20:37 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/17 23:41:14 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,19 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
+
+typedef struct g
+{
+	int	exit_status;
+	int	check;
+	char	*str;
+
+} g_var;
+
+
+g_var	*g;
+
+int	exit_status;
 
 typedef struct s_data
 {
