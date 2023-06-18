@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 21:53:19 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/18 17:35:44 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/18 20:03:15 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,132 +183,112 @@ char	*join_heredoc_to_be_one(char *words)
 	return (joined_string);
 }
 
-char	*fill_expand(char *no_quotes_str, char **envp)
+char	*fill_expand(char *str, char **envp)
 {
 	int		i;
 	int		j;
 	int		size;
 	char	*expand;
 
-	if (ft_expand_value(no_quotes_str, envp))
+	if (ft_expand_value(str, envp))
 	{
 		i = 0;
 		j = 0;
-		size = (ft_strlen(ft_expand_value(no_quotes_str, envp)) + 1);
-		expand = ft_expand_value(no_quotes_str, envp);
-		no_quotes_str = malloc(size + 1);
+		size = (ft_strlen(ft_expand_value(str, envp)) + 1);
+		expand = ft_expand_value(str, envp);
+		str = malloc(size + 1);
 		while (expand[j])
-			no_quotes_str[i++] = expand[j++];
-		no_quotes_str[i] = '\0';
+			str[i++] = expand[j++];
+		str[i] = '\0';
 	}
-	return (no_quotes_str);
+	return (str);
 }
 
-char	*fill_word_without_quotes(char *no_quotes_str, char *words)
+char	*fill_word_without_quotes(char *str, char *words, int *i)
 {
 	int	j;
-	int	i;
 
-	i = 0;
 	j = 0;
-	no_quotes_str = malloc(len(words) + 1);
-	while (words[i] && words[i] != '\"' && words[i] != '\'')
-		no_quotes_str[j++] = words[i++];
-	no_quotes_str[j] = '\0';
-	// no_quotes_str = fill_expand(no_quotes_str, envp);
-	return (no_quotes_str);
+	str = malloc(len(&words[*i]) + 1);
+	while (words[*i] && words[*i] != '\"' && words[*i] != '\'')
+		str[j++] = words[(*i)++];
+	str[j] = '\0';
+	return (str);
 }
 
-char	*fill_word_with_d_quotes(char *no_quotes_str, char *words)
+char	*fill_word_with_d_quotes(char *str, char *words, int *i)
 {
 	int	j;
-	int	i;
 
 	j = 0;
-	i = 1;
-	
-	no_quotes_str = malloc(word_len(&words[i]) + 1);
-	while (words[i] && words[i] != '\"')
-		no_quotes_str[j++] = words[i++];
-	no_quotes_str[j] = '\0';
-	return no_quotes_str;
+	(*i)++;
+	str = malloc(word_len(&words[*i]) + 1);
+	while (words[*i] && words[*i] != '\"')
+		str[j++] = words[(*i)++];
+	str[j] = '\0';
+	if (words[*i])
+		(*i)++;
+	return (str);
 }
 
-char	*fill_word_with_s_quotes(char *no_quotes_str, char *words)
+char	*fill_word_with_s_quotes(char *str, char *words, int *i)
 {
 	int	j;
-	int	i;
 
 	j = 0;
-	i = 1;
-	
-	no_quotes_str = malloc(word_len(&words[i]) + 1);
-	while (words[i] && words[i] != '\'')
-		no_quotes_str[j++] = words[i++];
-	no_quotes_str[j] = '\0';
-	return no_quotes_str;
+	(*i)++;
+	str = malloc(word_len(&words[*i]) + 1);
+	while (words[*i] && words[*i] != '\'')
+		str[j++] = words[(*i)++];
+	str[j] = '\0';
+	if (words[*i])
+		(*i)++;
+	return (str);
 }
 
-char	*empty_string(char *no_quotes_str)
+char	*empty_string(char *str, int *i)
 {
-	no_quotes_str = malloc(1);
-	no_quotes_str[0] = '\0';
-	return no_quotes_str;
+	str = malloc(1);
+	str[0] = '\0';
+	*i = *i + 2;
+	return (str);
+}
+
+int	empty_string_condition(char *words, int *i)
+{
+	if ((words[*i] == '\"' && words[*i + 1] == '\"') || (words[*i] == '\''
+			&& words[*i + 1] == '\''))
+		return (1);
+	return (0);
 }
 
 char	**strings_without_quotes(char *words, char **envp)
 {
-	int		i;
-	int		k;
-	char	**no_quotes_str;
+	int	i;
 
-	no_quotes_str = malloc((count_strings(words) + 1) * sizeof(char *));
-	k = 0;
+	g.str = malloc((count_strings(words) + 1) * sizeof(char *));
+	g.k = 0;
 	i = 0;
 	while (words[i])
 	{
-		if ((words[i] == '\"' && words[i + 1] == '\"') || (words[i] == '\''
-				&& words[i + 1] == '\''))
+		if (empty_string_condition(words, &i))
+			g.str[g.k] = empty_string(g.str[g.k], &i);
+		else if ((words[i] == '\"' && words[i + 1] != '\"'))
 		{
-			no_quotes_str[k] = empty_string(no_quotes_str[k]);
-			k++;
-			i = i + 2;
-		}
-		else if ((words[i] == '\"' && words[i + 1] != '\"')) //expand;
-		{
-			no_quotes_str[k] = fill_word_with_d_quotes(no_quotes_str[k],
-					&words[i]);
-			no_quotes_str[k] = fill_expand(no_quotes_str[k], envp);
-			i++;
-			while (words[i] && words[i] != '\"')
-				i++;
-			if (words[i])
-				i++;
-			k++;
+			g.str[g.k] = fill_word_with_d_quotes(g.str[g.k], words, &i);
+			g.str[g.k] = fill_expand(g.str[g.k], envp);
 		}
 		else if ((words[i] == '\'' && words[i + 1] != '\''))
+			g.str[g.k] = fill_word_with_s_quotes(g.str[g.k], words, &i);
+		else if (words[i] != '\"' && words[i] != '\'')
 		{
-			no_quotes_str[k] = fill_word_with_s_quotes(no_quotes_str[k],
-					&words[i]);
-			i++;
-			while (words[i] && words[i] != '\"')
-				i++;
-			if (words[i])
-				i++;
-			k++;
+			g.str[g.k] = fill_word_without_quotes(g.str[g.k], words, &i);
+			g.str[g.k] = fill_expand(g.str[g.k], envp);
 		}
-		else if (words[i] != '\"' && words[i] != '\'') //expand
-		{
-			no_quotes_str[k] = fill_word_without_quotes(no_quotes_str[k],
-					&words[i]);
-			no_quotes_str[k] = fill_expand(no_quotes_str[k], envp);
-			while (words[i] && words[i] != '\"' && words[i] != '\'')
-				i++;
-			k++;
-		}
+		g.k++;
 	}
-	no_quotes_str[k] = NULL;
-	return (no_quotes_str);
+	g.str[g.k] = NULL;
+	return (g.str);
 }
 
 // if(!ft_strncmp(no_quotes_str[k], "$_", 2)
@@ -342,7 +322,7 @@ char	*join_strings_to_be_one(char *words, char **envp)
 	return (joined_string);
 }
 
-void	print_info_without_quotes(t_token *ptr, char **envp)
+void	print_info(t_token *ptr, char **envp)
 {
 	int		i;
 	t_token	*data;
@@ -416,7 +396,7 @@ int	main(int ac, char **av, char **envp)
 				ft_lstadd_token(&ptr, ft_lstnew_token(words, envp));
 				i++;
 			}
-			print_info_without_quotes(ptr, envp);
+			print_info(ptr, envp);
 		}
 	}
 	free(cmd);

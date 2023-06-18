@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 19:52:02 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/18 17:29:01 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/18 20:01:25 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,11 @@
 typedef struct g
 {
 	int exit_status;
-	int i;
+	int		k;
+	char	**str;
 }							g_var;
 
-g_var						*g;
+g_var						g;
 
 int							exit_status;
 
@@ -96,8 +97,8 @@ char						*print_expanded_dollars(char *no_quotes);
 int							num_dollars(char *no_quotes);
 char						**heredoc_without_quotes(char *words);
 char						*join_heredoc_to_be_one(char *words);
-char						*fill_expand(char *no_quotes_str, char **envp);
-void						print_info_without_quotes(t_token *ptr,
+char						*fill_expand(char *str, char **envp);
+void	print_info_without_quotes(t_token *ptr,
 								char **envp);
 
 #endif
