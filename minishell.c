@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 21:53:19 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/18 14:38:25 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/18 17:35:44 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	count_strings(char *words)
 			i++;
 			while (words[i] && words[i] != '\"')
 				i++;
-			if(words[i])
+			if (words[i])
 				i++;
 			count++;
 		}
@@ -41,7 +41,7 @@ int	count_strings(char *words)
 			i++;
 			while (words[i] && words[i] != '\'')
 				i++;
-			if(words[i])
+			if (words[i])
 				i++;
 			count++;
 		}
@@ -131,7 +131,7 @@ char	**heredoc_without_quotes(char *words)
 				no_quotes_str[k][j++] = words[i++];
 			no_quotes_str[k][j] = '\0';
 			k++;
-			if(words[i])
+			if (words[i])
 				i++;
 		}
 		else if ((words[i] == '\'' && words[i + 1] != '\''))
@@ -143,10 +143,10 @@ char	**heredoc_without_quotes(char *words)
 				no_quotes_str[k][j++] = words[i++];
 			no_quotes_str[k][j] = '\0';
 			k++;
-			if(words[i])
+			if (words[i])
 				i++;
 		}
-		else if (words[i] != '\"' && words[i] != '\'')      //=> i should check for expand;
+		else if (words[i] != '\"' && words[i] != '\'')
 		{
 			j = 0;
 			no_quotes_str[k] = malloc(len(&words[i]) + 1);
@@ -183,16 +183,85 @@ char	*join_heredoc_to_be_one(char *words)
 	return (joined_string);
 }
 
-char	**strings_without_quotes(char *words, char **envp)
+char	*fill_expand(char *no_quotes_str, char **envp)
 {
 	int		i;
 	int		j;
+	int		size;
+	char	*expand;
+
+	if (ft_expand_value(no_quotes_str, envp))
+	{
+		i = 0;
+		j = 0;
+		size = (ft_strlen(ft_expand_value(no_quotes_str, envp)) + 1);
+		expand = ft_expand_value(no_quotes_str, envp);
+		no_quotes_str = malloc(size + 1);
+		while (expand[j])
+			no_quotes_str[i++] = expand[j++];
+		no_quotes_str[i] = '\0';
+	}
+	return (no_quotes_str);
+}
+
+char	*fill_word_without_quotes(char *no_quotes_str, char *words)
+{
+	int	j;
+	int	i;
+
+	i = 0;
+	j = 0;
+	no_quotes_str = malloc(len(words) + 1);
+	while (words[i] && words[i] != '\"' && words[i] != '\'')
+		no_quotes_str[j++] = words[i++];
+	no_quotes_str[j] = '\0';
+	// no_quotes_str = fill_expand(no_quotes_str, envp);
+	return (no_quotes_str);
+}
+
+char	*fill_word_with_d_quotes(char *no_quotes_str, char *words)
+{
+	int	j;
+	int	i;
+
+	j = 0;
+	i = 1;
+	
+	no_quotes_str = malloc(word_len(&words[i]) + 1);
+	while (words[i] && words[i] != '\"')
+		no_quotes_str[j++] = words[i++];
+	no_quotes_str[j] = '\0';
+	return no_quotes_str;
+}
+
+char	*fill_word_with_s_quotes(char *no_quotes_str, char *words)
+{
+	int	j;
+	int	i;
+
+	j = 0;
+	i = 1;
+	
+	no_quotes_str = malloc(word_len(&words[i]) + 1);
+	while (words[i] && words[i] != '\'')
+		no_quotes_str[j++] = words[i++];
+	no_quotes_str[j] = '\0';
+	return no_quotes_str;
+}
+
+char	*empty_string(char *no_quotes_str)
+{
+	no_quotes_str = malloc(1);
+	no_quotes_str[0] = '\0';
+	return no_quotes_str;
+}
+
+char	**strings_without_quotes(char *words, char **envp)
+{
+	int		i;
 	int		k;
 	char	**no_quotes_str;
-	char	*expand;
-	int		size;
 
-	expand = NULL;
 	no_quotes_str = malloc((count_strings(words) + 1) * sizeof(char *));
 	k = 0;
 	i = 0;
@@ -201,65 +270,40 @@ char	**strings_without_quotes(char *words, char **envp)
 		if ((words[i] == '\"' && words[i + 1] == '\"') || (words[i] == '\''
 				&& words[i + 1] == '\''))
 		{
-			no_quotes_str[k] = malloc(1);
-			no_quotes_str[k][0] = '\0';
+			no_quotes_str[k] = empty_string(no_quotes_str[k]);
 			k++;
 			i = i + 2;
 		}
-		else if ((words[i] == '\"' && words[i + 1] != '\"'))       //=> i should check for expand; 
+		else if ((words[i] == '\"' && words[i + 1] != '\"')) //expand;
 		{
-			j = 0;
+			no_quotes_str[k] = fill_word_with_d_quotes(no_quotes_str[k],
+					&words[i]);
+			no_quotes_str[k] = fill_expand(no_quotes_str[k], envp);
 			i++;
-			no_quotes_str[k] = malloc(word_len(&words[i]) + 1);
 			while (words[i] && words[i] != '\"')
-				no_quotes_str[k][j++] = words[i++];
-			no_quotes_str[k][j] = '\0';
-			if (ft_expand_value(no_quotes_str[k], envp))
-			{
-				j = 0;
-				int l = 0;
-				size = (ft_strlen(ft_expand_value(no_quotes_str[k], envp)) + 1);
-				char *expand = ft_expand_value(no_quotes_str[k], envp);
-				no_quotes_str[k] = malloc(size + 1);
-				while (expand[l])
-					no_quotes_str[k][j++] = expand[l++];
-				no_quotes_str[k][j] = '\0';
-			}
-			k++;
-			if(words[i])
 				i++;
+			if (words[i])
+				i++;
+			k++;
 		}
 		else if ((words[i] == '\'' && words[i + 1] != '\''))
 		{
-			j = 0;
+			no_quotes_str[k] = fill_word_with_s_quotes(no_quotes_str[k],
+					&words[i]);
 			i++;
-			no_quotes_str[k] = malloc(word_len_single(&words[i]) + 1);
-			while (words[i] && words[i] != '\'')
-				no_quotes_str[k][j++] = words[i++];
-			no_quotes_str[k][j] = '\0';
-			k++;
-			if(words[i])
+			while (words[i] && words[i] != '\"')
 				i++;
+			if (words[i])
+				i++;
+			k++;
 		}
-		else if (words[i] != '\"' && words[i] != '\'')      //=> i should check for expand;
+		else if (words[i] != '\"' && words[i] != '\'') //expand
 		{
-			j = 0;
-			no_quotes_str[k] = malloc(len(&words[i]) + 1);
+			no_quotes_str[k] = fill_word_without_quotes(no_quotes_str[k],
+					&words[i]);
+			no_quotes_str[k] = fill_expand(no_quotes_str[k], envp);
 			while (words[i] && words[i] != '\"' && words[i] != '\'')
-				no_quotes_str[k][j++] = words[i++];
-			no_quotes_str[k][j] = '\0';
-			if (ft_expand_value(no_quotes_str[k], envp))
-			{
-				j = 0;
-				int l = 0;
-				size = (ft_strlen(ft_expand_value(no_quotes_str[k], envp)) + 1);
-				char *expand = ft_expand_value(no_quotes_str[k], envp);
-				no_quotes_str[k] = malloc(size + 1);
-				while (expand[l])
-					no_quotes_str[k][j++] = expand[l++];
-				no_quotes_str[k][j] = '\0';
-				j = 1;
-			}
+				i++;
 			k++;
 		}
 	}
@@ -267,12 +311,13 @@ char	**strings_without_quotes(char *words, char **envp)
 	return (no_quotes_str);
 }
 
-	// if(!ft_strncmp(no_quotes_str[k], "$_", 2) && ft_strlen(no_quotes_str[k]) >= 3)
-	// {
-	// 	write(2, "minishell-3.2$ ", 15);
-	// 	write(2, no_quotes_str[k], ft_strlen(no_quotes_str[k]));
-	// 	write(2, ": ambiguous redirect\n", 21);
-	// }
+// if(!ft_strncmp(no_quotes_str[k], "$_", 2)
+// && ft_strlen(no_quotes_str[k]) >= 3)
+// {
+// 	write(2, "minishell-3.2$ ", 15);
+// 	write(2, no_quotes_str[k], ft_strlen(no_quotes_str[k]));
+// 	write(2, ": ambiguous redirect\n", 21);
+// }
 
 char	*join_strings_to_be_one(char *words, char **envp)
 {
@@ -297,10 +342,11 @@ char	*join_strings_to_be_one(char *words, char **envp)
 	return (joined_string);
 }
 
-void	print_info(t_token *ptr, char **envp)
+void	print_info_without_quotes(t_token *ptr, char **envp)
 {
-	int i;
-	t_token *data;
+	int		i;
+	t_token	*data;
+
 	data = ptr;
 	while (data)
 	{
@@ -370,7 +416,7 @@ int	main(int ac, char **av, char **envp)
 				ft_lstadd_token(&ptr, ft_lstnew_token(words, envp));
 				i++;
 			}
-			print_info(ptr, envp);
+			print_info_without_quotes(ptr, envp);
 		}
 	}
 	free(cmd);
