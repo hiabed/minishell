@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 14:34:41 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/18 14:45:27 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/18 14:52:59 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,6 @@ void	replace_space_in_quotes(char *token)
 		else
 			i++;
 	}
-	printf("token: %s\n", token);
 }
 
 char	**split_with_space(char *token)
@@ -153,14 +152,14 @@ void	replace_red_in_quotes(char *cmd)
 			{
 				if (cmd[i] == '>')
 					cmd[i] = -1;
-				if(cmd[i] == '<')
+				else if(cmd[i] == '<')
 					cmd[i] = -2;
-				if (cmd[i] == '>' && cmd[i + 1] == '>')
+				else if(cmd[i] == '>' && cmd[i + 1] == '>')
 				{
 					cmd[i++] = -3;
 					cmd[i] = -3;
 				}
-				if (cmd[i] == '<' && cmd[i + 1] == '<')
+				else if (cmd[i] == '<' && cmd[i + 1] == '<')
 				{
 					cmd[i++] = -4;
 					cmd[i] = -4;
@@ -179,14 +178,14 @@ void	replace_red_in_quotes(char *cmd)
 			{
 				if (cmd[i] == '>')
 					cmd[i] = -1;
-				if(cmd[i] == '<')
+				else if(cmd[i] == '<')
 					cmd[i] = -2;
-				if (cmd[i] == '>' && cmd[i + 1] == '>')
+				else if (cmd[i] == '>' && cmd[i + 1] == '>')
 				{
 					cmd[i++] = -3;
 					cmd[i] = -3;
 				}
-				if (cmd[i] == '<' && cmd[i + 1] == '<')
+				else if (cmd[i] == '<' && cmd[i + 1] == '<')
 				{
 					cmd[i++] = -4;
 					cmd[i] = -4;
@@ -214,19 +213,19 @@ void	bring_back(char *cmd)
 		{
 			if (cmd[i] == -1)
 				cmd[i] = '>';
-			if (cmd[i] == -2)
+			else if (cmd[i] == -2)
 				cmd[i] = '<';
-			if (cmd[i] == -3)
+			else if (cmd[i] == -3)
 			{
 				cmd[i++] = '>';
 				cmd[i] = '>';
 			}
-			if (cmd[i] == -4)
+			else if (cmd[i] == -4)
 			{
 				cmd[i++] = '<';
 				cmd[i] = '<';
 			}
-			if(!cmd[i])
+			else if(!cmd[i])
 				break;
 			i++;
 		}
