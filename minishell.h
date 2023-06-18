@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 19:52:02 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/18 20:01:25 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/18 23:33:22 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@
 typedef struct g
 {
 	int exit_status;
-	int		k;
-	char	**str;
+	int k;
+	char **str;
 }							g_var;
 
 g_var						g;
@@ -79,8 +79,6 @@ char						*ft_limiter_name(char *words, int type);
 int							ft_number_type(char *words);
 t_redirection				*ft_lstnew_red(char **words, char **envp);
 t_redirection				*ft_redirections(char **words, char **envp);
-int							count_strings(char *words);
-int							word_len(char *words);
 char						**strings_without_quotes(char *words, char **envp);
 char						*join_strings_to_be_one(char *words, char **envp);
 char						*space_arround_red(char *s1);
@@ -100,5 +98,10 @@ char						*join_heredoc_to_be_one(char *words);
 char						*fill_expand(char *str, char **envp);
 void	print_info_without_quotes(t_token *ptr,
 								char **envp);
+void						skip_quotes(char *words, int *i, int *count);
+int							count_strings(char *words);
+int							word_len(char *words);
+int							word_len_single(char *words);
+int							len(char *words);
 
 #endif
