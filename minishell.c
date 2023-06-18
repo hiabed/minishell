@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 21:53:19 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/17 23:33:15 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/18 14:38:25 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -248,12 +248,6 @@ char	**strings_without_quotes(char *words, char **envp)
 			while (words[i] && words[i] != '\"' && words[i] != '\'')
 				no_quotes_str[k][j++] = words[i++];
 			no_quotes_str[k][j] = '\0';
-			if(!ft_strncmp(no_quotes_str[k], "$_", 2) && ft_strlen(no_quotes_str[k]) >= 3)
-			{
-				write(2, "minishell-3.2$ ", 15);
-				write(2, no_quotes_str[k], ft_strlen(no_quotes_str[k]));
-				write(2, ": ambiguous redirect\n", 21);
-			}
 			if (ft_expand_value(no_quotes_str[k], envp))
 			{
 				j = 0;
@@ -272,6 +266,13 @@ char	**strings_without_quotes(char *words, char **envp)
 	no_quotes_str[k] = NULL;
 	return (no_quotes_str);
 }
+
+	// if(!ft_strncmp(no_quotes_str[k], "$_", 2) && ft_strlen(no_quotes_str[k]) >= 3)
+	// {
+	// 	write(2, "minishell-3.2$ ", 15);
+	// 	write(2, no_quotes_str[k], ft_strlen(no_quotes_str[k]));
+	// 	write(2, ": ambiguous redirect\n", 21);
+	// }
 
 char	*join_strings_to_be_one(char *words, char **envp)
 {

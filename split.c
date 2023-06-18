@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 14:34:41 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/16 18:28:26 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/18 14:45:27 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	replace_pipe_in_quotes(char *cmd)
 			if (!cmd[i])
 				break ;
 		}
-		if (cmd[i] == '\'')
+		else if (cmd[i] == '\'')
 		{
 			i++;
 			while (cmd[i] && cmd[i] != '\'')
@@ -96,7 +96,7 @@ void	replace_space_in_quotes(char *token)
 			if (!token[i])
 				break ;
 		}
-		if (token[i] == '\'')
+		else if (token[i] == '\'')
 		{
 			i++;
 			while (token[i] && token[i] != '\'')
@@ -113,7 +113,7 @@ void	replace_space_in_quotes(char *token)
 		else
 			i++;
 	}
-	
+	printf("token: %s\n", token);
 }
 
 char	**split_with_space(char *token)
