@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 19:52:02 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/18 23:33:22 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/19 16:51:10 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,12 +85,13 @@ char						*space_arround_red(char *s1);
 void						ft_fill_ptr(char *s1, char *ptr, int i, int j);
 int							cmd_lenght(char *s);
 char						*env_key(char *envp);
-char						*env_value(char *envp, char *no_quotes);
+char						*env_value(char *envp);
 char						*ft_expand_value(char *no_quotes, char **envp);
 int							before_dollar_len(char *no_quotes);
 int							ft_strcmp(char *s1, char *s2);
 char						*print_not_expanded_dollars(char *no_quotes);
 char						*after_expand(char *no_quotes);
+int							after_expand_check(char *no_quotes);
 char						*print_expanded_dollars(char *no_quotes);
 int							num_dollars(char *no_quotes);
 char						**heredoc_without_quotes(char *words);

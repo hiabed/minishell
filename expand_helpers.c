@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 20:35:28 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/18 20:44:27 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/19 17:25:36 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,20 +53,58 @@ char	*print_not_expanded_dollars(char *no_quotes)
 	return (print_var);
 }
 
+int	after_expand_check(char *no_quotes)
+{
+	int		i;
+	int		j;
+	int		k;
+	int		len;
+
+	i = 0;
+	k = 0;
+	len = 0;
+	j = 0;
+	while (no_quotes[i] && no_quotes[i] != '\'' && no_quotes[i] != '+'
+		&& no_quotes[i] != '.' && no_quotes[i] != '$')
+	{
+		k++;
+		i++;
+	}
+	while (no_quotes[k] && no_quotes[k] != '$')
+	{
+		k++;
+		len++;
+	}
+	if (!len)
+		return (0);
+	if (len)
+		return (1);
+	return (1);
+}
+
 char	*after_expand(char *no_quotes)
 {
 	int		i;
 	int		j;
+	int		k;
 	char	*var;
 	int		len;
 
-	len = 0;
 	i = 0;
+	k = 0;
+	len = 0;
 	j = 0;
 	while (no_quotes[i] && no_quotes[i] != '\'' && no_quotes[i] != '+'
-		&& no_quotes[i] != '.')
+		&& no_quotes[i] != '.' && no_quotes[i] != '$' && no_quotes[i] != ' ')
+	{
+		k++;
 		i++;
-	len = ft_strlen(&no_quotes[i]);
+	}
+	while (no_quotes[k] && no_quotes[k] != '$')
+	{
+		k++;
+		len++;
+	}
 	var = malloc(len + 1);
 	while (no_quotes[i] && no_quotes[i] != '$')
 		var[j++] = no_quotes[i++];
@@ -93,13 +131,13 @@ char	*env_key(char *envp)
 	return (key);
 }
 
-char	*env_value(char *envp, char *no_quotes)
+char	*env_value(char *envp)
 {
-	int		i;
-	int		j;
-	int		size;
-	char	*value;
-
+	int i;
+	int j;
+	int size;
+	char *value;
+	
 	size = 0;
 	i = 0;
 	j = 0;
@@ -116,6 +154,5 @@ char	*env_value(char *envp, char *no_quotes)
 	while (envp[i])
 		value[j++] = envp[i++];
 	value[j] = '\0';
-	value = ft_strjoin(value, after_expand(no_quotes));
 	return (value);
 }

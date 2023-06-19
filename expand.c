@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 17:59:21 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/18 23:56:45 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/19 18:30:18 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	*ft_extract_key(char *no_q)
 	var = malloc(i + 1);
 	i = 0;
 	while (no_q[i] && no_q[i] != '\'' && no_q[i] != '+' && no_q[i] != '.'
-		&& no_q[i] != '$')
+		&& no_q[i] != '$' && no_q[i] != ' ')
 		var[i++] = no_q[j++];
 	var[i] = '\0';
 	return (var);
@@ -50,16 +50,25 @@ char	*compare_keys(char **envp, char *no_quotes, char *chars, int *i,
 	{
 		if (!ft_strcmp(env_key(envp[j]), ft_extract_key(&no_quotes[*i])))
 		{
-			value = env_value(envp[j], &no_quotes[*i]);
-			value = ft_strjoin(dollars, value);
+			value = env_value(envp[j]);     				//mhassani
+			value = ft_strjoin(dollars, value);				//$$mhassani
 			if (!temp)
-				result = ft_strjoin(chars, value);
+				result = ft_strjoin(chars, value);			//aa$mhassani
 			else
 				result = ft_strjoin(temp, value);
 			temp = result;
 		}
 		j++;
 	}
+	if (!temp)
+	{
+		temp = ft_strjoin(chars, dollars);
+		temp = ft_strjoin(temp, after_expand(&no_quotes[*i]));
+	}
+	else if(temp)
+		temp = ft_strjoin(temp, after_expand(&no_quotes[*i]));
+	else if(after_expand_check(&no_quotes[*i]) && !temp)
+		temp = ft_strjoin(temp, after_expand(&no_quotes[*i]));
 	return (temp);
 }
 
@@ -96,11 +105,12 @@ char	*fst_chars(char *no_quotes, int i)
 	return (chars);
 }
 
-char *only_dollar(char *no_q)
+char	*only_dollar(char *no_q)
 {
-	int i = 0;
-	char *status;
-	
+	int		i;
+	char	*status;
+
+	i = 0;
 	if (no_q[i] == '$' && !no_q[i + 1])
 		return (NULL);
 	else if (no_q[i] == '$' && no_q[i + 1] == '?')
@@ -108,7 +118,7 @@ char *only_dollar(char *no_q)
 		status = ft_itoa(g.exit_status);
 		return (status);
 	}
-	return NULL;
+	return (NULL);
 }
 
 char	*ft_expand_value(char *no_q, char **envp)
@@ -133,12 +143,5 @@ char	*ft_expand_value(char *no_q, char **envp)
 		}
 		i++;
 	}
-	if (!temp)
-	{
-		temp = malloc(1);
-		temp[0] = '\0';
-		temp = ft_strjoin(chars, dollars);
-	}
-	temp = only_dollar(no_q);
 	return (temp);
 }
