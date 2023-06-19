@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 19:52:02 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/19 16:51:10 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/19 23:53:13 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,15 @@ typedef struct s_data
 	int						dcotes_in_cote;
 }							t_data;
 
+typedef struct s_expand
+{
+	char					**envp;
+	char					*no_q;
+	char					*chars;
+	char					*temp;
+	int						i;
+}							t_expand;
+
 typedef struct s_redirection
 {
 	struct s_redirection	*next;
@@ -52,6 +61,7 @@ typedef struct s_redirection
 typedef struct s_token
 {
 	t_redirection			*red;
+	int fd;
 	char					*cmd;
 	char					**arg;
 	struct s_token			*next;
@@ -97,12 +107,13 @@ int							num_dollars(char *no_quotes);
 char						**heredoc_without_quotes(char *words);
 char						*join_heredoc_to_be_one(char *words);
 char						*fill_expand(char *str, char **envp);
-void	print_info_without_quotes(t_token *ptr,
-								char **envp);
+void	infos_without_quotes(t_token *ptr,
+							char **envp);
 void						skip_quotes(char *words, int *i, int *count);
 int							count_strings(char *words);
 int							word_len(char *words);
 int							word_len_single(char *words);
 int							len(char *words);
+int							here_doc(t_token *p);
 
 #endif

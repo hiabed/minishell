@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 17:59:21 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/19 18:30:18 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/19 18:34:52 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,6 @@ char	*compare_keys(char **envp, char *no_quotes, char *chars, int *i,
 	char	*value;
 	char	*result;
 
-	value = NULL;
-	result = NULL;
 	dollars = print_expanded_dollars(&no_quotes[*i]);
 	while (no_quotes[*i] && no_quotes[(*i) + 1] && no_quotes[*i] == '$')
 		(*i)++;
@@ -50,10 +48,10 @@ char	*compare_keys(char **envp, char *no_quotes, char *chars, int *i,
 	{
 		if (!ft_strcmp(env_key(envp[j]), ft_extract_key(&no_quotes[*i])))
 		{
-			value = env_value(envp[j]);     				//mhassani
-			value = ft_strjoin(dollars, value);				//$$mhassani
+			value = env_value(envp[j]);         //mhassani
+			value = ft_strjoin(dollars, value); //$$mhassani
 			if (!temp)
-				result = ft_strjoin(chars, value);			//aa$mhassani
+				result = ft_strjoin(chars, value); //aa$mhassani
 			else
 				result = ft_strjoin(temp, value);
 			temp = result;
@@ -65,9 +63,9 @@ char	*compare_keys(char **envp, char *no_quotes, char *chars, int *i,
 		temp = ft_strjoin(chars, dollars);
 		temp = ft_strjoin(temp, after_expand(&no_quotes[*i]));
 	}
-	else if(temp)
+	else if (temp)
 		temp = ft_strjoin(temp, after_expand(&no_quotes[*i]));
-	else if(after_expand_check(&no_quotes[*i]) && !temp)
+	else if (after_expand_check(&no_quotes[*i]) && !temp)
 		temp = ft_strjoin(temp, after_expand(&no_quotes[*i]));
 	return (temp);
 }

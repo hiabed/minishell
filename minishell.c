@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 21:53:19 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/18 23:32:12 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/19 23:55:40 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,7 +197,7 @@ char	*join_heredoc_to_be_one(char *words)
 	return (joined_string);
 }
 
-void	print_info(t_token *ptr, char **envp)
+void	infos_without_quotes(t_token *ptr, char **envp)
 {
 	int		i;
 	t_token	*data;
@@ -206,23 +206,31 @@ void	print_info(t_token *ptr, char **envp)
 	while (data)
 	{
 		i = 0;
-		printf("------------\n");
+		// printf("------------\n");
 		if (data->cmd)
 		{
 			data->cmd = join_strings_to_be_one(data->cmd, envp);
-			printf("cmd: %s\n", data->cmd);
+			// printf("cmd: %s\n", data->cmd);
 		}
 		while (data->arg[i])
 		{
 			data->arg[i] = join_strings_to_be_one(data->arg[i], envp);
-			printf("arg: %s\n", data->arg[i]);
+			// printf("arg: %s\n", data->arg[i]);
 			i++;
 		}
 		while (data->red)
 		{
-			printf("type: %d\n", data->red->type);
-			printf("limiter: %s\n", data->red->limiter);
-			printf("file: %s\n", data->red->file);
+			if(data->red->type == 4)
+				here_doc(data);
+			else if(data->red->type == 3)
+				data->fd = open(data->red->file, O_CREAT, O_WRONLY, O_APPEND, 0777);
+			else if(data->red->type == 2)
+				data->fd = open(data->red->file, O_RDONLY, 0777);
+			else if(data->red->type == 1)
+				data->fd = open(data->red->file, O_CREAT, O_WRONLY, 0777);
+			// printf("type: %d\n", data->red->type);
+			// printf("limiter: %s\n", data->red->limiter);
+			// printf("file: %s\n", data->red->file);
 			data->red = data->red->next;
 		}
 		data = data->next;
@@ -271,7 +279,7 @@ int	main(int ac, char **av, char **envp)
 				ft_lstadd_token(&ptr, ft_lstnew_token(words, envp));
 				i++;
 			}
-			print_info(ptr, envp);
+			infos_without_quotes(ptr, envp);
 		}
 	}
 	free(cmd);
