@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 20:35:28 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/19 17:25:36 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/20 17:48:15 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,62 +53,31 @@ char	*print_not_expanded_dollars(char *no_quotes)
 	return (print_var);
 }
 
-int	after_expand_check(char *no_quotes)
-{
-	int		i;
-	int		j;
-	int		k;
-	int		len;
-
-	i = 0;
-	k = 0;
-	len = 0;
-	j = 0;
-	while (no_quotes[i] && no_quotes[i] != '\'' && no_quotes[i] != '+'
-		&& no_quotes[i] != '.' && no_quotes[i] != '$')
-	{
-		k++;
-		i++;
-	}
-	while (no_quotes[k] && no_quotes[k] != '$')
-	{
-		k++;
-		len++;
-	}
-	if (!len)
-		return (0);
-	if (len)
-		return (1);
-	return (1);
-}
-
 char	*after_expand(char *no_quotes)
 {
-	int		i;
-	int		j;
-	int		k;
-	char	*var;
-	int		len;
+	char		*var;
+	t_expand	exp;
 
-	i = 0;
-	k = 0;
-	len = 0;
-	j = 0;
-	while (no_quotes[i] && no_quotes[i] != '\'' && no_quotes[i] != '+'
-		&& no_quotes[i] != '.' && no_quotes[i] != '$' && no_quotes[i] != ' ')
+	exp.i = 0;
+	exp.k = 0;
+	exp.len = 0;
+	exp.j = 0;
+	while (no_quotes[exp.i] && no_quotes[exp.i] != '\''
+		&& no_quotes[exp.i] != '+' && no_quotes[exp.i] != '.'
+		&& no_quotes[exp.i] != '$' && no_quotes[exp.i] != ' ')
 	{
-		k++;
-		i++;
+		exp.k++;
+		exp.i++;
 	}
-	while (no_quotes[k] && no_quotes[k] != '$')
+	while (no_quotes[exp.k] && no_quotes[exp.k] != '$')
 	{
-		k++;
-		len++;
+		exp.k++;
+		exp.len++;
 	}
-	var = malloc(len + 1);
-	while (no_quotes[i] && no_quotes[i] != '$')
-		var[j++] = no_quotes[i++];
-	var[j] = '\0';
+	var = malloc(exp.len + 1);
+	while (no_quotes[exp.i] && no_quotes[exp.i] != '$')
+		var[exp.j++] = no_quotes[exp.i++];
+	var[exp.j] = '\0';
 	return (var);
 }
 
@@ -137,7 +106,7 @@ char	*env_value(char *envp)
 	int j;
 	int size;
 	char *value;
-	
+
 	size = 0;
 	i = 0;
 	j = 0;

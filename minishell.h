@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 19:52:02 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/19 23:53:13 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/20 17:44:47 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,9 @@ typedef struct s_expand
 	char					*chars;
 	char					*temp;
 	int						i;
+	int						j;
+	int						k;
+	int						len;
 }							t_expand;
 
 typedef struct s_redirection
@@ -61,7 +64,7 @@ typedef struct s_redirection
 typedef struct s_token
 {
 	t_redirection			*red;
-	int fd;
+	int						fd;
 	char					*cmd;
 	char					**arg;
 	struct s_token			*next;
@@ -115,5 +118,6 @@ int							word_len(char *words);
 int							word_len_single(char *words);
 int							len(char *words);
 int							here_doc(t_token *p);
+char						*fst_chars(char *no_quotes, int i);
 
 #endif
