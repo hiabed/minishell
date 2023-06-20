@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 21:53:19 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/19 23:55:40 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/20 15:42:18 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -227,7 +227,7 @@ void	infos_without_quotes(t_token *ptr, char **envp)
 			else if(data->red->type == 2)
 				data->fd = open(data->red->file, O_RDONLY, 0777);
 			else if(data->red->type == 1)
-				data->fd = open(data->red->file, O_CREAT, O_WRONLY, 0777);
+				data->fd = open(data->red->file, O_CREAT, O_WRONLY, O_TRUNC, 0777);
 			// printf("type: %d\n", data->red->type);
 			// printf("limiter: %s\n", data->red->limiter);
 			// printf("file: %s\n", data->red->file);
