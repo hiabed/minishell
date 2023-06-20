@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 19:52:02 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/20 18:10:29 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/20 22:37:23 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,7 @@ char						*join_heredoc_to_be_one(char *words);
 char						*fill_expand(char *str, char **envp);
 void	infos_without_quotes(t_token *ptr,
 							char **envp);
+void						print_data(t_token *ptr);
 void						skip_quotes(char *words, int *i, int *count);
 int							count_strings(char *words);
 int							word_len(char *words);
@@ -128,5 +129,8 @@ char						*fill_word_with_d_quotes(char *str, char *words,
 char						*fill_word_with_s_quotes(char *str, char *words,
 								int *i);
 char						*fill_expand(char *str, char **envp);
+int							empty_string_condition(char *words, int *i);
+void						p_in_double_quotes(char *cmd);
+void						s_in_double_quotes(char *token);
 
 #endif

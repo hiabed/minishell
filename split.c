@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 14:34:41 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/18 14:52:59 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/20 22:44:52 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,12 @@ void	replace_pipe_in_quotes(char *cmd)
 	{
 		if (cmd[i] == '\"')
 		{
+			p_in_double_quotes(&cmd[i]);
 			i++;
 			while (cmd[i] && cmd[i] != '\"')
-			{
-				if (cmd[i] == '|')
-					cmd[i] = -1;
 				i++;
-			}
-			if (cmd[i] && cmd[i] == '\"')
+			if (cmd[i] && cmd[i + 1] && cmd[i] == '\"')
 				i++;
-			if (!cmd[i])
-				break ;
 		}
 		else if (cmd[i] == '\'')
 		{
@@ -84,17 +79,12 @@ void	replace_space_in_quotes(char *token)
 	{
 		if (token[i] == '\"')
 		{
+			s_in_double_quotes(&token[i]);
 			i++;
 			while (token[i] && token[i] != '\"')
-			{
-				if (token[i] == ' ')
-					token[i] = -2;
 				i++;
-			}
-			if (token[i] && token[i] == '\"')
+			if (token[i] && token[i + 1] && token[i] == '\"')
 				i++;
-			if (!token[i])
-				break ;
 		}
 		else if (token[i] == '\'')
 		{
@@ -138,96 +128,29 @@ char	**split_with_space(char *token)
 	return (words);
 }
 
-void	replace_red_in_quotes(char *cmd)
+void	bring_back(char *cmd)
 {
 	int i;
 
 	i = 0;
 	while (cmd[i])
 	{
-		if (cmd[i] == '\"')
+		if (cmd[i] == -1)
+			cmd[i] = '>';
+		else if (cmd[i] == -2)
+			cmd[i] = '<';
+		else if (cmd[i] == -3)
 		{
-			i++;
-			while (cmd[i] && cmd[i] != '\"')
-			{
-				if (cmd[i] == '>')
-					cmd[i] = -1;
-				else if(cmd[i] == '<')
-					cmd[i] = -2;
-				else if(cmd[i] == '>' && cmd[i + 1] == '>')
-				{
-					cmd[i++] = -3;
-					cmd[i] = -3;
-				}
-				else if (cmd[i] == '<' && cmd[i + 1] == '<')
-				{
-					cmd[i++] = -4;
-					cmd[i] = -4;
-				}
-				i++;
-			}
-			if (cmd[i] && cmd[i] == '\"')
-				i++;
-			if (!cmd[i])
-				break ;
+			cmd[i++] = '>';
+			cmd[i] = '>';
 		}
-		else if (cmd[i] == '\'')
+		else if (cmd[i] == -4)
 		{
-			i++;
-			while (cmd[i] && cmd[i] != '\'')
-			{
-				if (cmd[i] == '>')
-					cmd[i] = -1;
-				else if(cmd[i] == '<')
-					cmd[i] = -2;
-				else if (cmd[i] == '>' && cmd[i + 1] == '>')
-				{
-					cmd[i++] = -3;
-					cmd[i] = -3;
-				}
-				else if (cmd[i] == '<' && cmd[i + 1] == '<')
-				{
-					cmd[i++] = -4;
-					cmd[i] = -4;
-				}
-				i++;
-			}
-			if (cmd[i] && cmd[i] == '\'')
-				i++;
-			if (!cmd[i])
-				break ;
+			cmd[i++] = '<';
+			cmd[i] = '<';
 		}
+		else if (!cmd[i])
+			break ;
 		i++;
-	}
-}
-
-void	bring_back(char *cmd)
-{
-	int		i;
-
-	i = 0;
-	while (cmd)
-	{
-		i = 0;
-		while (cmd[i])
-		{
-			if (cmd[i] == -1)
-				cmd[i] = '>';
-			else if (cmd[i] == -2)
-				cmd[i] = '<';
-			else if (cmd[i] == -3)
-			{
-				cmd[i++] = '>';
-				cmd[i] = '>';
-			}
-			else if (cmd[i] == -4)
-			{
-				cmd[i++] = '<';
-				cmd[i] = '<';
-			}
-			else if(!cmd[i])
-				break;
-			i++;
-		}
 	}
 }

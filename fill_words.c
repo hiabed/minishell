@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 18:05:20 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/20 18:09:36 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/20 21:52:45 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,13 @@ char	*fill_word_with_s_quotes(char *str, char *words, int *i)
 
 	j = 0;
 	(*i)++;
-	str = malloc(word_len(&words[*i]) + 1);
+	str = malloc(word_len_single(&words[*i]) + 1);
 	while (words[*i] && words[*i] != '\'')
 		str[j++] = words[(*i)++];
 	str[j] = '\0';
 	if (words[*i])
 		(*i)++;
+	printf("str: %s\n", str);
 	return (str);
 }
 

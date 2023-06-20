@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 22:14:50 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/18 18:42:16 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/20 18:24:49 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,19 +53,6 @@ char	*ft_limiter_name(char *words, int type)
 	return (NULL);
 }
 
-int	ft_number_type(char *words)
-{
-	if (words[0] == '<' && words[1] == '<')
-		return (4);
-	else if (words[0] == '>' && words[1] == '>')
-		return (3);
-	else if (words[0] == '<')
-		return (2);
-	else if (words[0] == '>')
-		return (1);
-	return (0);
-}
-
 t_redirection	*ft_lstnew_red(char **words, char **envp)
 {
 	t_redirection	*red_node;
@@ -81,25 +68,12 @@ t_redirection	*ft_lstnew_red(char **words, char **envp)
 	return (red_node);
 }
 
-void	ft_print(char **s)
-{
-	int	i;
-
-	i = 0;
-	while (s[i])
-	{
-		printf("str == %s\n", s[i]);
-		i++;
-	}
-	printf("last str == %s\n", s[i]);
-}
-
 t_redirection	*ft_redirections(char **words, char **envp)
 {
-	t_redirection *lst;
+	t_redirection	*lst;
+	int				i;
+
 	lst = NULL;
-	int i;
-	
 	i = 0;
 	while (words[i])
 	{
