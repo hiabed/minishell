@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 19:52:02 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/20 17:57:50 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/20 18:10:29 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,5 +120,13 @@ int							len(char *words);
 int							here_doc(t_token *p);
 char						*fst_chars(char *no_quotes, int i);
 char						*only_dollar(char *no_q, char *temp);
+char						*empty_string(char *str, int *i);
+char						*fill_word_without_quotes(char *str, char *words,
+								int *i);
+char						*fill_word_with_d_quotes(char *str, char *words,
+								int *i);
+char						*fill_word_with_s_quotes(char *str, char *words,
+								int *i);
+char						*fill_expand(char *str, char **envp);
 
 #endif
