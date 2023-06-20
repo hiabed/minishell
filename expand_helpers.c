@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 20:35:28 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/20 17:48:15 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/20 18:01:02 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,10 +102,10 @@ char	*env_key(char *envp)
 
 char	*env_value(char *envp)
 {
-	int i;
-	int j;
-	int size;
-	char *value;
+	int		i;
+	int		j;
+	int		size;
+	char	*value;
 
 	size = 0;
 	i = 0;

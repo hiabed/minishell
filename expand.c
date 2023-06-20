@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 17:59:21 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/20 17:56:49 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/20 18:00:27 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,10 @@ char	*ft_compare(char *no_quotes, char *chars, char **envp, char *temp)
 	{
 		if (!ft_strcmp(env_key(envp[j]), ft_extract_key(no_quotes)))
 		{
-			value = env_value(envp[j]);         //mhassani
-			value = ft_strjoin(dollars, value); //$$mhassani
+			value = env_value(envp[j]);
+			value = ft_strjoin(dollars, value);
 			if (!temp)
-				result = ft_strjoin(chars, value); //aa$mhassani
+				result = ft_strjoin(chars, value);
 			else
 				result = ft_strjoin(temp, value);
 			temp = result;
@@ -92,7 +92,7 @@ char	*not_compare_keys(char *no_quotes, int *i, char *temp)
 	value = NULL;
 	result = NULL;
 	dollars = ft_strjoin(print_not_expanded_dollars(&no_quotes[*i]),
-							ft_extract_key(&no_quotes[*i]));
+			ft_extract_key(&no_quotes[*i]));
 	if (!temp)
 		result = ft_strjoin(chars, dollars);
 	else
@@ -105,8 +105,8 @@ char	*not_compare_keys(char *no_quotes, int *i, char *temp)
 
 char	*ft_expand_value(char *no_q, char **envp)
 {
-	char *temp;
-	int i;
+	char	*temp;
+	int		i;
 
 	i = 0;
 	temp = NULL;
