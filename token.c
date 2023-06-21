@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 15:45:14 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/18 13:50:25 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/21 20:35:39 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	count_args(char **words)
 			i++;
 		else if (!cmd && words[i][0] != '>' && words[i][0] != '<')
 			cmd++;
-		else if(cmd && (words[i][0] != '>' && words[i][0] != '<'))
+		else if (cmd && (words[i][0] != '>' && words[i][0] != '<'))
 			k++;
 		i++;
 	}
@@ -53,7 +53,7 @@ char	**ft_arg(char **words)
 			i++;
 		else if (!cmd && words[i][0] != '>' && words[i][0] != '<')
 			cmd++;
-		else if(cmd && (words[i][0] != '>' && words[i][0] != '<'))
+		else if (cmd && (words[i][0] != '>' && words[i][0] != '<'))
 			args[j++] = words[i];
 		i++;
 	}
@@ -96,7 +96,7 @@ void	ft_lstadd_token(t_token **lst, t_token *new)
 
 t_token	*ft_lstnew_token(char **words, char **envp)
 {
-	t_token *head;
+	t_token	*head;
 
 	head = malloc(sizeof(t_token));
 	if (!head)

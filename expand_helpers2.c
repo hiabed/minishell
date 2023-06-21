@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 20:44:34 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/20 17:57:00 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/21 19:07:54 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ char	*only_dollar(char *no_q, char *temp)
 	}
 	else if (no_q[i] == '$' && no_q[i + 1] == '?')
 	{
-		status = ft_itoa(g.exit_status);
+		status = ft_itoa(g_g.exit_status);
 		return (status);
 	}
 	return (temp);

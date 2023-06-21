@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 18:05:20 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/21 18:39:16 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/21 19:11:49 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*empty_string(char *str, int *i)
 	return (str);
 }
 
-char	*fill_word_without_quotes(char *str, char *words, int *i)
+char	*fill_word_without_q(char *str, char *words, int *i)
 {
 	int	j;
 
@@ -32,7 +32,7 @@ char	*fill_word_without_quotes(char *str, char *words, int *i)
 	return (str);
 }
 
-char	*fill_word_with_d_quotes(char *str, char *words, int *i)
+char	*fill_word_with_d_q(char *str, char *words, int *i)
 {
 	int	j;
 
@@ -47,7 +47,7 @@ char	*fill_word_with_d_quotes(char *str, char *words, int *i)
 	return (str);
 }
 
-char	*fill_word_with_s_quotes(char *str, char *words, int *i)
+char	*fill_word_with_s_q(char *str, char *words, int *i)
 {
 	int	j;
 

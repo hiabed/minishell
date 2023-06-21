@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 14:15:26 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/16 18:30:35 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/21 20:34:43 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@ int	cmd_lenght(char *s)
 	count = 0;
 	while (s[i])
 	{
-		if(s[i] == 34 || s[i] == 39)
+		if (s[i] == 34 || s[i] == 39)
 		{
 			i++;
-			while(s[i] && (s[i] != 34 && s[i] != 39))
+			while (s[i] && (s[i] != 34 && s[i] != 39))
 				i++;
 		}
 		if (s[i] == '>' || s[i] == '<')
@@ -36,26 +36,32 @@ int	cmd_lenght(char *s)
 	return (len);
 }
 
+void	fill_inside_d_quotes(int *i, int *j, char *ptr, char *s1)
+{
+	ptr[(*j)++] = s1[(*i)++];
+	while (s1[*i] && s1[*i] != '\"')
+		ptr[(*j)++] = s1[(*i)++];
+	ptr[(*j)++] = s1[*i];
+}
+
+void	fill_inside_s_quotes(int *i, int *j, char *ptr, char *s1)
+{
+	ptr[(*j)++] = s1[(*i)++];
+	while (s1[*i] && s1[*i] != '\'')
+		ptr[(*j)++] = s1[(*i)++];
+	ptr[(*j)++] = s1[*i];
+}
+
 void	ft_fill_ptr(char *s1, char *ptr, int i, int j)
 {
 	while (s1[i])
 	{
-		if(s1[i] == '\"')
-		{
-			ptr[j++] = s1[i++];
-			while(s1[i] && s1[i] != '\"')
-				ptr[j++] = s1[i++];
-			ptr[j++] = s1[i];
-		}
-		else if(s1[i] == '\'')
-		{
-			ptr[j++] = s1[i++];
-			while(s1[i] && s1[i] != '\'')
-				ptr[j++] = s1[i++];
-			ptr[j++] = s1[i];
-		}
+		if (s1[i] == '\"')
+			fill_inside_d_quotes(&i, &j, ptr, s1);
+		else if (s1[i] == '\'')
+			fill_inside_s_quotes(&i, &j, ptr, s1);
 		else if ((s1[i] == '>' && s1[i + 1] == '>') || (s1[i] == '<' && s1[i
-				+ 1] == '<'))
+					+ 1] == '<'))
 		{
 			ptr[j++] = ' ';
 			ptr[j++] = s1[i++];

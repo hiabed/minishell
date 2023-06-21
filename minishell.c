@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 21:53:19 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/21 18:51:55 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/21 19:13:51 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,29 +16,29 @@ char	**strings_without_quotes(char *words, char **envp)
 {
 	int	i;
 
-	g.str = malloc((count_strings(words) + 1) * sizeof(char *));
-	g.k = 0;
+	g_g.str = malloc((count_strings(words) + 1) * sizeof(char *));
+	g_g.k = 0;
 	i = 0;
 	while (words[i])
 	{
 		if (empty_string_condition(words, &i))
-			g.str[g.k] = empty_string(g.str[g.k], &i);
+			g_g.str[g_g.k] = empty_string(g_g.str[g_g.k], &i);
 		else if ((words[i] == '\"' && words[i + 1] != '\"'))
 		{
-			g.str[g.k] = fill_word_with_d_quotes(g.str[g.k], words, &i);
-			g.str[g.k] = fill_expand(g.str[g.k], envp);
+			g_g.str[g_g.k] = fill_word_with_d_q(g_g.str[g_g.k], words, &i);
+			g_g.str[g_g.k] = fill_expand(g_g.str[g_g.k], envp);
 		}
 		else if ((words[i] == '\'' && words[i + 1] != '\''))
-			g.str[g.k] = fill_word_with_s_quotes(g.str[g.k], words, &i);
+			g_g.str[g_g.k] = fill_word_with_s_q(g_g.str[g_g.k], words, &i);
 		else if (words[i] != '\"' && words[i] != '\'')
 		{
-			g.str[g.k] = fill_word_without_quotes(g.str[g.k], words, &i);
-			g.str[g.k] = fill_expand(g.str[g.k], envp);
+			g_g.str[g_g.k] = fill_word_without_q(g_g.str[g_g.k], words, &i);
+			g_g.str[g_g.k] = fill_expand(g_g.str[g_g.k], envp);
 		}
-		g.k++;
+		g_g.k++;
 	}
-	g.str[g.k] = NULL;
-	return (g.str);
+	g_g.str[g_g.k] = NULL;
+	return (g_g.str);
 }
 
 char	*join_strings_to_be_one(char *words, char **envp)
@@ -68,23 +68,23 @@ char	**heredoc_without_quotes(char *words)
 {
 	int	i;
 
-	g.str = malloc((count_strings(words) + 1) * sizeof(char *));
-	g.k = 0;
+	g_g.str = malloc((count_strings(words) + 1) * sizeof(char *));
+	g_g.k = 0;
 	i = 0;
 	while (words[i])
 	{
 		if (empty_string_condition(words, &i))
-			g.str[g.k] = empty_string(g.str[g.k], &i);
+			g_g.str[g_g.k] = empty_string(g_g.str[g_g.k], &i);
 		else if ((words[i] == '\"' && words[i + 1] != '\"'))
-			g.str[g.k] = fill_word_with_d_quotes(g.str[g.k], words, &i);
+			g_g.str[g_g.k] = fill_word_with_d_q(g_g.str[g_g.k], words, &i);
 		else if ((words[i] == '\'' && words[i + 1] != '\''))
-			g.str[g.k] = fill_word_with_s_quotes(g.str[g.k], words, &i);
+			g_g.str[g_g.k] = fill_word_with_s_q(g_g.str[g_g.k], words, &i);
 		else if (words[i] != '\"' && words[i] != '\'')
-			g.str[g.k] = fill_word_without_quotes(g.str[g.k], words, &i);
-		g.k++;
+			g_g.str[g_g.k] = fill_word_without_q(g_g.str[g_g.k], words, &i);
+		g_g.k++;
 	}
-	g.str[g.k] = NULL;
-	return (g.str);
+	g_g.str[g_g.k] = NULL;
+	return (g_g.str);
 }
 
 char	*join_heredoc_to_be_one(char *words)
@@ -116,42 +116,42 @@ int	main(int ac, char **av, char **envp)
 
 	ac = 0;
 	av = NULL;
-	g.data = malloc(sizeof(t_data));
-	if (!g.data)
+	g_g.data = malloc(sizeof(t_data));
+	if (!g_g.data)
 		return (0);
-	g.exit_status = 1;
+	g_g.exit_status = 1;
 	while (1)
 	{
-		g.cmd = readline("minishell-3.2$ ");
-		if (!g.cmd)
+		g_g.cmd = readline("minishell-3.2$ ");
+		if (!g_g.cmd)
 		{
 			printf("exit\n");
 			exit(EXIT_FAILURE);
 		}
-		add_history(g.cmd);
-		g.data->error = 0;
-		g.data->flag = 0;
-		syntax_errors(g.cmd, g.data);
-		if (!g.data->error)
+		add_history(g_g.cmd);
+		g_g.data->error = 0;
+		g_g.data->flag = 0;
+		syntax_errors(g_g.cmd, g_g.data);
+		if (!g_g.data->error)
 		{
-			g.command = space_arround_red(g.cmd);
-			replace_pipe_in_quotes(g.command);
-			g.tokens = split_with_pipe(g.command);
+			g_g.command = space_arround_red(g_g.cmd);
+			replace_pipe_in_quotes(g_g.command);
+			g_g.tokens = split_with_pipe(g_g.command);
 			i = 0;
-			g.ptr = NULL;
-			while (g.tokens[i])
+			g_g.ptr = NULL;
+			while (g_g.tokens[i])
 			{
-				replace_space_in_quotes(g.tokens[i]);
-				g.words = split_with_space(g.tokens[i]);
-				ft_lstadd_token(&g.ptr, ft_lstnew_token(g.words, envp));
+				replace_space_in_quotes(g_g.tokens[i]);
+				g_g.words = split_with_space(g_g.tokens[i]);
+				ft_lstadd_token(&g_g.ptr, ft_lstnew_token(g_g.words, envp));
 				i++;
 			}
-			infos_without_quotes(g.ptr, envp);
-			print_data(g.ptr);
+			infos_without_quotes(g_g.ptr, envp);
+			print_data(g_g.ptr);
 		}
 	}
-	free(g.cmd);
-	free(g.command);
+	free(g_g.cmd);
+	free(g_g.command);
 	system("leaks minishell");
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 19:52:02 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/21 18:50:09 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/21 19:12:28 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,22 +48,20 @@ typedef struct s_token
 	struct s_token			*next;
 }							t_token;
 
-typedef struct g
+typedef struct s_glob
 {
-	char **str;
-	char	*cmd;
-	char	*command;
-	char	**tokens;
-	char	**words;
-	t_data	*data;
-	t_token	*ptr;
-	int exit_status;
-	int i;
-	int j;
-	int k;
-}							g_var;
-
-g_var						g;
+	char					**str;
+	char					*cmd;
+	char					*command;
+	char					**tokens;
+	char					**words;
+	t_data					*data;
+	t_token					*ptr;
+	int						exit_status;
+	int						i;
+	int						j;
+	int						k;
+}							t_glob;
 
 typedef struct s_expand
 {
@@ -76,6 +74,8 @@ typedef struct s_expand
 	int						k;
 	int						len;
 }							t_expand;
+
+t_glob						g_g;
 
 void						pipe_syntax_errors(char *cmd, t_data *data);
 void						red_syntax_errors(char *cmd, t_data *data);
@@ -92,8 +92,8 @@ char						**ft_arg(char **words);
 char						*ft_cmd(char **words);
 t_token						*ft_lstnew_token(char **words, char **envp);
 void						ft_lstadd_token(t_token **lst, t_token *new);
-void	ft_lstadd_red(t_redirection **lst,
-					t_redirection *new);
+void						ft_lstadd_red(t_redirection **lst,
+								t_redirection *new);
 char						*ft_file_name(char *words, char **envp, int type);
 char						*ft_limiter_name(char *words, int type);
 int							ft_number_type(char *words);
@@ -117,8 +117,8 @@ int							num_dollars(char *no_quotes);
 char						**heredoc_without_quotes(char *words);
 char						*join_heredoc_to_be_one(char *words);
 char						*fill_expand(char *str, char **envp);
-void	infos_without_quotes(t_token *ptr,
-							char **envp);
+void						infos_without_quotes(t_token *ptr,
+								char **envp);
 void						print_data(t_token *ptr);
 void						skip_d_quotes(char *words, int *i, int *count);
 void						skip_s_quotes(char *words, int *i, int *count);
@@ -130,11 +130,11 @@ int							here_doc(t_token *p);
 char						*fst_chars(char *no_quotes, int i);
 char						*only_dollar(char *no_q, char *temp);
 char						*empty_string(char *str, int *i);
-char						*fill_word_without_quotes(char *str, char *words,
+char						*fill_word_without_q(char *str, char *words,
 								int *i);
-char						*fill_word_with_d_quotes(char *str, char *words,
+char						*fill_word_with_d_q(char *str, char *words,
 								int *i);
-char						*fill_word_with_s_quotes(char *str, char *words,
+char						*fill_word_with_s_q(char *str, char *words,
 								int *i);
 char						*fill_expand(char *str, char **envp);
 int							empty_string_condition(char *words, int *i);

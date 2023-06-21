@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 14:34:41 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/21 16:45:33 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/21 19:08:45 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,30 +14,30 @@
 
 void	replace_pipe_in_quotes(char *cmd)
 {
-	g.i = 0;
-	while (cmd[g.i])
+	g_g.i = 0;
+	while (cmd[g_g.i])
 	{
-		if (cmd[g.i] == '\"')
+		if (cmd[g_g.i] == '\"')
 		{
-			p_in_double_quotes(&cmd[g.i]);
-			increment_i(cmd, &g.i);
+			p_in_double_quotes(&cmd[g_g.i]);
+			increment_i(cmd, &g_g.i);
 		}
-		else if (cmd[g.i] == '\'')
+		else if (cmd[g_g.i] == '\'')
 		{
-			g.i++;
-			while (cmd[g.i] && cmd[g.i] != '\'')
+			g_g.i++;
+			while (cmd[g_g.i] && cmd[g_g.i] != '\'')
 			{
-				if (cmd[g.i] == '|')
-					cmd[g.i] = -1;
-				g.i++;
+				if (cmd[g_g.i] == '|')
+					cmd[g_g.i] = -1;
+				g_g.i++;
 			}
-			if (cmd[g.i] && cmd[g.i] == '\'')
-				g.i++;
-			if (!cmd[g.i])
+			if (cmd[g_g.i] && cmd[g_g.i] == '\'')
+				g_g.i++;
+			if (!cmd[g_g.i])
 				break ;
 		}
 		else
-			g.i++;
+			g_g.i++;
 	}
 }
 
@@ -66,30 +66,30 @@ char	**split_with_pipe(char *cmd)
 
 void	replace_space_in_quotes(char *token)
 {
-	g.i = 0;
-	while (token[g.i])
+	g_g.i = 0;
+	while (token[g_g.i])
 	{
-		if (token[g.i] == '\"')
+		if (token[g_g.i] == '\"')
 		{
-			s_in_double_quotes(&token[g.i]);
-			increment_i(token, &g.i);
+			s_in_double_quotes(&token[g_g.i]);
+			increment_i(token, &g_g.i);
 		}
-		else if (token[g.i] == '\'')
+		else if (token[g_g.i] == '\'')
 		{
-			g.i++;
-			while (token[g.i] && token[g.i] != '\'')
+			g_g.i++;
+			while (token[g_g.i] && token[g_g.i] != '\'')
 			{
-				if (token[g.i] == ' ')
-					token[g.i] = -2;
-				g.i++;
+				if (token[g_g.i] == ' ')
+					token[g_g.i] = -2;
+				g_g.i++;
 			}
-			if (token[g.i] && token[g.i] == '\'')
-				g.i++;
-			if (!token[g.i])
+			if (token[g_g.i] && token[g_g.i] == '\'')
+				g_g.i++;
+			if (!token[g_g.i])
 				break ;
 		}
 		else
-			g.i++;
+			g_g.i++;
 	}
 }
 
