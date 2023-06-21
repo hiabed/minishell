@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 23:32:42 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/21 18:39:42 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/21 21:55:39 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,29 @@ int	here_doc(t_token *p)
 	free(line);
 	close(pipefd[1]);
 	return (pipefd[0]);
+}
+
+char	**heredoc_without_quotes(char *words)
+{
+	int	i;
+
+	g_g.str = malloc((count_strings(words) + 1) * sizeof(char *));
+	g_g.k = 0;
+	i = 0;
+	while (words[i])
+	{
+		if (empty_string_condition(words, &i))
+			g_g.str[g_g.k] = empty_string(g_g.str[g_g.k], &i);
+		else if ((words[i] == '\"' && words[i + 1] != '\"'))
+			g_g.str[g_g.k] = fill_word_with_d_q(g_g.str[g_g.k], words, &i);
+		else if ((words[i] == '\'' && words[i + 1] != '\''))
+			g_g.str[g_g.k] = fill_word_with_s_q(g_g.str[g_g.k], words, &i);
+		else if (words[i] != '\"' && words[i] != '\'')
+			g_g.str[g_g.k] = fill_word_without_q(g_g.str[g_g.k], words, &i);
+		g_g.k++;
+	}
+	g_g.str[g_g.k] = NULL;
+	return (g_g.str);
 }
 
 void	skip_d_quotes(char *words, int *i, int *count)

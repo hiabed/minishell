@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 19:52:02 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/21 19:12:28 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/21 21:48:27 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,15 +132,20 @@ char						*only_dollar(char *no_q, char *temp);
 char						*empty_string(char *str, int *i);
 char						*fill_word_without_q(char *str, char *words,
 								int *i);
-char						*fill_word_with_d_q(char *str, char *words,
-								int *i);
-char						*fill_word_with_s_q(char *str, char *words,
-								int *i);
+char						*fill_word_with_d_q(char *str, char *words, int *i);
+char						*fill_word_with_s_q(char *str, char *words, int *i);
 char						*fill_expand(char *str, char **envp);
 int							empty_string_condition(char *words, int *i);
 void						p_in_double_quotes(char *cmd);
 void						s_in_double_quotes(char *token);
 void						increment_i(char *cmd, int *i);
 void						redirections(t_token *ptr);
+void						d_quotes_errors(int *dcotes, int *cotes, int *i,
+								char *cmd);
+void						s_quotes_errors(int *dcotes, int *cotes, int *i,
+								char *cmd);
+void						outfile_errors(char *cmd, int *i, t_data *data);
+void						skip_db_quotes(int *i, char *cmd);
+void						skip_sin_quotes(int *i, char *cmd);
 
 #endif
