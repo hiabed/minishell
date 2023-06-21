@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 18:13:02 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/21 17:24:40 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/21 18:21:32 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,29 @@ int	ft_number_type(char *words)
 	return (0);
 }
 
+void	redirections(t_token *ptr)
+{
+	t_redirection	*redir;
+
+	redir = ptr->red;
+	while (redir)
+	{
+		if (redir->type == 4)
+			here_doc(ptr);
+		else if (redir->type == 3)
+			ptr->out = open(redir->file, O_CREAT, O_RDWR, O_APPEND, 0777);
+		else if (redir->type == 1)
+			ptr->out = open(redir->file, O_CREAT, O_RDWR, O_TRUNC, 0777);
+		else if (redir->type == 2)
+			ptr->fd = open(redir->file, O_RDONLY, 0777);
+		redir = redir->next;
+	}
+}
+
 void	infos_without_quotes(t_token *ptr, char **envp)
 {
 	int		i;
 	t_token	*data;
-	t_redirection *redir;
 
 	data = ptr;
 	while (data)
@@ -50,21 +68,7 @@ void	infos_without_quotes(t_token *ptr, char **envp)
 			data->arg[i] = join_strings_to_be_one(data->arg[i], envp);
 			i++;
 		}
-		redir = data->red;
-		while (redir)
-		{
-			if (redir->type == 4)
-				here_doc(data);
-			else if (redir->type == 3)
-				data->out = open(redir->file, O_CREAT, O_RDWR, O_APPEND,
-						0777);
-			else if (redir->type == 1)
-				data->out = open(redir->file, O_CREAT, O_RDWR, O_TRUNC,
-						0777);
-			else if (redir->type == 2)
-				data->fd = open(redir->file, O_RDONLY, 0777);
-			redir = redir->next;
-		}
+		redirections(ptr);
 		data = data->next;
 	}
 }

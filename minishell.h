@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 19:52:02 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/21 17:18:56 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/21 17:52:51 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,5 +137,6 @@ int							empty_string_condition(char *words, int *i);
 void						p_in_double_quotes(char *cmd);
 void						s_in_double_quotes(char *token);
 void						increment_i(char *cmd, int *i);
+void						redirections(t_token *ptr);
 
 #endif
