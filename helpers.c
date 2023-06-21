@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 18:13:02 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/21 18:21:32 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/21 18:39:26 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,8 @@ void	infos_without_quotes(t_token *ptr, char **envp)
 
 void	print_data(t_token *ptr)
 {
-	int i;
-	t_token *data;
+	int		i;
+	t_token	*data;
 
 	data = ptr;
 	while (data)

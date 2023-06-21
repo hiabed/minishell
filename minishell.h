@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 19:52:02 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/21 17:52:51 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/21 18:50:09 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,19 +20,6 @@
 # include <stdlib.h>
 # include <string.h>
 
-typedef struct g
-{
-	char **str;
-	int exit_status;
-	int i;
-	int j;
-	int k;
-}							g_var;
-
-g_var						g;
-
-int							exit_status;
-
 typedef struct s_data
 {
 	int						i;
@@ -42,18 +29,6 @@ typedef struct s_data
 	int						cote_in_dcotes;
 	int						dcotes_in_cote;
 }							t_data;
-
-typedef struct s_expand
-{
-	char					**envp;
-	char					*no_q;
-	char					*chars;
-	char					*temp;
-	int						i;
-	int						j;
-	int						k;
-	int						len;
-}							t_expand;
 
 typedef struct s_redirection
 {
@@ -72,6 +47,35 @@ typedef struct s_token
 	char					**arg;
 	struct s_token			*next;
 }							t_token;
+
+typedef struct g
+{
+	char **str;
+	char	*cmd;
+	char	*command;
+	char	**tokens;
+	char	**words;
+	t_data	*data;
+	t_token	*ptr;
+	int exit_status;
+	int i;
+	int j;
+	int k;
+}							g_var;
+
+g_var						g;
+
+typedef struct s_expand
+{
+	char					**envp;
+	char					*no_q;
+	char					*chars;
+	char					*temp;
+	int						i;
+	int						j;
+	int						k;
+	int						len;
+}							t_expand;
 
 void						pipe_syntax_errors(char *cmd, t_data *data);
 void						red_syntax_errors(char *cmd, t_data *data);

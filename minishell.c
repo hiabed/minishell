@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 21:53:19 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/20 18:21:55 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/21 18:51:55 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,52 +112,46 @@ char	*join_heredoc_to_be_one(char *words)
 
 int	main(int ac, char **av, char **envp)
 {
-	char	*cmd;
-	char	*command;
-	char	**tokens;
-	char	**words;
-	t_data	*data;
-	t_token	*ptr;
-	int		i;
+	int	i;
 
 	ac = 0;
 	av = NULL;
-	data = malloc(sizeof(t_data));
-	if (!data)
+	g.data = malloc(sizeof(t_data));
+	if (!g.data)
 		return (0);
 	g.exit_status = 1;
 	while (1)
 	{
-		cmd = readline("minishell-3.2$ ");
-		if (!cmd)
+		g.cmd = readline("minishell-3.2$ ");
+		if (!g.cmd)
 		{
 			printf("exit\n");
 			exit(EXIT_FAILURE);
 		}
-		add_history(cmd);
-		data->error = 0;
-		data->flag = 0;
-		syntax_errors(cmd, data);
-		if (!data->error)
+		add_history(g.cmd);
+		g.data->error = 0;
+		g.data->flag = 0;
+		syntax_errors(g.cmd, g.data);
+		if (!g.data->error)
 		{
-			command = space_arround_red(cmd);
-			replace_pipe_in_quotes(command);
-			tokens = split_with_pipe(command);
+			g.command = space_arround_red(g.cmd);
+			replace_pipe_in_quotes(g.command);
+			g.tokens = split_with_pipe(g.command);
 			i = 0;
-			ptr = NULL;
-			while (tokens[i])
+			g.ptr = NULL;
+			while (g.tokens[i])
 			{
-				replace_space_in_quotes(tokens[i]);
-				words = split_with_space(tokens[i]);
-				ft_lstadd_token(&ptr, ft_lstnew_token(words, envp));
+				replace_space_in_quotes(g.tokens[i]);
+				g.words = split_with_space(g.tokens[i]);
+				ft_lstadd_token(&g.ptr, ft_lstnew_token(g.words, envp));
 				i++;
 			}
-			infos_without_quotes(ptr, envp);
-			print_data(ptr);
+			infos_without_quotes(g.ptr, envp);
+			print_data(g.ptr);
 		}
 	}
-	free(cmd);
-	free(command);
+	free(g.cmd);
+	free(g.command);
 	system("leaks minishell");
 	return (0);
 }
