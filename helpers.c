@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 18:13:02 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/20 22:15:50 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/21 17:24:40 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	infos_without_quotes(t_token *ptr, char **envp)
 {
 	int		i;
 	t_token	*data;
+	t_redirection *redir;
 
 	data = ptr;
 	while (data)
@@ -49,19 +50,20 @@ void	infos_without_quotes(t_token *ptr, char **envp)
 			data->arg[i] = join_strings_to_be_one(data->arg[i], envp);
 			i++;
 		}
-		while (data->red)
+		redir = data->red;
+		while (redir)
 		{
-			if (data->red->type == 4)
+			if (redir->type == 4)
 				here_doc(data);
-			else if (data->red->type == 3)
-				data->fd = open(data->red->file, O_CREAT, O_WRONLY, O_APPEND,
+			else if (redir->type == 3)
+				data->out = open(redir->file, O_CREAT, O_RDWR, O_APPEND,
 						0777);
-			else if (data->red->type == 2)
-				data->fd = open(data->red->file, O_RDONLY, 0777);
-			else if (data->red->type == 1)
-				data->fd = open(data->red->file, O_CREAT, O_WRONLY, O_TRUNC,
+			else if (redir->type == 1)
+				data->out = open(redir->file, O_CREAT, O_RDWR, O_TRUNC,
 						0777);
-			data->red = data->red->next;
+			else if (redir->type == 2)
+				data->fd = open(redir->file, O_RDONLY, 0777);
+			redir = redir->next;
 		}
 		data = data->next;
 	}

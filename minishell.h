@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 19:52:02 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/21 16:45:55 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/21 17:18:56 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ typedef struct s_token
 {
 	t_redirection			*red;
 	int						fd;
+	int						out;
 	char					*cmd;
 	char					**arg;
 	struct s_token			*next;
