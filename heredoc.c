@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 23:32:42 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/21 16:39:28 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/21 16:45:42 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,13 @@ void	skip_s_quotes(char *words, int *i, int *count)
 	if (words[*i])
 		(*i)++;
 	(*count)++;
+}
+
+void	increment_i(char *cmd, int *i)
+{
+	(*i)++;
+	while (cmd[*i] && cmd[*i] != '\"')
+		(*i)++;
+	if (cmd[*i] && cmd[*i + 1] && cmd[*i] == '\"')
+		(*i)++;
 }

@@ -6,49 +6,38 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 14:34:41 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/21 16:10:21 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/21 16:45:33 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void increment_i(char *cmd, int *i)
-{
-	(*i)++;
-	while (cmd[*i] && cmd[*i] != '\"')
-		(*i)++;
-	if (cmd[*i] && cmd[*i + 1] && cmd[*i] == '\"')
-		(*i)++;
-}
-
 void	replace_pipe_in_quotes(char *cmd)
 {
-	int	i;
-
-	i = 0;
-	while (cmd[i])
+	g.i = 0;
+	while (cmd[g.i])
 	{
-		if (cmd[i] == '\"')
+		if (cmd[g.i] == '\"')
 		{
-			p_in_double_quotes(&cmd[i]);
-			increment_i(cmd, &i);
+			p_in_double_quotes(&cmd[g.i]);
+			increment_i(cmd, &g.i);
 		}
-		else if (cmd[i] == '\'')
+		else if (cmd[g.i] == '\'')
 		{
-			i++;
-			while (cmd[i] && cmd[i] != '\'')
+			g.i++;
+			while (cmd[g.i] && cmd[g.i] != '\'')
 			{
-				if (cmd[i] == '|')
-					cmd[i] = -1;
-				i++;
+				if (cmd[g.i] == '|')
+					cmd[g.i] = -1;
+				g.i++;
 			}
-			if (cmd[i] && cmd[i] == '\'')
-				i++;
-			if (!cmd[i])
+			if (cmd[g.i] && cmd[g.i] == '\'')
+				g.i++;
+			if (!cmd[g.i])
 				break ;
 		}
 		else
-			i++;
+			g.i++;
 	}
 }
 
@@ -77,32 +66,30 @@ char	**split_with_pipe(char *cmd)
 
 void	replace_space_in_quotes(char *token)
 {
-	int	i;
-
-	i = 0;
-	while (token[i])
+	g.i = 0;
+	while (token[g.i])
 	{
-		if (token[i] == '\"')
+		if (token[g.i] == '\"')
 		{
-			s_in_double_quotes(&token[i]);
-			increment_i(token, &i);
+			s_in_double_quotes(&token[g.i]);
+			increment_i(token, &g.i);
 		}
-		else if (token[i] == '\'')
+		else if (token[g.i] == '\'')
 		{
-			i++;
-			while (token[i] && token[i] != '\'')
+			g.i++;
+			while (token[g.i] && token[g.i] != '\'')
 			{
-				if (token[i] == ' ')
-					token[i] = -2;
-				i++;
+				if (token[g.i] == ' ')
+					token[g.i] = -2;
+				g.i++;
 			}
-			if (token[i] && token[i] == '\'')
-				i++;
-			if (!token[i])
+			if (token[g.i] && token[g.i] == '\'')
+				g.i++;
+			if (!token[g.i])
 				break ;
 		}
 		else
-			i++;
+			g.i++;
 	}
 }
 
@@ -131,7 +118,7 @@ char	**split_with_space(char *token)
 
 void	bring_back(char *cmd)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (cmd[i])

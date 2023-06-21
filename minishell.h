@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 19:52:02 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/21 16:39:51 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/21 16:45:55 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,11 @@
 
 typedef struct g
 {
-	int exit_status;
-	int k;
 	char **str;
+	int exit_status;
+	int i;
+	int j;
+	int k;
 }							g_var;
 
 g_var						g;
@@ -133,5 +135,6 @@ char						*fill_expand(char *str, char **envp);
 int							empty_string_condition(char *words, int *i);
 void						p_in_double_quotes(char *cmd);
 void						s_in_double_quotes(char *token);
+void						increment_i(char *cmd, int *i);
 
 #endif
