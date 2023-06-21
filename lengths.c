@@ -6,21 +6,11 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 20:31:36 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/20 18:03:16 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/21 16:39:24 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	skip_quotes(char *words, int *i, int *count)
-{
-	(*i)++;
-	while (words[*i] && words[*i] != '\"')
-		(*i)++;
-	if (words[*i])
-		(*i)++;
-	(*count)++;
-}
 
 int	count_strings(char *words)
 {
@@ -38,9 +28,9 @@ int	count_strings(char *words)
 			count++;
 		}
 		else if (words[i] == '\"' && words[i + 1] != '\"')
-			skip_quotes(words, &i, &count);
+			skip_d_quotes(words, &i, &count);
 		else if (words[i] == '\'' && words[i + 1] != '\'')
-			skip_quotes(words, &i, &count);
+			skip_s_quotes(words, &i, &count);
 		else if (words[i] != '\"' && words[i] != '\'')
 		{
 			while (words[i] && (words[i] != '\"' && words[i] != '\''))

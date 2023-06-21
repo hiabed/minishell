@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 21:30:24 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/08 17:25:18 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/21 16:20:08 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,25 @@ void	pipe_syntax_errors(char *cmd, t_data *data)
 	if (cmd[i] == '|' && !data->error)
 	{
 		write(2, "minishell: syntax error\n", 24);
-		write(2, "Pipe\n", 5);
+		write(2, "Pipe1\n", 6);
 		data->error++;
 	}
 	while (cmd[i])
 	{
-        if (cmd[i] == 34 || cmd[i] == 39) //(");
+        if (cmd[i] == '\"')
 		{
 			i++;
-			while (cmd[i] && (cmd[i] != 34 || cmd[i] == 39)) // != (");
+			while (cmd[i] && cmd[i] != '\"')
 				i++;
-			if (cmd[i] == 34 || cmd[i] == 39) // == (");
+			if (cmd[i] == '\"')
+                i++;
+		}
+		else if (cmd[i] == '\'')
+		{
+			i++;
+			while (cmd[i] && cmd[i] != '\'')
+				i++;
+			if (cmd[i] == '\'')
                 i++;
 		}
 		else if (cmd[i] == '|')
@@ -45,7 +53,7 @@ void	pipe_syntax_errors(char *cmd, t_data *data)
 			if ((cmd[i] == '\0' || cmd[i] == '|') && !data->error)
 			{
 				write(2, "minishell: syntax error\n", 24);
-				write(2, "Pipe\n", 5);
+				write(2, "Pipe2\n", 6);
 				data->error++;
 			}
 		}
@@ -63,12 +71,20 @@ void	red_syntax_errors(char *cmd, t_data *data)
 		i++;
 	while (cmd[i])
 	{
-        if (cmd[i] == 34 || cmd[i] == 39) //(");
+        if (cmd[i] == '\"')
 		{
 			i++;
-			while (cmd[i] && (cmd[i] != 34 || cmd[i] == 39)) // != (");
+			while (cmd[i] && cmd[i] != '\"')
 				i++;
-			if (cmd[i] == 34 || cmd[i] == 39) // == (");
+			if (cmd[i] == '\"')
+                i++;
+		}
+		else if (cmd[i] == '\'')
+		{
+			i++;
+			while (cmd[i] && cmd[i] != '\'')
+				i++;
+			if (cmd[i] == '\'')
                 i++;
 		}
 		else if (cmd[i] == '>')

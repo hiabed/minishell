@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 23:32:42 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/20 18:02:46 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/21 16:39:28 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,24 @@ int	here_doc(t_token *p)
 	free(line);
 	close(pipefd[1]);
 	return (pipefd[0]);
+}
+
+void	skip_d_quotes(char *words, int *i, int *count)
+{
+	(*i)++;
+	while (words[*i] && words[*i] != '\"')
+		(*i)++;
+	if (words[*i])
+		(*i)++;
+	(*count)++;
+}
+
+void	skip_s_quotes(char *words, int *i, int *count)
+{
+	(*i)++;
+	while (words[*i] && words[*i] != '\'')
+		(*i)++;
+	if (words[*i])
+		(*i)++;
+	(*count)++;
 }

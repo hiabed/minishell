@@ -6,11 +6,20 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 14:34:41 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/20 22:44:52 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/21 16:10:21 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void increment_i(char *cmd, int *i)
+{
+	(*i)++;
+	while (cmd[*i] && cmd[*i] != '\"')
+		(*i)++;
+	if (cmd[*i] && cmd[*i + 1] && cmd[*i] == '\"')
+		(*i)++;
+}
 
 void	replace_pipe_in_quotes(char *cmd)
 {
@@ -22,11 +31,7 @@ void	replace_pipe_in_quotes(char *cmd)
 		if (cmd[i] == '\"')
 		{
 			p_in_double_quotes(&cmd[i]);
-			i++;
-			while (cmd[i] && cmd[i] != '\"')
-				i++;
-			if (cmd[i] && cmd[i + 1] && cmd[i] == '\"')
-				i++;
+			increment_i(cmd, &i);
 		}
 		else if (cmd[i] == '\'')
 		{
@@ -80,11 +85,7 @@ void	replace_space_in_quotes(char *token)
 		if (token[i] == '\"')
 		{
 			s_in_double_quotes(&token[i]);
-			i++;
-			while (token[i] && token[i] != '\"')
-				i++;
-			if (token[i] && token[i + 1] && token[i] == '\"')
-				i++;
+			increment_i(token, &i);
 		}
 		else if (token[i] == '\'')
 		{
