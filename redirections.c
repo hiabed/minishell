@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 22:14:50 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/20 18:24:49 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/22 16:27:23 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	ft_lstadd_red(t_redirection **lst, t_redirection *new)
 	ptr->next = new;
 }
 
-char	*ft_file_name(char *words, char **envp, int type)
+char	*ft_file_name(char *words, t_env *envp, int type)
 {
 	int	i;
 
@@ -53,7 +53,7 @@ char	*ft_limiter_name(char *words, int type)
 	return (NULL);
 }
 
-t_redirection	*ft_lstnew_red(char **words, char **envp)
+t_redirection	*ft_lstnew_red(char **words, t_env *envp)
 {
 	t_redirection	*red_node;
 
@@ -68,7 +68,7 @@ t_redirection	*ft_lstnew_red(char **words, char **envp)
 	return (red_node);
 }
 
-t_redirection	*ft_redirections(char **words, char **envp)
+t_redirection	*ft_redirections(char **words, t_env *envp)
 {
 	t_redirection	*lst;
 	int				i;

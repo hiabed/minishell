@@ -6,11 +6,22 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 20:35:28 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/20 18:01:02 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/24 18:48:10 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+char	*env_value(t_env *a, char *s)
+{
+	while (a)
+	{
+		if (ft_strcmp(a->key, s) == 0)
+			return (a->valuer);
+		a = a->next;
+	}
+	return (NULL);
+}
 
 char	*print_expanded_dollars(char *no_quotes)
 {
@@ -79,49 +90,4 @@ char	*after_expand(char *no_quotes)
 		var[exp.j++] = no_quotes[exp.i++];
 	var[exp.j] = '\0';
 	return (var);
-}
-
-char	*env_key(char *envp)
-{
-	int		i;
-	int		j;
-	char	*key;
-
-	i = 0;
-	j = 0;
-	key = NULL;
-	while (envp[i] && envp[i] != '=')
-		i++;
-	key = malloc(i + 1);
-	i = 0;
-	while (envp[i] && envp[i] != '=')
-		key[j++] = envp[i++];
-	key[j] = '\0';
-	return (key);
-}
-
-char	*env_value(char *envp)
-{
-	int		i;
-	int		j;
-	int		size;
-	char	*value;
-
-	size = 0;
-	i = 0;
-	j = 0;
-	value = NULL;
-	while (envp[i] && envp[i] != '=')
-		i++;
-	i++;
-	j = i;
-	while (envp[j])
-		j++;
-	size = j - i;
-	value = malloc(size + 1);
-	j = 0;
-	while (envp[i])
-		value[j++] = envp[i++];
-	value[j] = '\0';
-	return (value);
 }

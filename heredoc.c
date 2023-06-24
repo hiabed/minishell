@@ -6,17 +6,20 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 23:32:42 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/21 21:55:39 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/22 23:18:12 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	here_doc(t_token *p)
+int	here_doc(t_token *p, t_env *envp)
 {
 	char	*line;
+	int		i;
 	int		pipefd[2];
+	envp = NULL;
 
+	i = 0;
 	pipe(pipefd);
 	while (1)
 	{
@@ -28,9 +31,11 @@ int	here_doc(t_token *p)
 		}
 		if (!(ft_strcmp(p->red->limiter, line)))
 			break ;
-		ft_putstr_fd(line, pipefd[1]);
+		ft_putendl_fd(line, pipefd[1]);
+		//close(pipefd[0]);
 		free(line);
 	}
+	g_g.pipefd = pipefd[0];
 	free(line);
 	close(pipefd[1]);
 	return (pipefd[0]);

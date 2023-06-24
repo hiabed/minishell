@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 15:45:14 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/21 20:35:39 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/22 16:26:27 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void	ft_lstadd_token(t_token **lst, t_token *new)
 	ptr->next = new;
 }
 
-t_token	*ft_lstnew_token(char **words, char **envp)
+t_token	*ft_lstnew_token(char **words, t_env *envp)
 {
 	t_token	*head;
 

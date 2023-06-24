@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 18:05:20 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/21 19:11:49 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/23 18:30:51 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ char	*fill_word_with_s_q(char *str, char *words, int *i)
 	return (str);
 }
 
-char	*fill_expand(char *str, char **envp)
+char	*fill_expand(char *str, t_env *envp)
 {
 	int		i;
 	int		j;
@@ -75,7 +75,7 @@ char	*fill_expand(char *str, char **envp)
 		j = 0;
 		size = (ft_strlen(ft_expand_value(str, envp)) + 1);
 		expand = ft_expand_value(str, envp);
-		str = malloc(size + 1);
+		str = malloc(size);
 		while (expand[j])
 			str[i++] = expand[j++];
 		str[i] = '\0';

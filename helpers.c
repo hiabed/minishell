@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 18:13:02 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/21 22:42:08 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/23 18:45:46 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,26 +33,28 @@ int	ft_number_type(char *words)
 	return (0);
 }
 
-void	redirections(t_token *ptr)
+void	redirections(t_token *ptr, t_env *envp)
 {
-	t_redirection	*redir;
+	t_token	*redir = ptr;
 
-	redir = ptr->red;
-	while (redir)
+	redir->red = ptr->red;
+	redir->out = 0;
+	redir->fd = 0;
+	while (redir->red)
 	{
-		if (redir->type == 4)
-			here_doc(ptr);
-		else if (redir->type == 3)
-			ptr->out = open(redir->file, O_CREAT | O_RDWR | O_APPEND, 0777);
-		else if (redir->type == 1)
-			ptr->out = open(redir->file, O_CREAT | O_RDWR | O_TRUNC, 0777);
-		else if (redir->type == 2)
-			ptr->fd = open(redir->file, O_RDONLY, 0777);
-		redir = redir->next;
+		if (redir->red->type == 4)
+			here_doc(redir, envp);
+		else if (redir->red->type == 3)
+			redir->out = open(redir->red->file, O_CREAT | O_RDWR | O_APPEND, 0644);
+		else if (redir->red->type == 1)
+			redir->out = open(redir->red->file, O_CREAT | O_RDWR | O_TRUNC, 0644);
+		else if (redir->red->type == 2)
+			redir->fd = open(redir->red->file, O_RDONLY, 0644);
+		redir->red = redir->red->next;
 	}
 }
 
-void	infos_without_quotes(t_token *ptr, char **envp)
+void	infos_without_quotes(t_token *ptr, t_env *envp)
 {
 	int		i;
 	t_token	*data;
@@ -68,7 +70,7 @@ void	infos_without_quotes(t_token *ptr, char **envp)
 			data->arg[i] = join_strings_to_be_one(data->arg[i], envp);
 			i++;
 		}
-		redirections(ptr);
+		redirections(data, envp);
 		data = data->next;
 	}
 }
@@ -79,6 +81,7 @@ void	print_data(t_token *ptr)
 	t_token	*data;
 
 	data = ptr;
+	
 	while (data)
 	{
 		i = 0;

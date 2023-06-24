@@ -6,13 +6,13 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 21:53:19 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/21 21:56:02 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/23 18:58:49 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	**strings_without_quotes(char *words, char **envp)
+char	**strings_without_quotes(char *words, t_env *envp)
 {
 	int	i;
 
@@ -41,7 +41,7 @@ char	**strings_without_quotes(char *words, char **envp)
 	return (g_g.str);
 }
 
-char	*join_strings_to_be_one(char *words, char **envp)
+char	*join_strings_to_be_one(char *words, t_env *envp)
 {
 	int		i;
 	char	*joined_string;
@@ -87,7 +87,7 @@ char	*join_heredoc_to_be_one(char *words)
 	return (joined_string);
 }
 
-void	minishell(t_data *data, char *cmd, char **envp)
+void	minishell(t_data *data, char *cmd, t_env *envp)
 {
 	int	i;
 
@@ -109,7 +109,7 @@ void	minishell(t_data *data, char *cmd, char **envp)
 			i++;
 		}
 		infos_without_quotes(g_g.ptr, envp);
-		print_data(g_g.ptr);
+		// print_data(g_g.ptr);
 	}
 }
 
@@ -118,6 +118,14 @@ int	main(int ac, char **av, char **envp)
 	ac = 0;
 	av = NULL;
 	g_g.data = malloc(sizeof(t_data));
+	t_env *env;
+	env = NULL;
+	int h = 0;
+	while(envp[h])
+	{
+		ft_lstadd_back_env(&env, ft_lstnew_env(envp[h]));
+		h++;
+	}
 	if (!g_g.data)
 		return (0);
 	g_g.exit_status = 1;
@@ -130,7 +138,8 @@ int	main(int ac, char **av, char **envp)
 			exit(EXIT_FAILURE);
 		}
 		add_history(g_g.cmd);
-		minishell(g_g.data, g_g.cmd, envp);
+		minishell(g_g.data, g_g.cmd, env);
+		chaeck_builtins(env, g_g.ptr);
 	}
 	free(g_g.cmd);
 	free(g_g.command);

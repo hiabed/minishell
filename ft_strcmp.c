@@ -3,21 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mkatfi <mkatfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/22 20:08:59 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/17 23:38:56 by mhassani         ###   ########.fr       */
+/*   Created: 2023/06/12 16:55:59 by mkatfi            #+#    #+#             */
+/*   Updated: 2023/06/21 22:34:55 by mkatfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include"minishell.h"
 
-int	ft_strcmp(char *s1, char *s2)
+int	ft_strcmp(char* str1, char* str2)
 {
-	unsigned int	i;
+	size_t			i;
+	unsigned char	*s1;
+	unsigned char	*s2;
 
+	s1 = (unsigned char *)str1;
+	s2 = (unsigned char *)str2;
 	i = 0;
-	while (s1[i] && (s1[i] == s2[i]))
+	if (!s1 || !s2)
+		return (0);
+	while ((s1[i] || s2[i]))
+	{
+		if (s1[i] != s2[i])
+			return (s1[i] - s2[i]);
 		i++;
-	return (s1[i] - s2[i]);
+	}	
+	return (0);
 }
