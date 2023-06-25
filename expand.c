@@ -38,15 +38,18 @@ char	*ft_compare(char *no_quotes, t_env *envp, char *temp)
 	g_g.result = NULL;
 	g_g.i = 0;
 	g_g.value = env_value(envp, ft_extract_key(no_quotes));
-	if(!g_g.value && g_g.count == 1 && only_dollar(no_quotes))
-		g_g.value = only_dollar(no_quotes);
-	if(!g_g.value && g_g.count == 1 && !ft_isalnum(no_quotes[g_g.i]))
+	if (!g_g.value && g_g.count == 1 && exit_status(no_quotes))
+	{
+		// printf("here\n");
+		g_g.value = exit_status(no_quotes);
+	}
+	else if (!g_g.value && g_g.count == 1 && !ft_isalnum(no_quotes[g_g.i]))
 	{
 		g_g.value = malloc(2);
 		g_g.value[0] = '$';
 		g_g.value[1] = '\0';
 	}
-	if (!g_g.value)
+	else if (!g_g.value)
 	{
 		g_g.value = malloc(1);
 		g_g.value[0] = '\0';

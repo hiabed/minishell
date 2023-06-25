@@ -79,14 +79,25 @@ char	*fst_chars(char *no_quotes, int i)
 	return (chars);
 }
 
-char	*only_dollar(char *no_q)
+char	*exit_status(char *no_q)
 {
-	int i =0;
+	int i = 0;
+	int len = 0;
 	char *status;
-	if (no_q[i] == '?')
+	if (no_q[i] == '?' && (no_q[i + 1] == ' ' || !no_q[i + 1]))
 	{
 		status = ft_itoa(g_g.exit_status);
 		return (status);
+	}
+	else if (no_q[i] == '?' && no_q[i + 1] && no_q[i + 1] != ' ')
+	{
+		while(no_q[i] && no_q[i] != ' ')
+		{
+			len++;
+			i++;
+		}
+		status = ft_strjoin(ft_itoa(g_g.exit_status), ft_substr(no_q, 1, len - 1));
+		return status;
 	}
 	return (NULL);
 }

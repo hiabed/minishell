@@ -143,7 +143,7 @@ int							word_len_single(char *words);
 int							len(char *words);
 int							here_doc(t_token *p, t_env *envp); //here;
 char						*fst_chars(char *no_quotes, int i);
-char						*only_dollar(char *no_q);
+char						*exit_status(char *no_q);
 char						*empty_string(char *str, int *i);
 char						*fill_word_without_q(char *str, char *words,
 								int *i);
@@ -154,7 +154,7 @@ int							empty_string_condition(char *words, int *i);
 void						p_in_double_quotes(char *cmd);
 void						s_in_double_quotes(char *token);
 void						increment_i(char *cmd, int *i);
-char						*ft_expand_value(char *no_q, t_env *envp); //here
+char	*ft_expand_value(char *no_q, t_env *envp); //here
 void						redirections(t_token *ptr, t_env *envp);   //here;
 void						d_quotes_errors(int *dcotes, int *cotes, int *i,
 								char *cmd);
@@ -163,8 +163,8 @@ void						s_quotes_errors(int *dcotes, int *cotes, int *i,
 void						outfile_errors(char *cmd, int *i, t_data *data);
 void						skip_db_quotes(int *i, char *cmd);
 void						skip_sin_quotes(int *i, char *cmd);
-char						*ft_expand_value_here_doc(char *no_q, t_env *envp); //here
-char						**ft_expand_value_export(char *no_q, t_env *envp); //here
+char	*ft_expand_value_here_doc(char *no_q, t_env *envp); //here
+char	**ft_expand_value_export(char *no_q, t_env *envp);  //here
 // excution
 int							ft_size_n(char *s);
 void						ft_lstadd_back_env(t_env **lst, t_env *new);

@@ -45,7 +45,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 // {
 // 	char *s1 = "Helloworld";
 
-// 	printf("the substr is: %s\n", ft_substr(s1, 5, 12));
+// 	printf("the substr is: %s\n", ft_substr(s1, 5, 2));
 
 // 	return (0);
 // }
