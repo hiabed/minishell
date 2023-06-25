@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 20:44:34 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/24 18:48:06 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/24 23:54:10 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,23 +79,14 @@ char	*fst_chars(char *no_quotes, int i)
 	return (chars);
 }
 
-char	*only_dollar(char *no_q, char *temp)
+char	*only_dollar(char *no_q)
 {
-	int		i;
-	char	*status;
-
-	i = 0;
-	if (no_q[i] == '$' && !no_q[i + 1])
-	{
-		temp = malloc(2);
-		temp[0] = '$';
-		temp[1] = '\0';
-		return (temp);
-	}
-	else if (no_q[i] == '$' && no_q[i + 1] == '?')
+	int i =0;
+	char *status;
+	if (no_q[i] == '?')
 	{
 		status = ft_itoa(g_g.exit_status);
 		return (status);
 	}
-	return (temp);
+	return (NULL);
 }

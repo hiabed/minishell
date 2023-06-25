@@ -63,6 +63,7 @@ typedef struct s_glob
 	int						i;
 	int						j;
 	int						k;
+	int						count;
 	int						pipefd;
 	int						pipe_2;
 }							t_glob;
@@ -140,7 +141,7 @@ int							word_len_single(char *words);
 int							len(char *words);
 int							here_doc(t_token *p, t_env *envp); //here;
 char						*fst_chars(char *no_quotes, int i);
-char						*only_dollar(char *no_q, char *temp);
+char						*only_dollar(char *no_q);
 char						*empty_string(char *str, int *i);
 char						*fill_word_without_q(char *str, char *words,
 								int *i);

@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 17:59:21 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/24 21:24:36 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/24 23:56:17 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,20 @@ char	*ft_compare(char *no_quotes, t_env *envp, char *temp)
 	result = NULL;
 	i = 0;
 	value = env_value(envp, ft_extract_key(no_quotes));
-	if(!value)
+	if(!value && g_g.count == 1 && only_dollar(no_quotes))
 	{
-		value =malloc(1);
+		value = only_dollar(no_quotes);
+		printf("value: %s\n", value);
+	}
+	if(!value && g_g.count == 1)
+	{
+		value = malloc(2);
+		value[0] = '$';
+		value[1] = '\0';
+	}
+	if (!value)
+	{
+		value = malloc(1);
 		value[0] = '\0';
 	}
 	value = ft_strjoin(g_g.dollars, value);
@@ -60,6 +71,7 @@ char	*compare_keys(t_env *envp, char *no_quotes, int *i, char *temp)
 {
 	g_g.chars = fst_chars(no_quotes, 0);
 	g_g.dollars = print_expanded_dollars(&no_quotes[*i]);
+	g_g.count = num_dollars(&no_quotes[*i]);
 	while (no_quotes[*i] && no_quotes[(*i) + 1] && no_quotes[*i] == '$')
 		(*i)++;
 	temp = ft_compare(&no_quotes[*i], envp, temp);
@@ -115,18 +127,5 @@ char	*ft_expand_value(char *no_q, t_env *envp)
 		}
 		i++;
 	}
-	// temp = only_dollar(no_q, temp);
-	// i = 0;
-	// split = ft_split(temp, ' ');
-	// if (split && split[i])
-	// {
-	// 	printf("split[%d]: %s\n", i, split[i]);
-	// 	i++;
-	// }
-	// while(split && split[i])
-	// {
-	// 	printf("split[%d]: %s\n", i, split[i]);
-	// 	i++;
-	// }
 	return (temp);
 }
