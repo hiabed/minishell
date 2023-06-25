@@ -21,12 +21,12 @@ char	*ft_extract_key(char *no_q)
 	i = 0;
 	j = 0;
 	while (no_q[i] && no_q[i] != '\'' && no_q[i] != '+' && no_q[i] != '.'
-		&& no_q[i] != '$')
+		&& no_q[i] != '$' && no_q[i] != ' ' && no_q[i] != '\n')
 		i++;
 	var = malloc(i + 1);
 	i = 0;
 	while (no_q[i] && no_q[i] != '\'' && no_q[i] != '+' && no_q[i] != '.'
-		&& no_q[i] != '$' && no_q[i] != ' ')
+		&& no_q[i] != '$' && no_q[i] != ' ' && no_q[i] != '\n')
 		var[i++] = no_q[j++];
 	var[i] = '\0';
 	return (var);
@@ -37,12 +37,10 @@ char	*ft_compare(char *no_quotes, t_env *envp, char *temp)
 	g_g.value = NULL;
 	g_g.result = NULL;
 	g_g.i = 0;
+	
 	g_g.value = env_value(envp, ft_extract_key(no_quotes));
 	if (!g_g.value && g_g.count == 1 && exit_status(no_quotes))
-	{
-		// printf("here\n");
 		g_g.value = exit_status(no_quotes);
-	}
 	else if (!g_g.value && g_g.count == 1 && !ft_isalnum(no_quotes[g_g.i]))
 	{
 		g_g.value = malloc(2);
@@ -117,7 +115,10 @@ char	*ft_expand_value(char *no_q, t_env *envp)
 		if (no_q[i] == '$')
 		{
 			if (num_dollars(&no_q[i]) % 2 != 0)
+			{
 				temp = compare_keys(envp, no_q, &i, temp);
+				
+			}
 			else
 				temp = not_compare_keys(no_q, &i, temp);
 		}

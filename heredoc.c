@@ -17,7 +17,6 @@ int	here_doc(t_token *p, t_env *envp)
 	char	*line;
 	int		i;
 	int		pipefd[2];
-	envp = NULL;
 
 	i = 0;
 	pipe(pipefd);
@@ -31,14 +30,23 @@ int	here_doc(t_token *p, t_env *envp)
 		}
 		if (!(ft_strcmp(p->red->limiter, line)))
 			break ;
+		else if(!g_g.check && ft_expand_value(line, envp))
+			line = ft_expand_value(line, envp);
 		ft_putendl_fd(line, pipefd[1]);
-		//close(pipefd[0]);
 		free(line);
 	}
 	g_g.pipefd = pipefd[0];
 	free(line);
 	close(pipefd[1]);
 	return (pipefd[0]);
+}
+
+void	lim_check(char *words)
+{
+	if(words[0] == '\'' || words[0] == '\"')
+		g_g.check = 1;
+	else
+		g_g.check = 0;
 }
 
 char	**heredoc_without_quotes(char *words)
@@ -50,6 +58,7 @@ char	**heredoc_without_quotes(char *words)
 	i = 0;
 	while (words[i])
 	{
+		lim_check(words);
 		if (empty_string_condition(words, &i))
 			g_g.str[g_g.k] = empty_string(g_g.str[g_g.k], &i);
 		else if ((words[i] == '\"' && words[i + 1] != '\"'))

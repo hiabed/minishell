@@ -65,6 +65,7 @@ typedef struct s_glob
 	int						i;
 	int						j;
 	int						k;
+	int						check;
 	int						count;
 	int						pipefd;
 	int						pipe_2;
@@ -93,6 +94,7 @@ typedef struct s_env
 
 t_glob						g_g;
 
+void						lim_check(char *words);
 void						pipe_syntax_errors(char *cmd, t_data *data);
 void						red_syntax_errors(char *cmd, t_data *data);
 void						cotes_syntax_errors(char *cmd, t_data *data);
@@ -108,8 +110,8 @@ char						**ft_arg(char **words);
 char						*ft_cmd(char **words);
 t_token						*ft_lstnew_token(char **words, t_env *envp);
 void						ft_lstadd_token(t_token **lst, t_token *new);
-void	ft_lstadd_red(t_redirection **lst,
-					t_redirection *new);
+void						ft_lstadd_red(t_redirection **lst,
+								t_redirection *new);
 char						*ft_file_name(char *words, t_env *envp, int type);
 char						*ft_limiter_name(char *words, int type);
 int							ft_number_type(char *words);
@@ -132,8 +134,8 @@ int							num_dollars(char *no_quotes);
 char						**heredoc_without_quotes(char *words);
 char						*join_heredoc_to_be_one(char *words);
 char						*fill_expand(char *str, t_env *envp);
-void	infos_without_quotes(t_token *ptr,
-							t_env *envp);
+void						infos_without_quotes(t_token *ptr,
+								t_env *envp);
 void						print_data(t_token *ptr);
 void						skip_d_quotes(char *words, int *i, int *count);
 void						skip_s_quotes(char *words, int *i, int *count);
@@ -154,7 +156,7 @@ int							empty_string_condition(char *words, int *i);
 void						p_in_double_quotes(char *cmd);
 void						s_in_double_quotes(char *token);
 void						increment_i(char *cmd, int *i);
-char	*ft_expand_value(char *no_q, t_env *envp); //here
+char						*ft_expand_value(char *no_q, t_env *envp); //here
 void						redirections(t_token *ptr, t_env *envp);   //here;
 void						d_quotes_errors(int *dcotes, int *cotes, int *i,
 								char *cmd);
@@ -163,8 +165,6 @@ void						s_quotes_errors(int *dcotes, int *cotes, int *i,
 void						outfile_errors(char *cmd, int *i, t_data *data);
 void						skip_db_quotes(int *i, char *cmd);
 void						skip_sin_quotes(int *i, char *cmd);
-char	*ft_expand_value_here_doc(char *no_q, t_env *envp); //here
-char	**ft_expand_value_export(char *no_q, t_env *envp);  //here
 // excution
 int							ft_size_n(char *s);
 void						ft_lstadd_back_env(t_env **lst, t_env *new);

@@ -14,11 +14,12 @@
 
 char	*env_value(t_env *a, char *s)
 {
-	while (a)
+	t_env *ptr = a;
+	while (ptr)
 	{
-		if (ft_strcmp(a->key, s) == 0)
-			return (a->valuer);
-		a = a->next;
+		if (ft_strcmp(ptr->key, s) == 0)
+			return (ptr->valuer);
+		ptr = ptr->next;
 	}
 	return (NULL);
 }

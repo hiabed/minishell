@@ -16,6 +16,7 @@ char	**strings_without_quotes(char *words, t_env *envp)
 {
 	int	i;
 
+	// printf("words: %s\n", words);
 	g_g.str = malloc((count_strings(words) + 1) * sizeof(char *));
 	g_g.k = 0;
 	i = 0;
@@ -71,6 +72,7 @@ char	*join_heredoc_to_be_one(char *words)
 	char	**to_be_joined;
 	char	*temp;
 
+	
 	i = 0;
 	joined_string = words;
 	to_be_joined = heredoc_without_quotes(words);

@@ -36,14 +36,16 @@ int	ft_number_type(char *words)
 void	redirections(t_token *ptr, t_env *envp)
 {
 	t_token	*redir = ptr;
+	t_env 	*temp;
 
+	temp = envp;
 	redir->red = ptr->red;
 	redir->out = 0;
 	redir->fd = 0;
 	while (redir->red)
 	{
 		if (redir->red->type == 4)
-			here_doc(redir, envp);
+			here_doc(redir, temp);
 		else if (redir->red->type == 3)
 			redir->out = open(redir->red->file, O_CREAT | O_RDWR | O_APPEND, 0644);
 		else if (redir->red->type == 1)
