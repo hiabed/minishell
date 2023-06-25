@@ -50,6 +50,8 @@ typedef struct s_token
 
 typedef struct s_glob
 {
+	char					*value;
+	char					*result;
 	char					**str;
 	char					*cmd;
 	char					*dollars;

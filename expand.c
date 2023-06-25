@@ -34,36 +34,29 @@ char	*ft_extract_key(char *no_q)
 
 char	*ft_compare(char *no_quotes, t_env *envp, char *temp)
 {
-	char	*value;
-	char	*result;
-	int		i;
-
-	value = NULL;
-	result = NULL;
-	i = 0;
-	value = env_value(envp, ft_extract_key(no_quotes));
-	if(!value && g_g.count == 1 && only_dollar(no_quotes))
+	g_g.value = NULL;
+	g_g.result = NULL;
+	g_g.i = 0;
+	g_g.value = env_value(envp, ft_extract_key(no_quotes));
+	if(!g_g.value && g_g.count == 1 && only_dollar(no_quotes))
+		g_g.value = only_dollar(no_quotes);
+	if(!g_g.value && g_g.count == 1 && !ft_isalnum(no_quotes[g_g.i]))
 	{
-		value = only_dollar(no_quotes);
-		printf("value: %s\n", value);
+		g_g.value = malloc(2);
+		g_g.value[0] = '$';
+		g_g.value[1] = '\0';
 	}
-	if(!value && g_g.count == 1)
+	if (!g_g.value)
 	{
-		value = malloc(2);
-		value[0] = '$';
-		value[1] = '\0';
+		g_g.value = malloc(1);
+		g_g.value[0] = '\0';
 	}
-	if (!value)
-	{
-		value = malloc(1);
-		value[0] = '\0';
-	}
-	value = ft_strjoin(g_g.dollars, value);
+	g_g.value = ft_strjoin(g_g.dollars, g_g.value);
 	if (!temp)
-		result = ft_strjoin(g_g.chars, value);
+		g_g.result = ft_strjoin(g_g.chars, g_g.value);
 	else
-		result = ft_strjoin(temp, value);
-	temp = result;
+		g_g.result = ft_strjoin(temp, g_g.value);
+	temp = g_g.result;
 	return (temp);
 }
 
