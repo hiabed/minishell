@@ -77,9 +77,7 @@ char	*fill_expand(char *str, t_env *envp)
 		expand = ft_expand_value(str, envp);
 		str = malloc(size);
 		while (expand[j])
-		{
 			str[i++] = expand[j++];
-		}
 		str[i] = '\0';
 	}
 	return (str);

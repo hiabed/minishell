@@ -91,8 +91,6 @@ char	*join_heredoc_to_be_one(char *words)
 
 void	minishell(t_data *data, char *cmd, t_env *envp)
 {
-	int	i;
-
 	data->error = 0;
 	data->flag = 0;
 	syntax_errors(cmd, data);
@@ -101,14 +99,20 @@ void	minishell(t_data *data, char *cmd, t_env *envp)
 		g_g.command = space_arround_red(cmd);
 		replace_pipe_in_quotes(g_g.command);
 		g_g.tokens = split_with_pipe(g_g.command);
-		i = 0;
+		g_g.i = 0;
+		g_g.expand = 0;
 		g_g.ptr = NULL;
-		while (g_g.tokens[i])
+		while (g_g.tokens[g_g.i])
 		{
-			replace_space_in_quotes(g_g.tokens[i]);
-			g_g.words = split_with_space(g_g.tokens[i]);
+			if (g_g.tokens[g_g.i][0] == '$')
+			{
+				g_g.tokens[g_g.i] = ft_expand_value(g_g.tokens[g_g.i], envp);
+				g_g.expand = 1;
+			}
+			replace_space_in_quotes(g_g.tokens[g_g.i]);
+			g_g.words = split_with_space(g_g.tokens[g_g.i]);
 			ft_lstadd_token(&g_g.ptr, ft_lstnew_token(g_g.words, envp));
-			i++;
+			g_g.i++;
 		}
 		infos_without_quotes(g_g.ptr, envp);
 		// print_data(g_g.ptr);

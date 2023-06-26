@@ -64,6 +64,7 @@ typedef struct s_glob
 	int						exit_status;
 	int						i;
 	int						j;
+	int						expand;
 	int						k;
 	int						check;
 	int						count;
@@ -133,8 +134,7 @@ char						*print_expanded_dollars(char *no_quotes);
 int							num_dollars(char *no_quotes);
 char						**heredoc_without_quotes(char *words);
 char						*join_heredoc_to_be_one(char *words);
-char						*fill_expand(char *str, t_env *envp);
-void	infos_without_quotes(t_token *ptr,
+void						infos_without_quotes(t_token *ptr,
 							t_env *envp);
 void						print_data(t_token *ptr);
 void						skip_d_quotes(char *words, int *i, int *count);
@@ -151,13 +151,16 @@ char						*fill_word_without_q(char *str, char *words,
 								int *i);
 char						*fill_word_with_d_q(char *str, char *words, int *i);
 char						*fill_word_with_s_q(char *str, char *words, int *i);
-char						*fill_expand(char *str, t_env *envp);
+char						*fill_expand(char *str, t_env *envp);//here
+//char						**fill_expand(char *str, t_env *envp);
 int							empty_string_condition(char *words, int *i);
 void						p_in_double_quotes(char *cmd);
 void						s_in_double_quotes(char *token);
 void						increment_i(char *cmd, int *i);
-char	*ft_expand_value(char *no_q, t_env *envp); //here
-void						redirections(t_token *ptr, t_env *envp);   //here;
+//char						**ft_expand_value_split(char *no_q, t_env *envp);
+							//here
+char						*ft_expand_value(char *no_q, t_env *envp);
+void						redirections(t_token *ptr, t_env *envp); //here;
 void						d_quotes_errors(int *dcotes, int *cotes, int *i,
 								char *cmd);
 void						s_quotes_errors(int *dcotes, int *cotes, int *i,

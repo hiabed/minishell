@@ -116,7 +116,7 @@ char	*ft_expand_value(char *no_q, t_env *envp)
 			temp = get_env(&envp, "HOME");
 		else if (no_q[i] == '$')
 		{
-			if (num_dollars(&no_q[i]) % 2 != 0)
+			if (!g_g.expand && num_dollars(&no_q[i]) % 2 != 0)
 				temp = compare_keys(envp, no_q, &i, temp);
 			else
 				temp = not_compare_keys(no_q, &i, temp);
