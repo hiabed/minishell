@@ -62,6 +62,7 @@ typedef struct s_glob
 	t_data					*data;
 	t_token					*ptr;
 	int						exit_status;
+	int						l;
 	int						i;
 	int						j;
 	int						expand;
@@ -134,7 +135,7 @@ char						*print_expanded_dollars(char *no_quotes);
 int							num_dollars(char *no_quotes);
 char						**heredoc_without_quotes(char *words);
 char						*join_heredoc_to_be_one(char *words);
-void						infos_without_quotes(t_token *ptr,
+void	infos_without_quotes(t_token *ptr,
 							t_env *envp);
 void						print_data(t_token *ptr);
 void						skip_d_quotes(char *words, int *i, int *count);
@@ -151,14 +152,14 @@ char						*fill_word_without_q(char *str, char *words,
 								int *i);
 char						*fill_word_with_d_q(char *str, char *words, int *i);
 char						*fill_word_with_s_q(char *str, char *words, int *i);
-char						*fill_expand(char *str, t_env *envp);//here
+char	*fill_expand(char *str, t_env *envp); //here
 //char						**fill_expand(char *str, t_env *envp);
 int							empty_string_condition(char *words, int *i);
 void						p_in_double_quotes(char *cmd);
 void						s_in_double_quotes(char *token);
 void						increment_i(char *cmd, int *i);
 //char						**ft_expand_value_split(char *no_q, t_env *envp);
-							//here
+//here
 char						*ft_expand_value(char *no_q, t_env *envp);
 void						redirections(t_token *ptr, t_env *envp); //here;
 void						d_quotes_errors(int *dcotes, int *cotes, int *i,
@@ -170,15 +171,16 @@ void						skip_db_quotes(int *i, char *cmd);
 void						skip_sin_quotes(int *i, char *cmd);
 // excution;
 char						*get_env(t_env **ptr, char *s);
+char						**get_envrment(t_env *p);
 int							ft_size_n(char *s);
 void						ft_lstadd_back_env(t_env **lst, t_env *new);
 t_env						*ft_lstnew_env(char *content);
 void						ft_echo(char **cmd, int fd);
-void						ft_env(t_env *p);
-char						*ft_pwd(int k);
+void						ft_env(t_env *p, t_token *ptr);
+char						*ft_pwd(int k, int i);
 void						ft_cd(char **s, t_env **p);
-void						ft_export(char **str, t_env *p);
-void						ft_env(t_env *p);
+void						ft_export(char **s, t_env *p, int fd);
+// void						ft_env(t_env *p);
 char						**key_valu(char *s);
 void						ft_unset(t_env **p, char **s);
 int							icale(char *s);
@@ -187,10 +189,14 @@ int							cheack_arg(char *s);
 char						*str_join(char *s1, char *s2);
 int							is_he_in_env(t_env *a, char *s);
 void						riblce_v(t_env *a, char *s, char *c);
-void						ft_Error(char *s);
-void						sort_nb(t_env *a);
+void						ft_Error(char *s, int i);
+void						sort_nb(t_env *a, int fd);
 void						main_ex(t_env *p, t_token *ptr);
-void						chaeck_builtins(t_env *p, t_token *ptr);
-int							is_he_in_env(t_env *a, char *s);
+void						chaeck_builtins(t_env **p, t_token *ptr);
+char						**get_envrment(t_env *p);
+char						*get_path(t_env *p);
+char						**join_cmd(char *d, char **s);
+char						*get_path_cmd(t_env *p, char *d, char **s);
+char						*get_env(t_env **ptr, char *s);
 
 #endif

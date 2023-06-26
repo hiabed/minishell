@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mkatfi <mkatfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 21:25:12 by mkatfi            #+#    #+#             */
-/*   Updated: 2023/06/22 20:42:36 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/25 18:34:11 by mkatfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
-char *ft_pwd(int k)
+#include"../minishell.h"
+
+char *ft_pwd(int k, int i)
 {
     char* cwd;
 
@@ -19,7 +20,7 @@ char *ft_pwd(int k)
     if (getcwd(cwd, 1000) != NULL)
     {
         if (k)
-            printf("%s\n", cwd);
+            ft_putendl_fd(cwd, i);
         else
             return(cwd);
     }

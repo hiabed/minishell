@@ -72,7 +72,6 @@ char	*join_heredoc_to_be_one(char *words)
 	char	**to_be_joined;
 	char	*temp;
 
-	
 	i = 0;
 	joined_string = words;
 	to_be_joined = heredoc_without_quotes(words);
@@ -99,20 +98,20 @@ void	minishell(t_data *data, char *cmd, t_env *envp)
 		g_g.command = space_arround_red(cmd);
 		replace_pipe_in_quotes(g_g.command);
 		g_g.tokens = split_with_pipe(g_g.command);
-		g_g.i = 0;
+		g_g.l = 0;
 		g_g.expand = 0;
 		g_g.ptr = NULL;
-		while (g_g.tokens[g_g.i])
+		while (g_g.tokens[g_g.l])
 		{
-			if (g_g.tokens[g_g.i][0] == '$')
+			if (g_g.tokens[g_g.l][0] == '$')
 			{
-				g_g.tokens[g_g.i] = ft_expand_value(g_g.tokens[g_g.i], envp);
+				g_g.tokens[g_g.l] = ft_expand_value(g_g.tokens[g_g.l], envp);
 				g_g.expand = 1;
 			}
-			replace_space_in_quotes(g_g.tokens[g_g.i]);
-			g_g.words = split_with_space(g_g.tokens[g_g.i]);
+			replace_space_in_quotes(g_g.tokens[g_g.l]);
+			g_g.words = split_with_space(g_g.tokens[g_g.l]);
 			ft_lstadd_token(&g_g.ptr, ft_lstnew_token(g_g.words, envp));
-			g_g.i++;
+			g_g.l++;
 		}
 		infos_without_quotes(g_g.ptr, envp);
 		// print_data(g_g.ptr);
@@ -121,13 +120,15 @@ void	minishell(t_data *data, char *cmd, t_env *envp)
 
 int	main(int ac, char **av, char **envp)
 {
+	t_env	*env;
+	int		h;
+
 	ac = 0;
 	av = NULL;
 	g_g.data = malloc(sizeof(t_data));
-	t_env *env;
 	env = NULL;
-	int h = 0;
-	while(envp[h])
+	h = 0;
+	while (envp[h])
 	{
 		ft_lstadd_back_env(&env, ft_lstnew_env(envp[h]));
 		h++;
@@ -145,7 +146,7 @@ int	main(int ac, char **av, char **envp)
 		}
 		add_history(g_g.cmd);
 		minishell(g_g.data, g_g.cmd, env);
-		chaeck_builtins(env, g_g.ptr);
+		chaeck_builtins(&env, g_g.ptr);
 	}
 	free(g_g.cmd);
 	free(g_g.command);

@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export_util.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mkatfi <mkatfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 15:17:11 by mkatfi            #+#    #+#             */
-/*   Updated: 2023/06/24 20:55:09 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/25 11:32:51 by mkatfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include"../minishell.h"
 
 int cheack_arg(char* s)
 {
     int i = 0;
     if (s[i] && ft_isdigit(s[0]) == 1)
     {
-        ft_Error(s);
+        ft_Error(s, 1);
         g_g.exit_status = 1;
         return(0);
     }
@@ -27,7 +27,7 @@ int cheack_arg(char* s)
             return 1;
         if ((ft_isalnum(s[i]) == 0) && (s[i] != '_'))
         {
-            ft_Error(s);
+            ft_Error(s, 1);
             g_g.exit_status = 1;
             return(0);
         }
@@ -95,16 +95,12 @@ void riblce_v(t_env* a, char* s, char* c)
 int icale(char* s)
 {
     int i = 0;
-    while (s && s[i])
+    while (s[i])
     {
         if (s[i] == '=')
         {
-            i--;
-            if (i >= 0 && s[i] == '+')
-            {
-                i++;
+            if (s[i - 1] == '+')
                 return (2);
-            }
             return (1);
         }
         i++;

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mkatfi <mkatfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 18:31:39 by mkatfi            #+#    #+#             */
-/*   Updated: 2023/06/22 20:42:28 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/24 13:55:29 by mkatfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include"../minishell.h"
 
 long long	fft_atoi(const char* str)
 {
@@ -81,7 +81,7 @@ void ft_exit( char** s)
     }
     else if (ft_isdigit(s[0][0]) && s[1])
     {
-       g_g.exit_status = 1;
+        g_g.exit_status = 1;
         printf("too many arguments\n");
     } 
     else if (chaeck_nb(s[0]) == 0)

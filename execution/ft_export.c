@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mkatfi <mkatfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 16:40:11 by mkatfi            #+#    #+#             */
-/*   Updated: 2023/06/23 19:06:46 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/24 17:10:02 by mkatfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include"../minishell.h"
 
 char* valuer_of_key(t_env* a, char* s)
 {
@@ -20,7 +20,7 @@ char* valuer_of_key(t_env* a, char* s)
         {
             return(a->valuer);
         }
-            a = a->next;
+        a = a->next;
         }
         return(NULL);
 }
@@ -43,9 +43,7 @@ void to_be_contined(int i, t_env *p, char **s)
     if (is_he_in_env(p, a[0]) == 0)
     {
         if (icale(s[i]) == 1 || icale(s[i]) == 2)
-        {
             ft_lstadd_back_env(&p, ft_lstnew_env(s[i]));
-        }
         if (icale(s[i]) == 0)
         {
             ft_lstadd_back_env(&p, ft_lstnew_env(s[i]));
@@ -55,12 +53,12 @@ void to_be_contined(int i, t_env *p, char **s)
     }
 }
 
-void ft_export(char **s, t_env *p)
+void ft_export(char **s, t_env *p, int fd)
 {
     int i ;
  
     if (s == NULL || *s == NULL)
-        sort_nb(p);
+        sort_nb(p, fd);
     else
     {
         i = 0;

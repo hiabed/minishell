@@ -19,6 +19,7 @@ int	count_strings(char *words)
 
 	count = 0;
 	i = 0;
+	
 	while (words[i])
 	{
 		if (words[i + 1] && ((words[i] == '\"' && words[i + 1] == '\"')

@@ -3,33 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mkatfi <mkatfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 16:45:57 by mkatfi            #+#    #+#             */
-/*   Updated: 2023/06/22 20:42:45 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/25 19:11:57 by mkatfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include"../minishell.h"
 
 int cheack_arg_unset(char* s)
 {
     int i = 0;
     if (ft_isdigit(s[0]) == 1)
-    {
-        return 0;
-    }
+        return (0);
     while (s[i])
     {
         if (ft_isalnum(s[i]) == 0 && (s[i] != '_'))
         {
-            return 0;
+            return (0);
         }
         i++;
     }
-    return 1;
+    return (1);
 }
-void delet_any_node( t_env *curr, t_env *pre, char *s)
+
+void delet_any_node(t_env* curr, t_env* pre, char* s)
 { 
     while (curr != NULL)
     {
@@ -48,13 +47,14 @@ void delet_any_node( t_env *curr, t_env *pre, char *s)
     }
 
 }
+
 void to_be_comtinued_unset(t_env** p, char* s)
 {
     t_env* curr;
     t_env* pre = NULL;
-    
+
     curr = *p;
-    if (curr && !ft_strcmp(curr->key, s))
+    if (curr && ft_strcmp(curr->key, s) == 0)
     {
         *p = (*p)->next;
         free(curr->key);
@@ -68,7 +68,6 @@ void to_be_comtinued_unset(t_env** p, char* s)
 void ft_unset(t_env** p, char** s)
 {
     int i;
-
     i = 0;
     while (s[i])
     {

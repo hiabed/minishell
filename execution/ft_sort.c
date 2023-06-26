@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_sort.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mkatfi <mkatfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 13:44:32 by mkatfi            #+#    #+#             */
-/*   Updated: 2023/06/22 20:42:40 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/24 17:11:01 by mkatfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include"../minishell.h"
 
 void aray(t_env* a , int i)
 {
@@ -36,21 +36,21 @@ void aray(t_env* a , int i)
     t->index = i;
 }
 
-void writor(t_env* ptr1)
+void writor(t_env* ptr1, int fd)
 {
-    ft_putstr_fd("declare -x ", 1);
-    ft_putstr_fd(ptr1->key, 1);
+    ft_putstr_fd("declare -x ", fd);
+    ft_putstr_fd(ptr1->key, fd);
     if (ptr1->valuer != NULL)
     {
-        ft_putchar_fd('=', 1);
-        ft_putchar_fd('\"', 1);
-        ft_putstr_fd(ptr1->valuer, 1);
-        ft_putchar_fd('\"', 1);
+        ft_putchar_fd('=', fd);
+        ft_putchar_fd('\"', fd);
+        ft_putstr_fd(ptr1->valuer, fd);
+        ft_putchar_fd('\"', fd);
     }
-    ft_putchar_fd('\n', 1);
+    ft_putchar_fd('\n', fd);
 }
 
-void continued_sort_nb(int i, t_env* ptr, t_env* a)
+void continued_sort_nb(int i, t_env* ptr, t_env* a, int fd)
 {
     t_env* ptr1;
     
@@ -62,7 +62,7 @@ void continued_sort_nb(int i, t_env* ptr, t_env* a)
         while (ptr1)
         {
             if (i == ptr1->index)
-                writor(ptr1);
+                writor(ptr1, fd);
             ptr1 = ptr1->next;
         }
         i++;
@@ -70,7 +70,7 @@ void continued_sort_nb(int i, t_env* ptr, t_env* a)
     }
 }
 
-void	sort_nb(t_env* a)
+void	sort_nb(t_env* a, int fd)
 {
 	t_env	*ptr = a;
 	int		i;
@@ -81,7 +81,7 @@ void	sort_nb(t_env* a)
         aray(a, i++);
         ptr = ptr->next;
     }
-    continued_sort_nb(i, ptr, a);
+    continued_sort_nb(i, ptr, a, fd);
     while (a)
     {
         a->index = -1;
