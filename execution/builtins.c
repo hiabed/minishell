@@ -6,13 +6,26 @@
 /*   By: mkatfi <mkatfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 21:59:36 by mkatfi            #+#    #+#             */
-/*   Updated: 2023/06/25 18:33:32 by mkatfi           ###   ########.fr       */
+/*   Updated: 2023/07/05 20:20:30 by mkatfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"../minishell.h"
 
-void chaeck_builtins(t_env** p, t_token* ptr)
+int is_builtin_command(char* command)
+{
+    char* builtins[] = {"cd","pwd","echo","exit","export","env","unset"};
+    int i = 0;
+    while (i < 7)
+    {
+        if (ft_strcmp(command, builtins[i]) == 0)
+            return (1);
+        i++;
+    }
+    return (0);
+}
+
+void  chaeck_builtins(t_env** p, t_token* ptr)
 {
     if (ptr && ptr->cmd && ptr->arg)
     {
@@ -31,6 +44,14 @@ void chaeck_builtins(t_env** p, t_token* ptr)
         else if (!ft_strcmp(ptr->cmd, "exit"))
             ft_exit(ptr->arg);
         else
-            main_ex(*p, ptr);
+            return ;
+    }
+}
+
+void  chaeck_builtins1(t_env** p, t_token* ptr)
+{
+    if (ptr && ptr->cmd && ptr->arg)
+    {
+        main_ex(p, ptr);
     }
 }

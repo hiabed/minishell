@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 14:34:41 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/21 19:08:45 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/06 19:07:50 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ char	**split_with_space(char *token)
 
 	i = 0;
 	j = 0;
-	words = ft_split(token, ' ');
+	words = ft_split_space(token);
 	while (words[j])
 	{
 		i = 0;

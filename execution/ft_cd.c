@@ -6,7 +6,7 @@
 /*   By: mkatfi <mkatfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 22:39:28 by mkatfi            #+#    #+#             */
-/*   Updated: 2023/06/26 12:03:02 by mkatfi           ###   ########.fr       */
+/*   Updated: 2023/06/28 11:52:03 by mkatfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	ft_cd(char **s, t_env **p)
 		chaeck(p, "OLDPWD", ft_pwd(0, 0));
 		if (chdir(path_pwd) == -1)
 		{
-			write(2, "minishell : cd: HOME not set\n", 30);
+			ft_Error(" HOME ", 2);
 			g_g.exit_status = 1;
 		}
 		chaeck(p, "PWD", ft_pwd(0, 0));

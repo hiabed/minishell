@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helpers.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mkatfi <mkatfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 18:13:02 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/23 18:45:46 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/06/28 14:37:07 by mkatfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,12 @@ void	redirections(t_token *ptr, t_env *envp)
 
 	temp = envp;
 	redir->red = ptr->red;
-	redir->out = 0;
+	redir->out = 1;
 	redir->fd = 0;
 	while (redir->red)
 	{
 		if (redir->red->type == 4)
-			here_doc(redir, temp);
+			redir->fd = here_doc(redir, temp);
 		else if (redir->red->type == 3)
 			redir->out = open(redir->red->file, O_CREAT | O_RDWR | O_APPEND, 0644);
 		else if (redir->red->type == 1)

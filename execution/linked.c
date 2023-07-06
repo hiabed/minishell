@@ -6,7 +6,7 @@
 /*   By: mkatfi <mkatfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 19:41:33 by mkatfi            #+#    #+#             */
-/*   Updated: 2023/06/25 18:59:19 by mkatfi           ###   ########.fr       */
+/*   Updated: 2023/07/01 16:24:57 by mkatfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ t_env* ft_lstnew_env(char* content)
 	head->valuer = ft_strdup(s[1]);
 	head->index = -1;
 	head->next = NULL;
-	return (head);
+	return (freepath(s), head);
 }
 
 void	ft_lstadd_back_env(t_env **lst, t_env *new)

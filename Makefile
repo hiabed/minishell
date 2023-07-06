@@ -1,6 +1,6 @@
 NAME = minishell
 
-CFILES = minishell.c syntax_errors.c split.c redirections.c token.c \
+CFILES = minishell.c syntax_errors.c split.c redirections.c token.c split_spaces.c\
 		expand.c space_arround_red.c ft_strcmp.c lengths.c expand_helpers2.c \
 		expand_helpers.c heredoc.c fill_words.c helpers.c split_helper.c errors_helper.c \
 		./execution/ft_echo.c ./execution/linked.c ./execution/ft_pwd.c ./execution/ft_export.c \
@@ -12,14 +12,16 @@ LIBFT = ./libft/libft.a
 
 OBJ = ${CFILES:.c=.o}
 
-CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g3
+CFLAGS = -Wall -Wextra -Werror #-fsanitize=address -g3
+
+LIB = -lreadline -L /goinfre/mhassani/.brew/opt/readline/lib -I /goinfre/mhassani/.brew/opt/readline/lib
 
 CC = cc
 
 all : ${NAME}
 
 ${NAME} : ${OBJ}
-	${CC} ${OBJ} ${CFLAGS} ${LIBFT} -lreadline -o ${NAME}
+	${CC} ${OBJ} ${CFLAGS} ${LIB} ${LIBFT} -o ${NAME}
 
 clean:
 	${RM} ${OBJ}
@@ -28,4 +30,3 @@ fclean: clean
 	${RM} ${NAME}
 
 re : fclean all
-	

@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 19:52:02 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/23 23:57:34 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/06 22:23:14 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "./libft/libft.h"
 # include <readline/history.h>
 # include <readline/readline.h>
+# include <signal.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
@@ -96,6 +97,7 @@ typedef struct s_env
 
 t_glob						g_g;
 
+void						rl_replace_line(const char *text, int clear_undo);
 void						lim_check(char *words);
 void						pipe_syntax_errors(char *cmd, t_data *data);
 void						red_syntax_errors(char *cmd, t_data *data);
@@ -125,7 +127,7 @@ char						*space_arround_red(char *s1);
 void						ft_fill_ptr(char *s1, char *ptr, int i, int j);
 int							cmd_lenght(char *s);
 char						*env_value(t_env *a, char *s);
-// char						*ft_expand_value(char *no_quotes, t_env *envp);
+char						*ft_expand_value(char *no_quotes, t_env *envp);
 int							before_dollar_len(char *no_quotes);
 int							ft_strcmp(char *s1, char *s2);
 char						*print_not_expanded_dollars(char *no_quotes);
@@ -153,13 +155,12 @@ char						*fill_word_without_q(char *str, char *words,
 char						*fill_word_with_d_q(char *str, char *words, int *i);
 char						*fill_word_with_s_q(char *str, char *words, int *i);
 char	*fill_expand(char *str, t_env *envp); //here
-//char						**fill_expand(char *str, t_env *envp);
+// char						**fill_expand(char *str, t_env *envp);
 int							empty_string_condition(char *words, int *i);
 void						p_in_double_quotes(char *cmd);
 void						s_in_double_quotes(char *token);
 void						increment_i(char *cmd, int *i);
-//char						**ft_expand_value_split(char *no_q, t_env *envp);
-//here
+char						**ft_expand_value_split(char *no_q, t_env *envp);
 char						*ft_expand_value(char *no_q, t_env *envp);
 void						redirections(t_token *ptr, t_env *envp); //here;
 void						d_quotes_errors(int *dcotes, int *cotes, int *i,
@@ -169,6 +170,10 @@ void						s_quotes_errors(int *dcotes, int *cotes, int *i,
 void						outfile_errors(char *cmd, int *i, t_data *data);
 void						skip_db_quotes(int *i, char *cmd);
 void						skip_sin_quotes(int *i, char *cmd);
+char						**ft_split_space(char const *s);
+char						**fill_array(char **tab, char const *s, int i);
+int							word_length(char const *s, int i);
+int							number_words(char const *s);
 // excution;
 char						*get_env(t_env **ptr, char *s);
 char						**get_envrment(t_env *p);
@@ -191,12 +196,14 @@ int							is_he_in_env(t_env *a, char *s);
 void						riblce_v(t_env *a, char *s, char *c);
 void						ft_Error(char *s, int i);
 void						sort_nb(t_env *a, int fd);
-void						main_ex(t_env *p, t_token *ptr);
+void						main_ex(t_env **p, t_token *ptr);
 void						chaeck_builtins(t_env **p, t_token *ptr);
 char						**get_envrment(t_env *p);
 char						*get_path(t_env *p);
 char						**join_cmd(char *d, char **s);
 char						*get_path_cmd(t_env *p, char *d, char **s);
 char						*get_env(t_env **ptr, char *s);
-
+void						freepath(char **ptr);
+int							is_builtin_command(char *command);
+void						chaeck_builtins1(t_env **p, t_token *ptr);
 #endif

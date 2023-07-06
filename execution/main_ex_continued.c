@@ -6,7 +6,7 @@
 /*   By: mkatfi <mkatfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 13:33:58 by mkatfi            #+#    #+#             */
-/*   Updated: 2023/06/25 18:59:26 by mkatfi           ###   ########.fr       */
+/*   Updated: 2023/07/05 21:22:47 by mkatfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,19 @@ char* get_path(t_env* p)
 char** join_cmd(char* d, char** s)
 {
     char** p;
+    int i = 0;
+    int j = 1;
+    while (s && s[i])
+        i++;
     if (s && *s)
     {
-        p = malloc(sizeof(char*) * (3));
+        p = malloc(sizeof(char*) * (i + 2));
+        i = 0;
         p[0] = ft_strdup(d);
-        p[1] = ft_strdup(s[0]);
-        return(p[2] = NULL, p);
+        while (s && s[i])
+            p[j++] = ft_strdup(s[i++]);
+        p[j] = NULL;
+        return(p);
     }
     p = malloc(sizeof(char*) * (2));
     p[0] = ft_strdup(d);
@@ -69,10 +76,15 @@ char* get_path_cmd(t_env* p, char* d, char** s)
     char** c;
     char* syt;
     char* buff;
+    char** jo;
+    char** gv;
+    
     g = get_path(p);
     c = ft_split(g, ':');
+    jo = join_cmd(d, s);
+    gv = get_envrment(p);
     if (access(d, X_OK) == 0)
-        execve(d, join_cmd(d, s), get_envrment(p));
+        execve(d, jo, gv);
     int i = 0;
     if (c == NULL || *c == NULL)
         return(NULL);
@@ -82,7 +94,13 @@ char* get_path_cmd(t_env* p, char* d, char** s)
         buff = ft_strjoin(syt, d);
         if (access(buff, F_OK) == 0)
             return(buff);
+        free(buff);
+        free(syt);
         i++;
     }
+    // freepath(jo);
+    // freepath(gv);
+    // free(buff);
+    // free(syt);
     return(NULL);
 }
