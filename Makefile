@@ -22,6 +22,7 @@ all : ${NAME}
 
 ${NAME} : ${OBJ}
 	${CC} ${OBJ} ${CFLAGS} ${LIB} ${LIBFT} -o ${NAME}
+	@stty -echoctl
 
 clean:
 	${RM} ${OBJ}

@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 21:53:19 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/06 22:42:34 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/07 17:21:00 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,16 +120,9 @@ void	minishell(t_data *data, char *cmd, t_env *envp)
 
 void	ctrl_c(int sigint)
 {
-	(void)sigint;
     write(1, "\n", 1);
+	(void)sigint;
     rl_on_new_line(); // Move to a new line
-    rl_replace_line("", 0); // Clear the current input line
-    rl_redisplay(); // Redisplay the prompt
-}
-
-void	ctrl_bslash(int sigquit)
-{
-	(void)sigquit;
     rl_replace_line("", 0); // Clear the current input line
     rl_redisplay(); // Redisplay the prompt
 }
@@ -153,23 +146,21 @@ int	main(int ac, char **av, char **envp)
 		return (0);
 	g_g.exit_status = 1;
 	signal(SIGINT, ctrl_c);
-	signal(SIGQUIT, ctrl_bslash);
+	signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
 		g_g.cmd = readline("minishell-3.2$ ");
 		if (!g_g.cmd)
 		{
-			printf("exit\n");
+			write(1, "exit\n", 5);
 			exit(EXIT_FAILURE);
 		}
 		if(ft_strlen(g_g.cmd) > 0)
 			add_history(g_g.cmd);
 		minishell(g_g.data, g_g.cmd, env);
-		//chaeck_builtins(&env, g_g.ptr);
 		chaeck_builtins1(&env, g_g.ptr);
 	}
 	// system("leaks minishell");
-	// printf("here\n");
 	// exit(1);
 	free(g_g.cmd);
 	free(g_g.command);

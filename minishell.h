@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 19:52:02 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/06 22:23:14 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/07 16:45:06 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ typedef struct s_glob
 	int						j;
 	int						expand;
 	int						k;
+	int						cmd_check;
 	int						check;
 	int						count;
 	int						pipefd;
@@ -97,6 +98,7 @@ typedef struct s_env
 
 t_glob						g_g;
 
+void						ctrl_c(int sigint);
 void						rl_replace_line(const char *text, int clear_undo);
 void						lim_check(char *words);
 void						pipe_syntax_errors(char *cmd, t_data *data);
