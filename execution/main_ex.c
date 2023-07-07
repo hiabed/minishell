@@ -12,12 +12,6 @@
 
 #include"../minishell.h"
 
-void    cmd_signal(int sigint)
-{
-    (void)sigint;
-    write(1, "\n", 1);
-}
-
 int	ft_lstsize_1(t_token *lst)
 {
 	int	i;
@@ -30,6 +24,7 @@ int	ft_lstsize_1(t_token *lst)
 	}
 	return (i);
 }
+
 void	freepath(char** ptr)
 {
 	int	i;
@@ -70,7 +65,7 @@ int first_cmd(t_env* p, t_token* ptr, int* pip)
         ev = get_envrment(p);
         if (path == NULL)
         {
-            perror("commd not fond");
+            write(2, "command not fond\n", 17);
             exit(127);
         }
         execve(path, cmd, ev);
@@ -154,9 +149,7 @@ void main_ex(t_env** p, t_token* ptr)
     if (WIFSIGNALED(status))
     {
         if(WTERMSIG(status) == 3)
-        {
             write(1, "^\\Quit: 3\n", 10);
-        }
     }
     signal(SIGINT, ctrl_c);
 	signal(SIGQUIT, SIG_IGN);

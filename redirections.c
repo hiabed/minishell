@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 22:14:50 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/22 16:27:23 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/07 18:54:33 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@ t_redirection	*ft_lstnew_red(char **words, t_env *envp)
 		return (NULL);
 	red_node->type = ft_number_type(*words);
 	words++;
-	red_node->limiter = ft_limiter_name(*words, red_node->type);
-	red_node->file = ft_file_name(*words, envp, red_node->type);
+	red_node->limiter = ft_limiter_name(ft_strdup(*words), red_node->type);
+	red_node->file = ft_file_name(ft_strdup(*words), envp, red_node->type);
 	red_node->next = NULL;
 	return (red_node);
 }

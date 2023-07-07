@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   linked.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkatfi <mkatfi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 19:41:33 by mkatfi            #+#    #+#             */
-/*   Updated: 2023/07/01 16:24:57 by mkatfi           ###   ########.fr       */
+/*   Updated: 2023/07/07 17:28:04 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,6 @@ char **key_valu(char* s)
 	continue_key_valu(g, s);
 	if (g[0] != NULL || g[1] != NULL)
 		return(g);
-	// free(g[0]);
-	// free(g[1]);
-	// free(g);
 	return(NULL);
 }
 

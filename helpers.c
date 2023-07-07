@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helpers.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkatfi <mkatfi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 18:13:02 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/28 14:37:07 by mkatfi           ###   ########.fr       */
+/*   Updated: 2023/07/07 19:35:15 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,16 @@ void	infos_without_quotes(t_token *ptr, t_env *envp)
 	while (data)
 	{
 		i = 0;
-		if (data->cmd)
+		if (data->cmd){
+			char *cmd_tmp = data->cmd;
 			data->cmd = join_strings_to_be_one(data->cmd, envp);
+			free(cmd_tmp);
+		}
 		while (data->arg[i])
 		{
+			char *cmd_tmp = data->arg[i];
 			data->arg[i] = join_strings_to_be_one(data->arg[i], envp);
+			free(cmd_tmp);
 			i++;
 		}
 		redirections(data, envp);
