@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 21:53:19 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/07 21:34:59 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/08 18:28:09 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,33 @@
 
 char	**strings_without_quotes(char *words, t_env *envp)
 {
-	int	i;
+	int		i;
 
-	// printf("words: %s\n", words);
 	g_g.str = malloc((count_strings(words) + 1) * sizeof(char *));
+	// printf("file %s line %d, %p\n", __FILE__, __LINE__, g_g.str);
 	g_g.k = 0;
 	i = 0;
 	while (words[i])
 	{
 		if (empty_string_condition(words, &i))
 			g_g.str[g_g.k] = empty_string(g_g.str[g_g.k], &i);
-	
 		else if ((words[i] == '\"' && words[i + 1] != '\"'))
 		{
 			g_g.str[g_g.k] = fill_word_with_d_q(g_g.str[g_g.k], words, &i);
-			g_g.str[g_g.k] = fill_expand(g_g.str[g_g.k], envp);
-		} 
+			if (ft_expand_value(g_g.str[g_g.k], envp))
+			{
+				g_g.str[g_g.k] = ft_strdup(fill_expand(g_g.str[g_g.k], envp));
+			}
+		}
 		else if ((words[i] == '\'' && words[i + 1] != '\''))
 			g_g.str[g_g.k] = fill_word_with_s_q(g_g.str[g_g.k], words, &i);
 		else if (words[i] != '\"' && words[i] != '\'')
 		{
 			g_g.str[g_g.k] = fill_word_without_q(g_g.str[g_g.k], words, &i);
-			g_g.str[g_g.k] = fill_expand(g_g.str[g_g.k], envp);
+			if (ft_expand_value(g_g.str[g_g.k], envp))
+			{
+				g_g.str[g_g.k] = ft_strdup(fill_expand(g_g.str[g_g.k], envp));
+			}
 		}
 		g_g.k++;
 	}
@@ -49,6 +54,7 @@ char	*join_strings_to_be_one(char *words, t_env *envp)
 	char	*joined_string;
 	char	**to_be_joined;
 	char	*temp;
+	char	*x;
 
 	i = 0;
 	joined_string = words;
@@ -58,7 +64,7 @@ char	*join_strings_to_be_one(char *words, t_env *envp)
 		joined_string = ft_strdup(to_be_joined[i]);
 		while (to_be_joined[i + 1])
 		{
-			char *x = joined_string;
+			x = joined_string;
 			temp = ft_strjoin(joined_string, to_be_joined[i + 1]);
 			joined_string = temp;
 			free(x);
@@ -124,11 +130,17 @@ void	minishell(t_data *data, char *cmd, t_env *envp)
 	}
 }
 
-void ft_free_data(t_token **leaks) {
-	while ((*leaks) && ((*leaks))) {
-		t_token *b = (*leaks);
-		while ((*leaks)->red && (*leaks)->red) {
-			t_redirection *a = (*leaks)->red;
+void	ft_free_data(t_token **leaks)
+{
+	t_token			*b;
+	t_redirection	*a;
+
+	while ((*leaks) && ((*leaks)))
+	{
+		b = (*leaks);
+		while ((*leaks)->red && (*leaks)->red)
+		{
+			a = (*leaks)->red;
 			free(a->file);
 			free(a->limiter);
 			(*leaks)->red = (*leaks)->red->next;
@@ -170,7 +182,7 @@ int	main(int ac, char **av, char **envp)
 			free(g_g.cmd);
 			exit(EXIT_FAILURE);
 		}
-		if(ft_strlen(g_g.cmd) > 0)
+		if (ft_strlen(g_g.cmd) > 0)
 			add_history(g_g.cmd);
 		minishell(g_g.data, g_g.cmd, env);
 		chaeck_builtins1(&env, g_g.ptr);
@@ -178,8 +190,7 @@ int	main(int ac, char **av, char **envp)
 		free(g_g.cmd);
 		free(g_g.command);
 	}
-	system("leaks minishell");
+	// system("leaks minishell");
 	// exit(1);
-
 	return (0);
 }

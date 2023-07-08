@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 18:13:02 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/07 19:35:15 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/08 16:05:02 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,10 @@ int	ft_number_type(char *words)
 
 void	redirections(t_token *ptr, t_env *envp)
 {
-	t_token	*redir = ptr;
-	t_env 	*temp;
+	t_token	*redir;
+	t_env	*temp;
 
+	redir = ptr;
 	temp = envp;
 	redir->red = ptr->red;
 	redir->out = 1;
@@ -47,9 +48,11 @@ void	redirections(t_token *ptr, t_env *envp)
 		if (redir->red->type == 4)
 			redir->fd = here_doc(redir, temp);
 		else if (redir->red->type == 3)
-			redir->out = open(redir->red->file, O_CREAT | O_RDWR | O_APPEND, 0644);
+			redir->out = open(redir->red->file, O_CREAT | O_RDWR | O_APPEND,
+					0644);
 		else if (redir->red->type == 1)
-			redir->out = open(redir->red->file, O_CREAT | O_RDWR | O_TRUNC, 0644);
+			redir->out = open(redir->red->file, O_CREAT | O_RDWR | O_TRUNC,
+					0644);
 		else if (redir->red->type == 2)
 			redir->fd = open(redir->red->file, O_RDONLY, 0644);
 		redir->red = redir->red->next;
@@ -60,19 +63,21 @@ void	infos_without_quotes(t_token *ptr, t_env *envp)
 {
 	int		i;
 	t_token	*data;
+	char	*cmd_tmp;
 
 	data = ptr;
 	while (data)
 	{
 		i = 0;
-		if (data->cmd){
-			char *cmd_tmp = data->cmd;
+		if (data->cmd)
+		{
+			cmd_tmp = data->cmd;
 			data->cmd = join_strings_to_be_one(data->cmd, envp);
 			free(cmd_tmp);
 		}
 		while (data->arg[i])
 		{
-			char *cmd_tmp = data->arg[i];
+			cmd_tmp = data->arg[i];
 			data->arg[i] = join_strings_to_be_one(data->arg[i], envp);
 			free(cmd_tmp);
 			i++;
@@ -88,7 +93,6 @@ void	print_data(t_token *ptr)
 	t_token	*data;
 
 	data = ptr;
-	
 	while (data)
 	{
 		i = 0;

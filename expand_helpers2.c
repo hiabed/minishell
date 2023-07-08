@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 20:44:34 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/24 23:54:10 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/08 18:21:29 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ char	*fst_chars(char *no_quotes, int i)
 	while (no_quotes[i] && no_quotes[i] != '$')
 		chars[j++] = no_quotes[(i)++];
 	chars[j] = '\0';
+	
 	return (chars);
 }
 
@@ -84,9 +85,11 @@ char	*exit_status(char *no_q)
 	int i = 0;
 	int len = 0;
 	char *status;
+	char	*itoaa;
+	itoaa = ft_itoa(g_g.exit_status);
 	if (no_q[i] == '?' && (no_q[i + 1] == ' ' || !no_q[i + 1]))
 	{
-		status = ft_itoa(g_g.exit_status);
+		status = itoaa;
 		return (status);
 	}
 	else if (no_q[i] == '?' && no_q[i + 1] && no_q[i + 1] != ' ')
@@ -97,6 +100,7 @@ char	*exit_status(char *no_q)
 			i++;
 		}
 		status = ft_strjoin(ft_itoa(g_g.exit_status), ft_substr(no_q, 1, len - 1));
+	
 		return status;
 	}
 	return (NULL);
