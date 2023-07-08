@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 21:53:19 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/07 19:58:54 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/07 21:34:59 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,10 +116,9 @@ void	minishell(t_data *data, char *cmd, t_env *envp)
 			g_g.words = split_with_space(g_g.tokens[g_g.l]);
 			ft_lstadd_token(&g_g.ptr, ft_lstnew_token(g_g.words, envp));
 			freepath(g_g.words);
-			free(g_g.tokens[g_g.l]);
 			g_g.l++;
 		}
-		free(g_g.tokens);
+		freepath(g_g.tokens);
 		infos_without_quotes(g_g.ptr, envp);
 		// print_data(g_g.ptr);
 	}
@@ -135,8 +134,6 @@ void ft_free_data(t_token **leaks) {
 			(*leaks)->red = (*leaks)->red->next;
 			free(a);
 		}
-
-		dprintf(2, "Addres : %s | %p\n", (*leaks)->cmd, (*leaks)->cmd);
 		free((*leaks)->cmd);
 		freepath((*leaks)->arg);
 		(*leaks) = ((*leaks))->next;
@@ -181,7 +178,7 @@ int	main(int ac, char **av, char **envp)
 		free(g_g.cmd);
 		free(g_g.command);
 	}
-	// system("leaks minishell");
+	system("leaks minishell");
 	// exit(1);
 
 	return (0);

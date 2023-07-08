@@ -65,7 +65,7 @@ int first_cmd(t_env* p, t_token* ptr, int* pip)
         ev = get_envrment(p);
         if (path == NULL)
         {
-            write(2, "command not fond\n", 17);
+            printf("minishell-3.2: %s: command not fond\n", cmd[0]);
             exit(127);
         }
         execve(path, cmd, ev);
