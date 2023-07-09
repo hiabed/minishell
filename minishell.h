@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 19:52:02 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/07 17:23:57 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/09 19:15:12 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,8 @@ typedef struct s_env
 
 t_glob						g_g;
 
+char	*fill_expand_without_q(char *str, t_env *envp);
+char	*ft_expand_value_without_q(char *no_q, t_env *envp);
 void						cmd_signal(int sigint);
 void						ctrl_c(int sigint);
 void						rl_replace_line(const char *text, int clear_undo);
@@ -163,7 +165,6 @@ int							empty_string_condition(char *words, int *i);
 void						p_in_double_quotes(char *cmd);
 void						s_in_double_quotes(char *token);
 void						increment_i(char *cmd, int *i);
-char						**ft_expand_value_split(char *no_q, t_env *envp);
 char						*ft_expand_value(char *no_q, t_env *envp);
 void						redirections(t_token *ptr, t_env *envp); //here;
 void						d_quotes_errors(int *dcotes, int *cotes, int *i,

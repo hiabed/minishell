@@ -19,14 +19,14 @@ LIB = -lreadline -L /goinfre/mhassani/.brew/opt/readline/lib -I /goinfre/mhassan
 CC = cc
 
 all : ${NAME}
-	make -C libft
+	#make -C libft
 
 ${NAME} : ${OBJ}
 	${CC} ${OBJ} ${CFLAGS} ${LIB} ${LIBFT} -o ${NAME}
 	@stty -echoctl
 
 clean:
-	make clean -C libft
+	#make clean -C libft
 	${RM} ${OBJ}
 
 fclean: clean

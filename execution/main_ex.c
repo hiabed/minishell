@@ -63,9 +63,9 @@ int first_cmd(t_env* p, t_token* ptr, int* pip)
         path = get_path_cmd(p, ptr->cmd, ptr->arg);
         cmd = join_cmd(ptr->cmd, ptr->arg);
         ev = get_envrment(p);
-        if (path == NULL)
+        if (path == NULL || ptr->cmd[0] == '\0')
         {
-            printf("minishell-3.2: %s: command not fond\n", cmd[0]);
+            printf("minishell-3.2: %s: command not fond\n", ptr->cmd);
             exit(127);
         }
         execve(path, cmd, ev);
@@ -104,9 +104,13 @@ int any_next_cmd(t_env* p, t_token* ptr, int last_fd, int *pipe_2)
         path = get_path_cmd(p, ptr->cmd, ptr->arg);
         cmd = join_cmd(ptr->cmd, ptr->arg);
         ev = get_envrment(p);
-        if (path == NULL)
+        if (path == NULL  || ptr->cmd[0] == '\0')
         {
-            perror("commd not fond");
+            while(ptr)
+            {
+                printf("minishell-3.2: %s: command not fond\n", ptr->cmd);
+                ptr = ptr->next;
+            }
             exit(127);
         }
         execve(path, cmd, ev);

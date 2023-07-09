@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 19:41:33 by mkatfi            #+#    #+#             */
-/*   Updated: 2023/07/07 17:28:04 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/09 22:06:25 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,8 @@ t_env* ft_lstnew_env(char* content)
 	head->valuer = ft_strdup(s[1]);
 	head->index = -1;
 	head->next = NULL;
-	return (freepath(s), head);
+	freepath(s);
+	return (head);
 }
 
 void	ft_lstadd_back_env(t_env **lst, t_env *new)
