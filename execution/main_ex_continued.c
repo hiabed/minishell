@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 13:33:58 by mkatfi            #+#    #+#             */
-/*   Updated: 2023/07/08 22:53:44 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/09 22:42:57 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,12 @@ char** get_envrment(t_env* p)
 
 char* get_path(t_env* p)
 {
-    while (p)
+    t_env *ptr = p;
+    while (ptr)
     {
-        if (ft_strcmp("PATH", p->key) == 0)
-            return(p->valuer);
-        p = p->next;
+        if (ft_strcmp("PATH", ptr->key) == 0)
+            return(ptr->valuer);
+        ptr = ptr->next;
     }
     return(NULL);
 }
@@ -80,6 +81,7 @@ char* get_path_cmd(t_env* p, char* d, char** s)
     char** gv;
     
     g = get_path(p);
+    printf("g: %s\n", g);
     c = ft_split(g, ':');
     jo = join_cmd(d, s);
     gv = get_envrment(p);

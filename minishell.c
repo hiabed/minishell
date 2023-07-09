@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 21:53:19 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/09 22:22:49 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/09 22:45:06 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,23 +172,16 @@ void free_env(t_env **env)
         current = next;
     }
 
-    *env = NULL; // Set the original pointer to NULL after freeing the list
+    // *env = NULL; // Set the original pointer to NULL after freeing the list
 }
 int	main(int ac, char **av, char **envp)
 {
 	t_env	*env;
 	int		h;
 
-	ac = 0;
-	av = NULL;
+	(void)ac;
+	(void)av;
 	g_g.data = malloc(sizeof(t_data));
-	env = NULL;
-	h = 0;
-	while (envp[h])
-	{
-		ft_lstadd_back_env(&env, ft_lstnew_env(envp[h]));
-		h++;
-	}
 	if (!g_g.data)
 		return (0);
 	g_g.exit_status = 1;
@@ -196,7 +189,13 @@ int	main(int ac, char **av, char **envp)
 	signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
-		system("leaks minishell");
+		env = NULL;
+		h = 0;
+		while (envp[h])
+		{
+			ft_lstadd_back_env(&env, ft_lstnew_env(envp[h]));
+			h++;
+		}
 		g_g.cmd = readline("minishell-3.2$ ");
 		if (!g_g.cmd)
 		{
@@ -215,6 +214,7 @@ int	main(int ac, char **av, char **envp)
 			free(g_g.command);
 			free(g_g.cmd);
 		}
+		system("leaks minishell");
 	}
 	free(g_g.data);
 	// exit(1);

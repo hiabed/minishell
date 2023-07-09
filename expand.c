@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 17:59:21 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/09 22:26:53 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/09 22:29:55 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,7 @@ char	*not_compare_keys(char *no_quotes, int *i, char *temp)
 		(*i)++;
 	free(dollars);
 	free(chars);
-	free(result);
+	// free(result);
 	return (temp);
 }
 
