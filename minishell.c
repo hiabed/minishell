@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 21:53:19 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/09 22:45:06 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/10 23:18:52 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	**strings_without_quotes(char *words, t_env *envp)
 		else if (words[i] != '\"' && words[i] != '\'')
 		{
 			g_g.str[g_g.k] = fill_word_without_q(g_g.str[g_g.k], words, &i);
-			g_g.str[g_g.k] = fill_expand_without_q(g_g.str[g_g.k], envp);
+			g_g.str[g_g.k] = fill_expand(g_g.str[g_g.k], envp);
 		}
 		g_g.k++;
 	}
@@ -119,7 +119,6 @@ void	minishell(t_data *data, char *cmd, t_env *envp)
 				g_g.expand = 1;
 				free(token);
 			}
-			
 			replace_space_in_quotes(g_g.tokens[g_g.l]);
 			g_g.words = split_with_space(g_g.tokens[g_g.l]);
 			ft_lstadd_token(&g_g.ptr, ft_lstnew_token(g_g.words, envp));
@@ -155,25 +154,25 @@ void	ft_free_data(t_token **leaks)
 	}
 }
 
-void free_env(t_env **env)
-{
-    t_env *current = *env;
-    t_env *next;
+// void free_env(t_env **env)
+// {
+//     t_env *current = *env;
+//     t_env *next;
 
-    while (current)
-    {
-        next = current->next;
+//     while (current)
+//     {
+//         next = current->next;
 
-        free(current->content);
-        free(current->valuer);
-        free(current->key);
-        free(current);
+//         free(current->content);
+//         free(current->valuer);
+//         free(current->key);
+//         free(current);
 
-        current = next;
-    }
+//         current = next;
+//     }
 
-    // *env = NULL; // Set the original pointer to NULL after freeing the list
-}
+//     // *env = NULL; // Set the original pointer to NULL after freeing the list
+// }
 int	main(int ac, char **av, char **envp)
 {
 	t_env	*env;
@@ -184,18 +183,18 @@ int	main(int ac, char **av, char **envp)
 	g_g.data = malloc(sizeof(t_data));
 	if (!g_g.data)
 		return (0);
+	env = NULL;
+	h = 0;
+	while (envp[h])
+	{
+		ft_lstadd_back_env(&env, ft_lstnew_env(envp[h]));
+		h++;
+	}
 	g_g.exit_status = 1;
 	signal(SIGINT, ctrl_c);
 	signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
-		env = NULL;
-		h = 0;
-		while (envp[h])
-		{
-			ft_lstadd_back_env(&env, ft_lstnew_env(envp[h]));
-			h++;
-		}
 		g_g.cmd = readline("minishell-3.2$ ");
 		if (!g_g.cmd)
 		{
@@ -208,15 +207,14 @@ int	main(int ac, char **av, char **envp)
 		minishell(g_g.data, g_g.cmd, env);
 		chaeck_builtins1(&env, g_g.ptr);
 		ft_free_data(&g_g.ptr);
-		free_env(&env);
 		if(!g_g.data->error)
 		{
 			free(g_g.command);
-			free(g_g.cmd);
 		}
+		free(g_g.cmd);
+		// free(g_g.data);
 		system("leaks minishell");
 	}
-	free(g_g.data);
 	// exit(1);
 	return (0);
 }

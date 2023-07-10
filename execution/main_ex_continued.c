@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 13:33:58 by mkatfi            #+#    #+#             */
-/*   Updated: 2023/07/09 22:42:57 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/10 16:21:37 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ char* get_path_cmd(t_env* p, char* d, char** s)
     char** gv;
     
     g = get_path(p);
-    printf("g: %s\n", g);
     c = ft_split(g, ':');
     jo = join_cmd(d, s);
     gv = get_envrment(p);

@@ -6,20 +6,20 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 20:35:28 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/09 20:03:08 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/10 17:04:02 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*env_value(t_env *a, char *s)
+char	*env_value(t_env *a, char *key)
 {
 	t_env *ptr = a;
 	while (ptr)
 	{
-		if (ft_strcmp(ptr->key, s) == 0)
+		if (ft_strcmp(ptr->key, key) == 0)
 		{
-			free(s);
+			free(key);
 			return (ptr->valuer);
 		}
 		ptr = ptr->next;
