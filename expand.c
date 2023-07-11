@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 17:59:21 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/11 22:32:02 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/10 23:38:34 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,61 +38,52 @@ char	*ft_compare(char *no_quotes, t_env *envp, char *temp)
 	g_g.i = 0;
 	char *key = ft_extract_key(no_quotes);
 	char *status = exit_status(no_quotes);
-	
 	g_g.value = env_value(envp, key); //mhassani
-	if (!g_g.value && g_g.count == 1 && status)
+	if (!g_g.value && g_g.count == 1 && exit_status(no_quotes))
 	{
 		g_g.value = status;
 		free(status);
 	}
 	else if (!g_g.value && g_g.count == 1 && !ft_isalnum(no_quotes[g_g.i]))
 	{
-		char *value = g_g.value;
 		g_g.value = ft_strdup("$");
-		free(value);
 	}
 	else if (!g_g.value)
 	{
 		g_g.value = ft_strdup("");
 	}
-	char *x;
-	x = g_g.value;
 	g_g.value = ft_strjoin(g_g.dollars, g_g.value);
-	
 	if (!temp)
 	{
 		g_g.result = ft_strjoin(g_g.chars, g_g.value);
 	}
 	else
 	{
-		g_g.result = ft_strjoin_f(temp, g_g.value);
+		g_g.result = ft_strjoin(temp, g_g.value);
 	}
-	// temp = g_g.value;
 	temp = g_g.result;
-	// // printf("temp adress1: %p\n", temp);
 	free(g_g.value); //mhassani
-	// free(x);
-	free(g_g.chars);
-	free(g_g.dollars);
 	// printf("g_g.result: ===> file : %s, line : %d, adress: %p\n", __FILE__, __LINE__, g_g.result);
 	return (temp);
 }
 
 char	*compare_keys(t_env *envp, char *no_quotes, int *i, char *temp)
 {
-	g_g.chars = fst_chars(no_quotes, 0);//!    "aaaaa$USER"
-	g_g.dollars = print_expanded_dollars(&no_quotes[*i]); //!   $$$USER  $$mhassani;
+	g_g.chars = fst_chars(no_quotes, 0);//!
+	g_g.dollars = print_expanded_dollars(&no_quotes[*i]); //!
 	g_g.count = num_dollars(&no_quotes[*i]); //done
+		// system("leaks minishell");
 	while (no_quotes[*i] && no_quotes[(*i) + 1] && no_quotes[*i] == '$')
 	{
 		(*i)++;
 	}
 	temp = ft_compare(&no_quotes[*i], envp, temp);
+	
 	char *after_exp = after_expand(&no_quotes[*i]);
 	if (!temp)
 	{
 		temp = ft_strjoin(g_g.chars, g_g.dollars);
-		temp = ft_strjoin_f(temp, after_exp);    //"$dsf'asd"
+		temp = ft_strjoin_f(temp, after_exp);
 	}
 	else if (temp)
 	{
@@ -105,12 +96,15 @@ char	*compare_keys(t_env *envp, char *no_quotes, int *i, char *temp)
 		//printf("3temp: ===> file : %s, line : %d, adress: %p\n", __FILE__, __LINE__, temp);
 	}
 	free(after_exp);
-
+	free(g_g.chars);
+	free(g_g.dollars);
 	return (temp);
 }
 
 char	*compare_keys_without_q(t_env *envp, char *no_quotes, int *i, char *temp)
 {
+	// free(temp);
+	// temp = NULL;
 	g_g.chars = fst_chars(no_quotes, 0);//!
 	g_g.dollars = print_expanded_dollars(&no_quotes[*i]); //!
 	g_g.count = num_dollars(&no_quotes[*i]); //done
@@ -125,8 +119,8 @@ char	*compare_keys_without_q(t_env *envp, char *no_quotes, int *i, char *temp)
 	}
 	// printf("no_quotes: %s\n", &no_quotes[*i]);
 	// printf("g_g.chars: ===> file : %s, line : %d, adress: %p\n", __FILE__, __LINE__, g_g.chars);
-	// free(g_g.chars);
-	// free(g_g.dollars);
+	free(g_g.chars);
+	free(g_g.dollars);
 	return (temp);
 }
 
@@ -135,7 +129,9 @@ char	*not_compare_keys(char *no_quotes, int *i, char *temp)
 	char	*dollars;
 	char	*result;
 	char	*chars;
+	// char	*new_tmp;
 
+	// new_tmp = temp;
 	chars = fst_chars(no_quotes, 0);
 	result = NULL;
 	char *print_ned = print_not_expanded_dollars(&no_quotes[*i]);
@@ -157,6 +153,7 @@ char	*not_compare_keys(char *no_quotes, int *i, char *temp)
 char	*ft_expand_value(char *no_q, t_env *envp)
 {
 	char	*temp;
+	char	*temp1;
 	int		i;
 
 	i = 0;
@@ -171,15 +168,23 @@ char	*ft_expand_value(char *no_q, t_env *envp)
 		{
 			if (!g_g.expand && num_dollars(&no_q[i]) % 2 != 0)
 			{
+				temp1 = temp;
 				temp = compare_keys(envp, no_q, &i, temp);
+				printf("temp111111: ===> file : %s, line : %d, adress: %p\n", __FILE__, __LINE__, temp);
+				free(temp1);
 			}
 			else
 			{
+				temp1 = temp;
 				temp = not_compare_keys(no_q, &i, temp);
+				free(temp1);
 			}
-		}			
+		}
 		i++;
 	}
+	// char *tmp = ft_strdup(temp);
+	// free(tmp);
+	// exit(1);
 	// printf("temp1: ===> file : %s, line : %d, adress: %p\n", __FILE__, __LINE__, temp);
 	// free(g_g.result);
 	// free(g_g.value);
@@ -192,6 +197,7 @@ char	*ft_expand_value_without_q(char *no_q, t_env *envp)
 {
 	char	*temp;
 	int		i;
+	char	*temp1;
 	// char *dollars;
 	// char *chars;
 	
@@ -205,16 +211,20 @@ char	*ft_expand_value_without_q(char *no_q, t_env *envp)
 		{
 			if (!g_g.expand && num_dollars(&no_q[i]) % 2 != 0)
 			{
+				temp1 = temp;
 				temp = compare_keys_without_q(envp, no_q, &i, temp);
-				printf("temp2: ===> file : %s, line : %d, adress: %p\n", __FILE__, __LINE__, temp); 
+				free(temp1);
 			}
 			else
 			{
+				temp1 = temp;
 				temp = not_compare_keys(no_q, &i, temp);
+				free(temp1);
 			}
 		}
 		i++;
 	}
+	printf("temp2: ===> file : %s, line : %d, adress: %p\n", __FILE__, __LINE__, temp);
 	// free(no_q);
 	// free(g_g.result);
 	// free(g_g.value);

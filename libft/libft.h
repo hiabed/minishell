@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/29 14:42:18 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/11 21:27:01 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/08 22:00:40 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ typedef struct s_list
 	struct s_list	*next;
 }					t_list;
 
-char	*ft_strjoin_f2(char *s1, char *s2);
 char				*ft_strjoin_f(char *s1, char *s2);
 int					ft_isalpha(int c);
 int					ft_isdigit(int c);
