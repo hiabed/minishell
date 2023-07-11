@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 21:53:19 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/10 23:18:52 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/11 22:27:25 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ char	**strings_without_quotes(char *words, t_env *envp)
 		else if ((words[i] == '\"' && words[i + 1] != '\"'))
 		{
 			g_g.str[g_g.k] = fill_word_with_d_q(g_g.str[g_g.k], words, &i);
+			printf("g_g.str[g_g.k]: %p", g_g.str[g_g.k]);
 			g_g.str[g_g.k] = fill_expand(g_g.str[g_g.k], envp);
 		}
 		else if ((words[i] == '\'' && words[i + 1] != '\''))
@@ -173,6 +174,7 @@ void	ft_free_data(t_token **leaks)
 
 //     // *env = NULL; // Set the original pointer to NULL after freeing the list
 // }
+
 int	main(int ac, char **av, char **envp)
 {
 	t_env	*env;

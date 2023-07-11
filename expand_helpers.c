@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 20:35:28 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/10 17:04:02 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/11 19:44:19 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ char	*print_expanded_dollars(char *no_quotes)
 	while (no_quotes[i] && no_quotes[i] == '$' && no_quotes[i + 1] == '$')
 		print_dollars[i++] = no_quotes[j++];
 	print_dollars[i] = '\0';
+	printf("******%s*****\n", print_dollars);
 	return (print_dollars);
 }
 

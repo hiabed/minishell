@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 19:52:02 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/09 19:15:12 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/11 17:05:15 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ typedef struct s_token
 
 typedef struct s_glob
 {
+	char					*ous;
 	char					*value;
 	char					*result;
 	char					**str;
