@@ -59,7 +59,7 @@ int first_cmd(t_env* p, t_token* ptr, int* pip)
         {
             chaeck_builtins(&p,  ptr);
             g_g.exit_status = 0;
-            return 0;
+            exit(g_g.exit_status);
         }
         path = get_path_cmd(p, ptr->cmd, ptr->arg);
         cmd = join_cmd(ptr->cmd, ptr->arg);
@@ -68,12 +68,12 @@ int first_cmd(t_env* p, t_token* ptr, int* pip)
         {
             ft_Error(ptr->cmd,3);
             g_g.exit_status = 127;
-            return 0;
+            exit(g_g.exit_status);
         }
         execve(path, cmd, ev);
         perror("execve");
         g_g.exit_status = 1;
-        return 0;
+        // return 0;
     }
     return id;
 }
@@ -106,13 +106,13 @@ int any_next_cmd(t_env* p, t_token* ptr, int last_fd, int *pipe_2)
         {
             chaeck_builtins(&p, ptr);
             g_g.exit_status = 0;
-            return 0;
+            exit(g_g.exit_status);
         }
-        if (path == NULL  || ptr->cmd[0] == '\0')
+        else if (path == NULL  || ptr->cmd[0] == '\0')
         {
             ft_Error(ptr->cmd,3);
             g_g.exit_status = 127;
-            return 0;
+            exit(g_g.exit_status);
         }
         execve(path, cmd, ev);
         perror("execve: ");
