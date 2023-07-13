@@ -46,8 +46,8 @@ int first_cmd(t_env* p, t_token* ptr, int* pip)
     char** ev;
     if (id == 0)
     {
-        // signal(SIGINT, SIG_DFL);
-        // signal(SIGQUIT, SIG_DFL);
+        signal(SIGINT, SIG_DFL);
+        signal(SIGQUIT, SIG_DFL);
         if (ptr->fd > 0)
             dup2(ptr->fd, 0);
         if (ptr->out == 1 && ptr->next) 
@@ -58,19 +58,22 @@ int first_cmd(t_env* p, t_token* ptr, int* pip)
         if (is_builtin_command(ptr->cmd))
         {
             chaeck_builtins(&p,  ptr);
-            exit(0);
+            g_g.exit_status = 0;
+            return 0;
         }
         path = get_path_cmd(p, ptr->cmd, ptr->arg);
         cmd = join_cmd(ptr->cmd, ptr->arg);
         ev = get_envrment(p);
         if (path == NULL || ptr->cmd[0] == '\0')
         {
-            printf("minishell-3.2: %s: command not fond\n", ptr->cmd);
-            exit(127);
+            ft_Error(ptr->cmd,3);
+            g_g.exit_status = 127;
+            return 0;
         }
         execve(path, cmd, ev);
         perror("execve");
-		exit(1);
+        g_g.exit_status = 1;
+        return 0;
     }
     return id;
 }
@@ -83,8 +86,11 @@ int any_next_cmd(t_env* p, t_token* ptr, int last_fd, int *pipe_2)
     char** ev;
     if (id == 0)
     {
-        // signal(SIGINT, SIG_DFL);
-        // signal(SIGQUIT, SIG_DFL);
+        signal(SIGINT, SIG_DFL);
+        signal(SIGQUIT, SIG_DFL);
+        path = get_path_cmd(p, ptr->cmd, ptr->arg);
+        cmd = join_cmd(ptr->cmd, ptr->arg);
+        ev = get_envrment(p);
         if (ptr->fd > 0)
             dup2(ptr->fd, 0);
         else
@@ -99,30 +105,26 @@ int any_next_cmd(t_env* p, t_token* ptr, int last_fd, int *pipe_2)
         if (is_builtin_command(ptr->cmd))
         {
             chaeck_builtins(&p, ptr);
-            exit(0);
+            g_g.exit_status = 0;
+            return 0;
         }
-        path = get_path_cmd(p, ptr->cmd, ptr->arg);
-        cmd = join_cmd(ptr->cmd, ptr->arg);
-        ev = get_envrment(p);
         if (path == NULL  || ptr->cmd[0] == '\0')
         {
-            while(ptr)
-            {
-                printf("minishell-3.2: %s: command not fond\n", ptr->cmd);
-                ptr = ptr->next;
-            }
-            exit(127);
+            ft_Error(ptr->cmd,3);
+            g_g.exit_status = 127;
+            return 0;
         }
         execve(path, cmd, ev);
         perror("execve: ");
-        exit(1);
+        g_g.exit_status = 1;
+        return 0;
     }
     return id;
 }
 
 void main_ex(t_env** p, t_token* ptr)
 {
-    // int status;
+    int status;
     int last_fd = 0;
     int pip[2];
     int pid =0;
@@ -146,15 +148,15 @@ void main_ex(t_env** p, t_token* ptr)
         close(pip[1]);
         ptr = ptr->next;
     }
-    // signal(SIGINT, cmd_signal);
-    // waitpid(pid, &status, 0);
+    signal(SIGINT, cmd_signal);
+    waitpid(pid, &status, 0);
     while (wait(NULL) != -1)
         ;
-    // if (WIFSIGNALED(status))
-    // {
-    //     if(WTERMSIG(status) == 3)
-    //         write(1, "^\\Quit: 3\n", 10);
-    // }
-    // signal(SIGINT, ctrl_c);
-	// signal(SIGQUIT, SIG_IGN);
+    if (WIFSIGNALED(status))
+    {
+        if(WTERMSIG(status) == 3)
+            write(1, "^\\Quit: 3\n", 10);
+    }
+    signal(SIGINT, ctrl_c);
+	signal(SIGQUIT, SIG_IGN);
 }

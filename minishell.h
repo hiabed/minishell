@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 19:52:02 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/12 18:36:17 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/13 16:01:59 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ typedef struct s_env
 
 t_glob						g_g;
 
+void	infos_without_quotes(t_token *ptr, t_env *envp);
 char	*fill_expand_without_q(char *str, t_env *envp);
 char	*ft_expand_value_without_q(char *no_q, t_env *envp);
 void						cmd_signal(int sigint);
@@ -143,8 +144,6 @@ char						*print_expanded_dollars(char *no_quotes);
 int							num_dollars(char *no_quotes);
 char						**heredoc_without_quotes(char *words);
 char						*join_heredoc_to_be_one(char *words);
-void	infos_without_quotes(t_token *ptr,
-							t_env *envp);
 void						print_data(t_token *ptr);
 void						skip_d_quotes(char *words, int *i, int *count);
 void						skip_s_quotes(char *words, int *i, int *count);

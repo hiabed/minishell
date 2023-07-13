@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkatfi <mkatfi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 18:31:39 by mkatfi            #+#    #+#             */
-/*   Updated: 2023/06/24 13:55:29 by mkatfi           ###   ########.fr       */
+/*   Updated: 2023/07/13 16:32:44 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,12 @@ long long	fft_atoi(const char* str)
     }
     while (str[i] != '\0' && str[i] >= '0' && str[i] <= '9')
     {
-        
         nb = (str[i] - 48) + nb * 10;
         if ((nb > 9223372036854775807 && a > 0) || (nb > 9223372036854775807 && a < 0))
         {
             printf("minishell: exit: %s : numeric argument required\n", str);
-            return (255);
+            g_g.exit_status = 255;
+            return (0);
         }
         i++;
     }
@@ -77,7 +77,8 @@ void ft_exit( char** s)
     else if (chaeck_nb(*s) == 1)
     {
         printf("minishell: exit: %s : numeric argument required\n", *s);
-        exit(255);
+        g_g.exit_status = 255;
+        return ;
     }
     else if (ft_isdigit(s[0][0]) && s[1])
     {

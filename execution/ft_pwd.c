@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkatfi <mkatfi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 21:25:12 by mkatfi            #+#    #+#             */
-/*   Updated: 2023/07/12 11:43:54 by mkatfi           ###   ########.fr       */
+/*   Updated: 2023/07/13 16:35:35 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ char *ft_pwd(int k, int i)
     cwd = malloc(sizeof(char) * 1000);
     if (getcwd(cwd, 1000) != NULL)
     {
+        g_g.exit_status = 0;
         if (k)
             ft_putendl_fd(cwd, i);
         else

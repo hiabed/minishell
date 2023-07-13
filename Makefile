@@ -12,21 +12,19 @@ LIBFT = ./libft/libft.a
 
 OBJ = ${CFILES:.c=.o}
 
-CFLAGS = -Wall -Wextra -Werror #-fsanitize=address -g3
+CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g3
 
 LIB = -lreadline -L /goinfre/mhassani/.brew/opt/readline/lib -I /goinfre/mhassani/.brew/opt/readline/lib
 
 CC = cc
 
 all : ${NAME}
-	#make -C libft
 
 ${NAME} : ${OBJ}
 	${CC} ${OBJ} ${CFLAGS} ${LIB} ${LIBFT} -o ${NAME}
 	@stty -echoctl
 
 clean:
-	#make clean -C libft
 	${RM} ${OBJ}
 
 fclean: clean
