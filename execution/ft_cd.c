@@ -6,7 +6,7 @@
 /*   By: mkatfi <mkatfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 22:39:28 by mkatfi            #+#    #+#             */
-/*   Updated: 2023/06/28 11:52:03 by mkatfi           ###   ########.fr       */
+/*   Updated: 2023/07/12 22:12:05 by mkatfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,10 @@ char	*chaeck(t_env **ptr, char *s, char *k)
 	while (p)
 	{
 		if (ft_strcmp(p->key, s) == 0)
-			p->valuer = k;
+		{
+			free(p->valuer);
+			p->valuer = ft_strdup(k);
+		}
 		p = p->next;
 	}
 	return (NULL);
@@ -42,38 +45,52 @@ char	*chaeck(t_env **ptr, char *s, char *k)
 void	ft_cd(char **s, t_env **p)
 {
 	char	*path_pwd;
+	char	*old_pwd;
+	char	*home;
 	char	*bag;
 
-	path_pwd = ft_pwd(0, 0);
 	if (!s[0])
 	{
-		path_pwd = get_env(p, "HOME");
-		chaeck(p, "OLDPWD", ft_pwd(0, 0));
-		if (chdir(path_pwd) == -1)
+		path_pwd = ft_pwd(0, 0);
+		home = get_env(p, "HOME");
+		chaeck(p, "OLDPWD", path_pwd);
+		free(path_pwd);
+		if (chdir(home) == -1)
 		{
 			ft_Error(" HOME ", 2);
 			g_g.exit_status = 1;
 		}
-		chaeck(p, "PWD", ft_pwd(0, 0));
+		chaeck(p, "PWD", home);
 		return ;
 	}
 
 	if (s != NULL)
 	{
-		if (s[0][0] == '/' || s[0][1] == '\0')
-			path_pwd = *s;
+		path_pwd = ft_pwd(0, 0);
+		if (s[0][0] == '/' && s[0][1] == '\0')
+		{		
+			free(path_pwd);
+			path_pwd = ft_strdup(*s);
+		}
 		else
 		{
-			bag = ft_strjoin("/", *s);
-			path_pwd = ft_strjoin(path_pwd, bag);
+			if (s[0][0] != '/' && s[0][1] != '\0')
+				bag = ft_strjoin("/", *s);
+			else
+				bag = ft_strdup(*s);
+			path_pwd = ft_strjoin_f(path_pwd, bag);
+			free(bag);
 		}
-		chaeck(p, "OLDPWD", ft_pwd(0, 0));
-		if (chdir(path_pwd) == -1)
+		old_pwd = ft_pwd(0,0);
+		chaeck(p, "OLDPWD", old_pwd);
+		if (chdir(path_pwd) == -1 && s[0][0] != '.')
 		{
 			ft_Error(path_pwd, 2);
 			g_g.exit_status = 1;
 		}
-		chaeck(p, "PWD", ft_pwd(0, 0));
+		chaeck(p, "PWD", path_pwd);
+		free(path_pwd);
+		free(old_pwd);
 		return ;
 	}
 }

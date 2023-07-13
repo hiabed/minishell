@@ -46,8 +46,8 @@ int first_cmd(t_env* p, t_token* ptr, int* pip)
     char** ev;
     if (id == 0)
     {
-        signal(SIGINT, SIG_DFL);
-        signal(SIGQUIT, SIG_DFL);
+        // signal(SIGINT, SIG_DFL);
+        // signal(SIGQUIT, SIG_DFL);
         if (ptr->fd > 0)
             dup2(ptr->fd, 0);
         if (ptr->out == 1 && ptr->next) 
@@ -83,8 +83,8 @@ int any_next_cmd(t_env* p, t_token* ptr, int last_fd, int *pipe_2)
     char** ev;
     if (id == 0)
     {
-        signal(SIGINT, SIG_DFL);
-        signal(SIGQUIT, SIG_DFL);
+        // signal(SIGINT, SIG_DFL);
+        // signal(SIGQUIT, SIG_DFL);
         if (ptr->fd > 0)
             dup2(ptr->fd, 0);
         else
@@ -122,7 +122,7 @@ int any_next_cmd(t_env* p, t_token* ptr, int last_fd, int *pipe_2)
 
 void main_ex(t_env** p, t_token* ptr)
 {
-    int status;
+    // int status;
     int last_fd = 0;
     int pip[2];
     int pid =0;
@@ -146,15 +146,15 @@ void main_ex(t_env** p, t_token* ptr)
         close(pip[1]);
         ptr = ptr->next;
     }
-    signal(SIGINT, cmd_signal);
-    waitpid(pid, &status, 0);
+    // signal(SIGINT, cmd_signal);
+    // waitpid(pid, &status, 0);
     while (wait(NULL) != -1)
         ;
-    if (WIFSIGNALED(status))
-    {
-        if(WTERMSIG(status) == 3)
-            write(1, "^\\Quit: 3\n", 10);
-    }
-    signal(SIGINT, ctrl_c);
-	signal(SIGQUIT, SIG_IGN);
+    // if (WIFSIGNALED(status))
+    // {
+    //     if(WTERMSIG(status) == 3)
+    //         write(1, "^\\Quit: 3\n", 10);
+    // }
+    // signal(SIGINT, ctrl_c);
+	// signal(SIGQUIT, SIG_IGN);
 }

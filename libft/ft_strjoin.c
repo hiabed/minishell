@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 18:14:51 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/08 22:00:28 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/12 22:06:06 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,35 @@ char	*ft_strjoin_f(char *s1, char *s2)
 	}
 	newstr[i] = '\0';
 	free(s1);
+	return (newstr);
+}
+
+char	*ft_strjoin_f2(char *s1, char *s2)
+{
+	char	*newstr;
+	int		i;
+	int		j;
+
+	if (!s1 || !s2)
+		return (NULL);
+	newstr = (char *)malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+	if (!newstr)
+		return (NULL);
+	i = 0;
+	while (s1[i])
+	{
+		newstr[i] = s1[i];
+		i++;
+	}
+	j = 0;
+	while (s2[j])
+	{
+		newstr[i] = s2[j];
+		i++;
+		j++;
+	}
+	newstr[i] = '\0';
+	free(s2);
 	return (newstr);
 }
 

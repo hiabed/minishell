@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export_util.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mkatfi <mkatfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 15:17:11 by mkatfi            #+#    #+#             */
-/*   Updated: 2023/07/09 20:05:11 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/13 09:50:41 by mkatfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,15 @@ void riblce_v(t_env* a, char* s, char* c)
         if (ft_strcmp(a->key, s) == 0)
         {
             if (c != NULL)
-                a->valuer = c;
+            {
+                free(a->valuer);
+                a->valuer = ft_strdup(c);
+            }
             else
+            {
+                free(a->valuer);
                 a->valuer = NULL;
+            }
             return;
         }
         a = a->next;

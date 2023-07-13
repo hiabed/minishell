@@ -6,7 +6,7 @@
 /*   By: mkatfi <mkatfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 16:40:11 by mkatfi            #+#    #+#             */
-/*   Updated: 2023/06/24 17:10:02 by mkatfi           ###   ########.fr       */
+/*   Updated: 2023/07/13 10:22:16 by mkatfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,23 +34,29 @@ void to_be_contined(int i, t_env *p, char **s)
     if (is_he_in_env(p, a[0]) == 1)
     {
         valuer = valuer_of_key(p, a[0]);
-        char* val = str_join(valuer, a[1]);     
+        char *tmp = valuer;
+        char* val = ft_strjoin(valuer, a[1]);
         if (icale(s[i]) == 2)
             riblce_v(p, a[0], val);
-        if (icale(s[i]) == 1)
+        else if (icale(s[i]) == 1)
             riblce_v(p, a[0], a[1]);
+        if (icale(s[i]) == 0)
+            free(tmp);
+        free(val);
     }
-    if (is_he_in_env(p, a[0]) == 0)
+    else if (is_he_in_env(p, a[0]) == 0)
     {
         if (icale(s[i]) == 1 || icale(s[i]) == 2)
             ft_lstadd_back_env(&p, ft_lstnew_env(s[i]));
-        if (icale(s[i]) == 0)
+        else if (icale(s[i]) == 0)
         {
             ft_lstadd_back_env(&p, ft_lstnew_env(s[i]));
+            free(a[1]);
             a[1] = NULL;
             riblce_v(p, a[0], a[1]);
         }
     }
+    freepath(a);
 }
 
 void ft_export(char **s, t_env *p, int fd)
@@ -74,10 +80,4 @@ void ft_export(char **s, t_env *p, int fd)
             i++;
         }
     }
-    // while (p != NULL) 
-    // {
-    // 	free(p->key);
-    // 	free(p->valuer);
-    // 	free(p);
-    // }
 }

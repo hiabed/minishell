@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 21:53:19 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/10 23:18:52 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/13 11:59:53 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ void	minishell(t_data *data, char *cmd, t_env *envp)
 			if (g_g.tokens[g_g.l][0] == '$')
 			{
 				char *token = g_g.tokens[g_g.l];
-				g_g.tokens[g_g.l] = ft_expand_value_without_q(g_g.tokens[g_g.l], envp);
+				g_g.tokens[g_g.l] = ft_expand_value(g_g.tokens[g_g.l], envp);
 				g_g.expand = 1;
 				free(token);
 			}
@@ -127,7 +127,7 @@ void	minishell(t_data *data, char *cmd, t_env *envp)
 		}
 		freepath(g_g.tokens);
 		infos_without_quotes(g_g.ptr, envp);
-		// print_data(g_g.ptr);
+		print_data(g_g.ptr);
 	}
 }
 
@@ -154,25 +154,6 @@ void	ft_free_data(t_token **leaks)
 	}
 }
 
-// void free_env(t_env **env)
-// {
-//     t_env *current = *env;
-//     t_env *next;
-
-//     while (current)
-//     {
-//         next = current->next;
-
-//         free(current->content);
-//         free(current->valuer);
-//         free(current->key);
-//         free(current);
-
-//         current = next;
-//     }
-
-//     // *env = NULL; // Set the original pointer to NULL after freeing the list
-// }
 int	main(int ac, char **av, char **envp)
 {
 	t_env	*env;
@@ -212,9 +193,8 @@ int	main(int ac, char **av, char **envp)
 			free(g_g.command);
 		}
 		free(g_g.cmd);
-		// free(g_g.data);
-		system("leaks minishell");
+		// system("leaks minishell");
 	}
-	// exit(1);
+	// free(g_g.data);
 	return (0);
 }

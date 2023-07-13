@@ -6,7 +6,7 @@
 /*   By: mkatfi <mkatfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 16:45:57 by mkatfi            #+#    #+#             */
-/*   Updated: 2023/06/25 19:11:57 by mkatfi           ###   ########.fr       */
+/*   Updated: 2023/07/12 12:03:40 by mkatfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void delet_any_node(t_env* curr, t_env* pre, char* s)
             pre->next = curr->next;
             free(curr->key);
             free(curr->valuer);
+            free(curr->content);
             free(curr);
             break;
         }
@@ -59,6 +60,7 @@ void to_be_comtinued_unset(t_env** p, char* s)
         *p = (*p)->next;
         free(curr->key);
         free(curr->valuer);
+        free(curr->content);
         free(curr);
         return;
     }
