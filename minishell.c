@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 21:53:19 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/13 16:20:40 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/13 16:46:43 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,14 +140,14 @@ void	ft_free_data(t_token **leaks)
 	while ((*leaks))
 	{
 		a = (*leaks)->red;
-		while ((*leaks)->red)
+		while (a)
 		{
+			printf("hahaha\n");
 			free(a->file);
 			free(a->limiter);
-			(*leaks)->red = (*leaks)->red->next;
 			free(a);
+			a = a->next;
 		}
-			// printf("hahaha\n");
 		free((*leaks)->cmd);
 		freepath((*leaks)->arg);
 		(*leaks) = ((*leaks))->next;
@@ -191,7 +191,7 @@ int	main(int ac, char **av, char **envp)
 		ft_free_data(&g_g.ptr);
 		free(g_g.command);
 		free(g_g.cmd);
-		// system("leaks minishell");
+		system("leaks minishell");
 	}
 	// free(g_g.data);
 	return (0);
