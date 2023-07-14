@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 19:52:02 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/13 16:01:59 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/14 22:09:07 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,10 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
+
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 10
+# endif
 
 typedef struct s_data
 {
@@ -74,6 +78,7 @@ typedef struct s_glob
 	int						count;
 	int						pipefd;
 	int						pipe_2;
+	int						signal_check;
 }							t_glob;
 
 typedef struct s_expand
@@ -99,6 +104,16 @@ typedef struct s_env
 
 t_glob						g_g;
 
+char	*ft_strjoin_x(char *s1, char *s2);
+void sig_handler(int sigint);
+void	*ft_calloc(size_t count, size_t size);
+int		ft_newline(char *s);
+void	ft_free(char *s1, char *s2);
+char	*line(char *s);
+char	*left_str(char *s);
+char	*read_line(int fd, int i, char *s);
+char	*get_next_line(int fd);
+void	ctrl_ccc(int sigint);
 void	infos_without_quotes(t_token *ptr, t_env *envp);
 char	*fill_expand_without_q(char *str, t_env *envp);
 char	*ft_expand_value_without_q(char *no_q, t_env *envp);
@@ -210,4 +225,5 @@ char						*get_env(t_env **ptr, char *s);
 void						freepath(char **ptr);
 int							is_builtin_command(char *command);
 void						chaeck_builtins1(t_env **p, t_token *ptr);
+
 #endif

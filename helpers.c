@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 18:13:02 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/13 16:02:11 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/14 22:53:48 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,23 +38,40 @@ void	redirections(t_token *ptr, t_env *envp)
 	t_token	*data = ptr;
 	t_redirection *red = ptr->red;
 	t_env 	*temp;
+	int status;
 
 	temp = envp;
 	data->out = 1;
 	data->fd = 0;
-	while (red)
+	signal(SIGINT, SIG_IGN);
+	int id = fork();
+	if(id == 0)
 	{
-		if (red->type == 4)
+		while (data->red)
 		{
-			data->fd = here_doc(data, temp);
+			if (red->type == 4)
+				data->fd = here_doc(data, temp);
+			data->red = data->red->next;
 		}
-		else if (red->type == 3)
+		// g_g.signal_check = 1;
+		exit(0);
+	}
+	else
+		waitpid(id, &status, 0);
+	// if (WEXITSTATUS(status) == 1)
+	// {
+	// 	g_g.signal_check = WEXITSTATUS(status);
+	// 	g_g.exit_status = WEXITSTATUS(status);
+	// }
+	while(data->red)
+	{
+		if (red->type == 3)
 			data->out = open(red->file, O_CREAT | O_RDWR | O_APPEND, 0644);
-		else if (data->red->type == 1)
+		else if (red->type == 1)
 			data->out = open(red->file, O_CREAT | O_RDWR | O_TRUNC, 0644);
-		else if (data->red->type == 2)
+		else if (red->type == 2)
 			data->fd = open(red->file, O_RDONLY, 0644);
-		red = red->next;
+		data->red = data->red->next;
 	}
 }
 

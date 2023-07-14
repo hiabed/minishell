@@ -6,41 +6,36 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 23:32:42 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/14 16:22:44 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/14 22:28:28 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	here_doc(t_token *p, t_env *envp)
+int    here_doc(t_token *p, t_env *envp)
 {
-	char	*line;
-	int		i;
-	int		pipefd[2];
-
-	i = 0;
+	signal(SIGINT, &sig_handler);
+    char    *line;
+    int        pipefd[2];
 	pipe(pipefd);
 	while (1)
 	{
-		line = readline("> ");
-		if (!line)
+		write(1, "> ", 2);
+		line = get_next_line(0);
+		if (!line || !ft_strcmp(ft_strjoin(p->red->limiter, "\n"), line))
 		{
-			rl_replace_line("", 0); // Clear the current input line
-    		rl_redisplay(); // Redisplay the prompt
 			g_g.exit_status = 0;
-			// exit(EXIT_FAILURE);
-		}
-		if (!(ft_strcmp(p->red->limiter, line)))
+			free(line);
 			break ;
+		}
 		else if(!g_g.check && ft_expand_value(line, envp))
 			line = ft_expand_value(line, envp);
 		ft_putendl_fd(line, pipefd[1]);
 		free(line);
 	}
 	g_g.pipefd = pipefd[0];
-	free(line);
 	close(pipefd[1]);
-	return (pipefd[0]);
+    return (pipefd[0]);
 }
 
 void	lim_check(char *words)

@@ -7,12 +7,13 @@ CFILES = minishell.c syntax_errors.c split.c redirections.c token.c split_spaces
 		./execution/ft_sort.c ./execution/builtins.c ./execution/ft_export_util.c \
 		./execution/ft_cd.c ./execution/ft_unset.c ./execution/ft_exit.c ./execution/ft_env.c \
 		./execution/ft_Error.c ./execution/main_ex.c ./execution/main_ex_continued.c \
+		get_next_line.c get_next_line_utils.c \
 
 LIBFT = ./libft/libft.a
 
 OBJ = ${CFILES:.c=.o}
 
-CFLAGS = -Wall -Wextra -Werror #-fsanitize=address -g3
+CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g3
 
 LIB = -lreadline -L /goinfre/mhassani/.brew/opt/readline/lib -I /goinfre/mhassani/.brew/opt/readline/lib
 
@@ -22,7 +23,7 @@ all : ${NAME}
 
 ${NAME} : ${OBJ}
 	${CC} ${OBJ} ${CFLAGS} ${LIB} ${LIBFT} -o ${NAME}
-	@stty -echoctl
+	stty -echoctl
 
 clean:
 	${RM} ${OBJ}

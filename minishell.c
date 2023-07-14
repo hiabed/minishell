@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 21:53:19 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/14 15:51:19 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/14 22:24:39 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,10 +172,11 @@ int	main(int ac, char **av, char **envp)
 		h++;
 	}
 	g_g.exit_status = 0;
-	signal(SIGINT, ctrl_c);
-	signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
+		g_g.signal_check = 0;
+		signal(SIGINT, ctrl_c);
+		signal(SIGQUIT, SIG_IGN);
 		g_g.cmd = readline("minishell-3.2$ ");
 		if (!g_g.cmd)
 		{
@@ -193,6 +194,5 @@ int	main(int ac, char **av, char **envp)
 		free(g_g.cmd);
 		// system("leaks minishell");
 	}
-	// free(g_g.data);
 	return (0);
 }

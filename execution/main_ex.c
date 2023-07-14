@@ -156,7 +156,7 @@ void main_ex(t_env** p, t_token* ptr)
     {
         if(WTERMSIG(status) == 3)
         {
-            write(1, "^\\Quit: 3\n", 10);
+            write(1, "Quit: 3\n", 8);
             g_g.exit_status = 131;
         }
     }

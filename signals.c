@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 17:23:01 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/14 15:52:51 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/14 22:32:59 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void    cmd_signal(int sigint)
 {
     (void)sigint;
-    write(1, "\n", 1);
+    write(1, "^C\n", 3);
 }
 
 void	ctrl_c(int sigint)
@@ -26,4 +26,12 @@ void	ctrl_c(int sigint)
     rl_replace_line("", 0); // Clear the current input line
     rl_redisplay(); // Redisplay the prompt
     g_g.exit_status = 1;
+}
+
+void sig_handler(int sigint)
+{
+	(void)sigint;
+	g_g.exit_status = 1;
+	printf("\n");
+	exit(44);
 }
