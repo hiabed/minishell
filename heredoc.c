@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 23:32:42 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/09 21:22:20 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/14 16:22:44 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,10 @@ int	here_doc(t_token *p, t_env *envp)
 		line = readline("> ");
 		if (!line)
 		{
-			printf("exit\n");
-			exit(EXIT_FAILURE);
+			rl_replace_line("", 0); // Clear the current input line
+    		rl_redisplay(); // Redisplay the prompt
+			g_g.exit_status = 0;
+			// exit(EXIT_FAILURE);
 		}
 		if (!(ft_strcmp(p->red->limiter, line)))
 			break ;

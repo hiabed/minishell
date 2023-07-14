@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 21:25:12 by mkatfi            #+#    #+#             */
-/*   Updated: 2023/07/13 16:35:35 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/14 15:32:02 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char *ft_pwd(int k, int i)
     else
     {
         perror("getcwd error");
-        g_g.exit_status = 0;
+        g_g.exit_status = 1;
     }
 	//printf(": ===> file : %s, line : %d, adress: %p\n", __FILE__, __LINE__, cwd);
     

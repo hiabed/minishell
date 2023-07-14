@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkatfi <mkatfi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 16:40:11 by mkatfi            #+#    #+#             */
-/*   Updated: 2023/07/13 10:22:16 by mkatfi           ###   ########.fr       */
+/*   Updated: 2023/07/14 15:31:17 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void to_be_contined(int i, t_env *p, char **s)
 void ft_export(char **s, t_env *p, int fd)
 {
     int i ;
- 
+    g_g.exit_status = 0;
     if (s == NULL || *s == NULL)
         sort_nb(p, fd);
     else

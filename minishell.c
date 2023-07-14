@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 21:53:19 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/13 20:40:59 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/14 15:51:19 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,7 +181,8 @@ int	main(int ac, char **av, char **envp)
 		{
 			write(1, "exit\n", 5);
 			free(g_g.cmd);
-			exit(EXIT_FAILURE);
+			g_g.exit_status = 0;
+			exit(g_g.exit_status);
 		}
 		if (ft_strlen(g_g.cmd) > 0)
 			add_history(g_g.cmd);

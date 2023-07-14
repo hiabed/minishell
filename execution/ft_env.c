@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkatfi <mkatfi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 18:40:02 by mkatfi            #+#    #+#             */
-/*   Updated: 2023/06/25 16:15:22 by mkatfi           ###   ########.fr       */
+/*   Updated: 2023/07/14 15:30:47 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,4 +27,5 @@ void ft_env(t_env *p, t_token *ptr)
 		}
 		p = p->next;
 	}
+	g_g.exit_status = 0;
 }

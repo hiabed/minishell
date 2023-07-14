@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkatfi <mkatfi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 16:45:57 by mkatfi            #+#    #+#             */
-/*   Updated: 2023/07/12 12:03:40 by mkatfi           ###   ########.fr       */
+/*   Updated: 2023/07/14 15:31:42 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ void ft_unset(t_env** p, char** s)
 {
     int i;
     i = 0;
+    g_g.exit_status = 0;
     while (s[i])
     {
         if (!cheack_arg_unset(s[i]))

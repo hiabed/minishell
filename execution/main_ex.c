@@ -73,7 +73,7 @@ int first_cmd(t_env* p, t_token* ptr, int* pip)
         execve(path, cmd, ev);
         perror("execve");
         g_g.exit_status = 1;
-        // return 0;
+        exit(g_g.exit_status);
     }
     return id;
 }
@@ -117,7 +117,7 @@ int any_next_cmd(t_env* p, t_token* ptr, int last_fd, int *pipe_2)
         execve(path, cmd, ev);
         perror("execve: ");
         g_g.exit_status = 1;
-        return 0;
+        exit(g_g.exit_status);
     }
     return id;
 }
@@ -155,8 +155,13 @@ void main_ex(t_env** p, t_token* ptr)
     if (WIFSIGNALED(status))
     {
         if(WTERMSIG(status) == 3)
+        {
             write(1, "^\\Quit: 3\n", 10);
+            g_g.exit_status = 131;
+        }
     }
+    else
+        g_g.exit_status =  WEXITSTATUS(status);
     signal(SIGINT, ctrl_c);
 	signal(SIGQUIT, SIG_IGN);
 }

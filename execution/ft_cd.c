@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkatfi <mkatfi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 22:39:28 by mkatfi            #+#    #+#             */
-/*   Updated: 2023/07/12 22:12:05 by mkatfi           ###   ########.fr       */
+/*   Updated: 2023/07/14 15:30:18 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ void	ft_cd(char **s, t_env **p)
 			g_g.exit_status = 1;
 		}
 		chaeck(p, "PWD", home);
+		g_g.exit_status = 0;
 		return ;
 	}
 
@@ -91,6 +92,7 @@ void	ft_cd(char **s, t_env **p)
 		chaeck(p, "PWD", path_pwd);
 		free(path_pwd);
 		free(old_pwd);
+		g_g.exit_status = 0;
 		return ;
 	}
 }

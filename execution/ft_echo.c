@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkatfi <mkatfi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 10:54:30 by mkatfi            #+#    #+#             */
-/*   Updated: 2023/06/24 17:37:40 by mkatfi           ###   ########.fr       */
+/*   Updated: 2023/07/14 15:30:33 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ void ft_echo(char** arg, int fd)
 
 	cont = 0;
 	i = 0;
+	g_g.exit_status = 0;
 	if (ft_strcmp(arg[0], "") == 0)
 	{
 		write(fd, "\n", 1);
