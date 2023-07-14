@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 19:52:02 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/14 22:09:07 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/14 23:38:52 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ typedef struct s_glob
 	int						pipefd;
 	int						pipe_2;
 	int						signal_check;
+	int						error;
 }							t_glob;
 
 typedef struct s_expand

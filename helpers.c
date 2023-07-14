@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 18:13:02 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/14 22:53:48 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/14 23:50:49 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,17 +53,11 @@ void	redirections(t_token *ptr, t_env *envp)
 				data->fd = here_doc(data, temp);
 			data->red = data->red->next;
 		}
-		// g_g.signal_check = 1;
 		exit(0);
 	}
 	else
 		waitpid(id, &status, 0);
-	// if (WEXITSTATUS(status) == 1)
-	// {
-	// 	g_g.signal_check = WEXITSTATUS(status);
-	// 	g_g.exit_status = WEXITSTATUS(status);
-	// }
-	while(data->red)
+	while(red)
 	{
 		if (red->type == 3)
 			data->out = open(red->file, O_CREAT | O_RDWR | O_APPEND, 0644);
@@ -71,7 +65,7 @@ void	redirections(t_token *ptr, t_env *envp)
 			data->out = open(red->file, O_CREAT | O_RDWR | O_TRUNC, 0644);
 		else if (red->type == 2)
 			data->fd = open(red->file, O_RDONLY, 0644);
-		data->red = data->red->next;
+		red = red->next;
 	}
 }
 
