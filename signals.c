@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 17:23:01 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/14 22:32:59 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/15 18:34:36 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,13 @@ void	ctrl_c(int sigint)
 void sig_handler(int sigint)
 {
 	(void)sigint;
-	g_g.exit_status = 1;
-	printf("\n");
-	exit(44);
+    write(1, "\n", 1);
 }
+
+void	ctrl_c_herdoc(int sigint)
+{
+	(void)sigint;
+	printf("ENTER HERE\n");
+	exit(1);
+}
+

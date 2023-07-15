@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 18:13:02 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/14 23:50:49 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/15 18:32:21 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,30 +33,23 @@ int	ft_number_type(char *words)
 	return (0);
 }
 
-void	redirections(t_token *ptr, t_env *envp)
+int	redirections(t_token *ptr, t_env *envp)
 {
 	t_token	*data = ptr;
 	t_redirection *red = ptr->red;
 	t_env 	*temp;
-	int status;
 
 	temp = envp;
 	data->out = 1;
 	data->fd = 0;
-	signal(SIGINT, SIG_IGN);
-	int id = fork();
-	if(id == 0)
+	while (data->red)
 	{
-		while (data->red)
-		{
-			if (red->type == 4)
-				data->fd = here_doc(data, temp);
-			data->red = data->red->next;
-		}
-		exit(0);
+		if (red->type == 4)
+			data->fd = here_doc(data, temp);
+		if (data->fd == 1)
+			return (1);
+		data->red = data->red->next;
 	}
-	else
-		waitpid(id, &status, 0);
 	while(red)
 	{
 		if (red->type == 3)
@@ -67,6 +60,7 @@ void	redirections(t_token *ptr, t_env *envp)
 			data->fd = open(red->file, O_RDONLY, 0644);
 		red = red->next;
 	}
+	return (0);
 }
 
 void	infos_without_quotes(t_token *ptr, t_env *envp)
@@ -74,26 +68,37 @@ void	infos_without_quotes(t_token *ptr, t_env *envp)
 	int		i;
 	char *cmd_tmp;
 	t_token	*data;
-
+	int ch = 1;
 	data = ptr;
 	while (data)
 	{
-		i = 0;
-		if (data->cmd){
-			cmd_tmp = data->cmd;
-			data->cmd = join_strings_to_be_one(data->cmd, envp);
-			free(cmd_tmp);
-		}
-		while (data->arg[i])
-		{
-			cmd_tmp = data->arg[i];
-			data->arg[i] = join_strings_to_be_one(data->arg[i], envp);
-			free(cmd_tmp);
-			i++;
-		}
-		redirections(data, envp);
-		data = data->next;
+		if(redirections(data, envp))
+			ch  = 0;
+		if (!ch)
+			break ;
+		data =data->next;
 	}
+	if (ch)
+	{
+		while (data)
+		{
+			i = 0;
+			if (data->cmd){
+				cmd_tmp = data->cmd;
+				data->cmd = join_strings_to_be_one(data->cmd, envp);
+				free(cmd_tmp);
+			}
+			while (data->arg[i])
+			{
+				cmd_tmp = data->arg[i];
+				data->arg[i] = join_strings_to_be_one(data->arg[i], envp);
+				free(cmd_tmp);
+				i++;
+			}
+			data = data->next;
+		}
+	}
+	
 }
 
 void	print_data(t_token *ptr)

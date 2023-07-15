@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 17:59:21 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/14 23:24:34 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/15 17:19:34 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,37 @@ char	*ft_extract_key(char *no_q)
 	return (var);
 }
 
+char	*first_is_number(char *no_quotes)
+{
+	int i = 0;
+	char *str;
+	while(no_quotes[i] && (no_quotes[i] != ' ' || no_quotes[i] != '\t'))
+		i++;
+	str = malloc(i);
+	i = 1; //skip first number;
+	while(str[i] && (no_quotes[i] != ' ' || no_quotes[i] != '\t'))
+	{
+		str[i - 1] = no_quotes[i];
+		i++;
+	}
+	str[i] = '\0';
+	return str;
+}
+
 char	*ft_compare(char *no_quotes, t_env *envp, char *temp)
 {
 	g_g.value = NULL;
 	g_g.result = NULL;
 	g_g.i = 0;
+	if(ft_isdigit(no_quotes[0]))
+	{
+		g_g.value = first_is_number(no_quotes);
+		printf("value: %s\n", g_g.value);
+	}
 	char *key = ft_extract_key(no_quotes);
 	char *status = exit_status(no_quotes);
-	g_g.value = env_value(envp, key);
+	if(!g_g.value)
+		g_g.value = env_value(envp, key);
 	free(key);
 	if (!g_g.value && g_g.count == 1 && status)
 		g_g.value = status;
@@ -58,7 +81,7 @@ char	*ft_compare(char *no_quotes, t_env *envp, char *temp)
 }
 
 char	*compare_keys(t_env *envp, char *no_quotes, int *i, char *temp)
-{
+{	
 	g_g.chars = fst_chars(no_quotes, 0);
 	g_g.dollars = print_expanded_dollars(&no_quotes[*i]);
 	g_g.count = num_dollars(&no_quotes[*i]);

@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 23:32:42 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/14 23:32:56 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/15 18:34:09 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,38 @@
 
 int    here_doc(t_token *p, t_env *envp)
 {
-	signal(SIGINT, &sig_handler);
+	//signal(SIGINT, &sig_handler);
     char    *line;
-    int        pipefd[2];
+		int status;
+    int		pipefd[2];
 	pipe(pipefd);
-	while (1)
+	int id = fork();
+	if(id == 0)
 	{
-		write(1, "> ", 2);
-		line = get_next_line(0);
-		if (!line || !ft_strcmp(ft_strjoin(p->red->limiter, "\n"), line))
+		signal(SIGINT,SIG_DFL);
+		while (1)
 		{
-			g_g.exit_status = 0;
+			write(1, "> ", 2);
+			line = get_next_line(0);
+			if (!line || !ft_strcmp(ft_strjoin(p->red->limiter, "\n"), line))
+			{
+				g_g.exit_status = 0;
+				free(line);
+				break ;
+			}
+			else if(!g_g.check && ft_expand_value(line, envp))
+				line = ft_expand_value(line, envp);
+			ft_putendl_fd(line, pipefd[1]);
 			free(line);
-			break ;
 		}
-		else if(!g_g.check && ft_expand_value(line, envp))
-			line = ft_expand_value(line, envp);
-		ft_putendl_fd(line, pipefd[1]);
-		free(line);
+		exit(0);
 	}
+	signal(SIGINT, sig_handler);
+	waitpid(id, &status, 0);
+	if(WIFSIGNALED(status))
+		return 1;
+	signal(SIGINT, ctrl_c);
+	signal(SIGQUIT, SIG_IGN);
 	g_g.pipefd = pipefd[0];
 	close(pipefd[1]);
     return (pipefd[0]);

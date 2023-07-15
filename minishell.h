@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 19:52:02 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/14 23:38:52 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/15 17:42:15 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ typedef struct s_env
 
 t_glob						g_g;
 
+void	ctrl_c_herdoc(int sigint);
 char	*ft_strjoin_x(char *s1, char *s2);
 void sig_handler(int sigint);
 void	*ft_calloc(size_t count, size_t size);
@@ -182,7 +183,7 @@ void						p_in_double_quotes(char *cmd);
 void						s_in_double_quotes(char *token);
 void						increment_i(char *cmd, int *i);
 char						*ft_expand_value(char *no_q, t_env *envp);
-void						redirections(t_token *ptr, t_env *envp); //here;
+int						redirections(t_token *ptr, t_env *envp); //here;
 void						d_quotes_errors(int *dcotes, int *cotes, int *i,
 								char *cmd);
 void						s_quotes_errors(int *dcotes, int *cotes, int *i,
