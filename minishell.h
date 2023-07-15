@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 19:52:02 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/15 17:42:15 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/15 18:56:15 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ typedef struct s_glob
 	int						pipe_2;
 	int						signal_check;
 	int						error;
+	int						exp_num;
 }							t_glob;
 
 typedef struct s_expand
@@ -150,7 +151,7 @@ char						*join_strings_to_be_one(char *words, t_env *envp);
 char						*space_arround_red(char *s1);
 void						ft_fill_ptr(char *s1, char *ptr, int i, int j);
 int							cmd_lenght(char *s);
-char						*env_value(t_env *a, char *s);
+char	*env_value(t_env *a, char *key);
 char						*ft_expand_value(char *no_quotes, t_env *envp);
 int							before_dollar_len(char *no_quotes);
 int							ft_strcmp(char *s1, char *s2);

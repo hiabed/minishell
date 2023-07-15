@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 21:53:19 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/15 18:30:19 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/15 19:47:28 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,7 @@ void	ft_free_data(t_token **leaks)
 {
 	t_token			*b;
 	t_redirection	*a;
-
+	// printf("*leaks: %p\n", (*leaks));
 	while ((*leaks))
 	{
 		b = (*leaks);

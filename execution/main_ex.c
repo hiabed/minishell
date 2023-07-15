@@ -44,29 +44,30 @@ int first_cmd(t_env* p, t_token* ptr, int* pip)
     char* path;
     char** cmd;
     char** ev;
+    t_token *data = ptr;
     if (id == 0)
     {
         signal(SIGINT, SIG_DFL);
         signal(SIGQUIT, SIG_DFL);
-        if (ptr->fd > 0)
-            dup2(ptr->fd, 0);
-        if (ptr->out == 1 && ptr->next) 
+        if (data->fd > 0)
+            dup2(data->fd, 0);
+        if (data->out == 1 && data->next) 
             dup2(pip[1], 1);
         else 
-            dup2(ptr->out, 1);
+            dup2(data->out, 1);
         close(pip[0]);
-        if (is_builtin_command(ptr->cmd))
+        if (is_builtin_command(data->cmd))
         {
-            chaeck_builtins(&p,  ptr);
+            chaeck_builtins(&p,  data);
             g_g.exit_status = 0;
             exit(g_g.exit_status);
         }
-        path = get_path_cmd(p, ptr->cmd, ptr->arg);
-        cmd = join_cmd(ptr->cmd, ptr->arg);
+        path = get_path_cmd(p, data->cmd, data->arg);
+        cmd = join_cmd(data->cmd, data->arg);
         ev = get_envrment(p);
-        if (path == NULL || ptr->cmd[0] == '\0')
+        if (path == NULL || data->cmd[0] == '\0')
         {
-            ft_Error(ptr->cmd,3);
+            ft_Error(data->cmd,3);
             g_g.exit_status = 127;
             exit(g_g.exit_status);
         }
@@ -84,33 +85,34 @@ int any_next_cmd(t_env* p, t_token* ptr, int last_fd, int *pipe_2)
     char* path;
     char** cmd;
     char** ev;
+    t_token *data = ptr;
     if (id == 0)
     {
         signal(SIGINT, SIG_DFL);
         signal(SIGQUIT, SIG_DFL);
-        path = get_path_cmd(p, ptr->cmd, ptr->arg);
-        cmd = join_cmd(ptr->cmd, ptr->arg);
+        path = get_path_cmd(p, data->cmd, data->arg);
+        cmd = join_cmd(data->cmd, data->arg);
         ev = get_envrment(p);
-        if (ptr->fd > 0)
-            dup2(ptr->fd, 0);
+        if (data->fd > 0)
+            dup2(data->fd, 0);
         else
             dup2(last_fd, 0);
-        if (ptr->out == 1 && ptr->next)
+        if (data->out == 1 && data->next)
             dup2(pipe_2[1], 1);
         else
-            dup2(ptr->out, 1);
+            dup2(data->out, 1);
         close(pipe_2[0]);
         close(pipe_2[1]);
         close(last_fd);
-        if (is_builtin_command(ptr->cmd))
+        if (is_builtin_command(data->cmd))
         {
-            chaeck_builtins(&p, ptr);
+            chaeck_builtins(&p, data);
             g_g.exit_status = 0;
             exit(g_g.exit_status);
         }
-        else if (path == NULL  || ptr->cmd[0] == '\0')
+        else if (path == NULL  || data->cmd[0] == '\0')
         {
-            ft_Error(ptr->cmd,3);
+            ft_Error(data->cmd,3);
             g_g.exit_status = 127;
             exit(g_g.exit_status);
         }
@@ -127,26 +129,27 @@ void main_ex(t_env** p, t_token* ptr)
     int status;
     int last_fd = 0;
     int pip[2];
-    int pid =0;
+    int pid = 0;
+    t_token *data = ptr;
     pipe(pip);
-    if (ft_lstsize_1(ptr) == 1 && is_builtin_command(ptr->cmd))
+    if (ft_lstsize_1(data) == 1 && is_builtin_command(data->cmd))
     {
-        chaeck_builtins(p, ptr);
+        chaeck_builtins(p, data);
         return ;
     }
     else
-        pid = first_cmd(*p, ptr, pip);
+        pid = first_cmd(*p, data, pip);
     last_fd = pip[0];
     close(pip[1]);
-    ptr = ptr->next;
-    while (ptr)
+    data = data->next;
+    while (data)
     {
         pipe(pip);
-        pid = any_next_cmd(*p, ptr, last_fd, pip);
+        pid = any_next_cmd(*p, data, last_fd, pip);
         close(last_fd);
         last_fd = pip[0];
         close(pip[1]);
-        ptr = ptr->next;
+        data = data->next;
     }
     signal(SIGINT, cmd_signal);
     waitpid(pid, &status, 0);
