@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 21:53:19 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/15 23:42:02 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/16 18:09:43 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,6 @@ void	minishell(t_data *data, char *cmd, t_env *envp)
 	if (!data->error)
 	{
 		free(g_g.command);
-		g_g.command = NULL;
 		g_g.command = space_arround_red(cmd);
 		replace_pipe_in_quotes(g_g.command);
 		g_g.tokens = split_with_pipe(g_g.command);
@@ -128,7 +127,7 @@ void	minishell(t_data *data, char *cmd, t_env *envp)
 			g_g.l++;
 		}
 		freepath(g_g.tokens);
-		infos_without_quotes(g_g.ptr, envp);
+		infos_without_quotes(&g_g.ptr, envp);
 		// print_data(g_g.ptr);
 	}
 }
@@ -192,6 +191,7 @@ int	main(int ac, char **av, char **envp)
 		chaeck_builtins1(&env, g_g.ptr);
 		ft_free_data(&g_g.ptr);
 		free(g_g.cmd);
+
 		// system("leaks minishell");
 	}
 	return (0);

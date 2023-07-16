@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 19:52:02 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/16 00:48:38 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/16 19:30:16 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ char	*left_str(char *s);
 char	*read_line(int fd, int i, char *s);
 char	*get_next_line(int fd);
 void	ctrl_ccc(int sigint);
-void	infos_without_quotes(t_token *ptr, t_env *envp);
+void	infos_without_quotes(t_token **ptr, t_env *envp);
 char	*fill_expand_without_q(char *str, t_env *envp);
 char	*ft_expand_value_without_q(char *no_q, t_env *envp);
 void						cmd_signal(int sigint);
@@ -169,7 +169,7 @@ int							count_strings(char *words);
 int							word_len(char *words);
 int							word_len_single(char *words);
 int							len(char *words);
-int							here_doc(t_token *p, t_env *envp); //here;
+int							here_doc(char *lim, t_env *envp); //here;
 char						*fst_chars(char *no_quotes, int i);
 char						*exit_status(char *no_q);
 char						*empty_string(char *str, int *i);
@@ -184,7 +184,7 @@ void						p_in_double_quotes(char *cmd);
 void						s_in_double_quotes(char *token);
 void						increment_i(char *cmd, int *i);
 char						*ft_expand_value(char *no_q, t_env *envp);
-int						redirections(t_token *ptr, t_env *envp); //here;
+int						redirections(t_token **ptr, t_env *envp); //here;
 void						d_quotes_errors(int *dcotes, int *cotes, int *i,
 								char *cmd);
 void						s_quotes_errors(int *dcotes, int *cotes, int *i,

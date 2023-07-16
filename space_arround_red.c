@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 14:15:26 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/14 23:29:01 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/16 20:35:39 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ char	*space_arround_red(char *s1)
 	size_t	j;
 
 	ptr = (char *)malloc(cmd_lenght(s1) + 1);
-	if (ptr == NULL)
+	if (!ptr)
 		return (NULL);
 	i = 0;
 	j = 0;
