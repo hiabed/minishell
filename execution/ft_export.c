@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 16:40:11 by mkatfi            #+#    #+#             */
-/*   Updated: 2023/07/14 15:31:17 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/16 23:53:00 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,11 @@ void to_be_contined(int i, t_env *p, char **s)
     if (is_he_in_env(p, a[0]) == 1)
     {
         valuer = valuer_of_key(p, a[0]);
-        char *tmp = valuer;
         char* val = ft_strjoin(valuer, a[1]);
         if (icale(s[i]) == 2)
             riblce_v(p, a[0], val);
         else if (icale(s[i]) == 1)
             riblce_v(p, a[0], a[1]);
-        if (icale(s[i]) == 0)
-            free(tmp);
         free(val);
     }
     else if (is_he_in_env(p, a[0]) == 0)

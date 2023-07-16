@@ -6,7 +6,7 @@
 #    By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/29 13:57:27 by mhassani          #+#    #+#              #
-#    Updated: 2023/07/16 23:01:02 by mhassani         ###   ########.fr        #
+#    Updated: 2023/07/16 23:48:16 by mhassani         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,7 +49,7 @@ CFILES = ft_atoi.c\
 CFILES_BONUS = ft_lstnew.c ft_lstadd_front.c ft_lstsize.c ft_lstlast.c ft_lstadd_back.c ft_lstdelone.c ft_lstclear.c ft_lstiter.c ft_lstmap.c
 OBJ = ${CFILES:.c=.o}
 OBJ_BONUS = ${CFILES_BONUS:.c=.o}
-CFLAGS = -Wall -Werror -Wextra -fsanitize=address -g3
+CFLAGS = -Wall -Werror -Wextra #-fsanitize=address -g3
 CC = cc
 LI = ar -r
 HEAD = libft.h
