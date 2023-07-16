@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 14:15:26 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/16 20:35:39 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/16 23:22:21 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,16 @@ int	cmd_lenght(char *s)
 	count = 0;
 	while (s[i])
 	{
-		if (s[i] == 34 || s[i] == 39)
+		if (s[i] == 34)
 		{
 			i++;
-			while (s[i] && (s[i] != 34 && s[i] != 39))
+			while (s[i] && s[i] != 34)
+				i++;
+		}
+		else if(s[i] == 39)
+		{
+			i++;
+			while (s[i] && s[i] != 39)
 				i++;
 		}
 		else if (s[i] == '>' || s[i] == '<')

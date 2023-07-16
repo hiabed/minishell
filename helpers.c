@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 18:13:02 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/16 21:25:14 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/16 22:58:46 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,6 @@ void	infos_without_quotes(t_token **ptr, t_env *envp)
 				data->cmd = join_strings_to_be_one(data->cmd, envp);
 				free(cmd_tmp);
 			}
-			dprintf(2, "args : %p\n", &data->arg);
 			while (data->arg[i])
 			{
 				cmd_tmp = data->arg[i];

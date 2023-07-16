@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 23:32:42 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/16 22:18:32 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/16 22:58:58 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ int    here_doc(char *lim, t_env *envp)
 			}
 			else if(!g_g.check && (line2 = ft_expand_value(line, envp)))
 				line = ft_expand_value(line, envp);
-			dprintf(2, "%p\n", line2);
 			ft_putendl_fd(line, pipefd[1]);
 			free(line);
 		}
