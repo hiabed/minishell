@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 23:32:42 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/16 20:33:38 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/16 22:18:32 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int    here_doc(char *lim, t_env *envp)
 {
-	(void)envp;
     char    *line;
+    char    *line2;
 		int status;
     int		pipefd[2];
 	pipe(pipefd);
@@ -28,13 +28,13 @@ int    here_doc(char *lim, t_env *envp)
 			line = readline("> ");
 			if (!line || !ft_strcmp(lim, line))
 			{
-				// free(lim);
 				g_g.exit_status = 0;
 				free(line);
 				break ;
 			}
-			else if(!g_g.check && ft_expand_value(line, envp))
+			else if(!g_g.check && (line2 = ft_expand_value(line, envp)))
 				line = ft_expand_value(line, envp);
+			dprintf(2, "%p\n", line2);
 			ft_putendl_fd(line, pipefd[1]);
 			free(line);
 		}
@@ -62,7 +62,10 @@ void	lim_check(char *words)
 char	**heredoc_without_quotes(char *words)
 {
 	int	i;
-
+	if (g_g.str)
+	{
+		free (g_g.str);
+	}
 	g_g.str = malloc((count_strings(words) + 1) * sizeof(char *));
 	g_g.k = 0;
 	i = 0;
@@ -76,7 +79,7 @@ char	**heredoc_without_quotes(char *words)
 		else if ((words[i] == '\'' && words[i + 1] != '\''))
 			g_g.str[g_g.k] = fill_word_with_s_q(g_g.str[g_g.k], words, &i);
 		else if (words[i] != '\"' && words[i] != '\'')
-			g_g.str[g_g.k] = fill_word_without_q(g_g.str[g_g.k], words, &i);
+				g_g.str[g_g.k] = fill_word_without_q(g_g.str[g_g.k], words, &i);
 		g_g.k++;
 	}
 	g_g.str[g_g.k] = NULL;
