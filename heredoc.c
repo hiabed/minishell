@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 23:32:42 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/15 18:34:09 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/16 16:35:02 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 int    here_doc(t_token *p, t_env *envp)
 {
-	//signal(SIGINT, &sig_handler);
     char    *line;
 		int status;
     int		pipefd[2];
@@ -25,9 +24,8 @@ int    here_doc(t_token *p, t_env *envp)
 		signal(SIGINT,SIG_DFL);
 		while (1)
 		{
-			write(1, "> ", 2);
-			line = get_next_line(0);
-			if (!line || !ft_strcmp(ft_strjoin(p->red->limiter, "\n"), line))
+			line = readline("> ");
+			if (!line || !ft_strcmp(p->red->limiter, line))
 			{
 				g_g.exit_status = 0;
 				free(line);

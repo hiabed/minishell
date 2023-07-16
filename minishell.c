@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 21:53:19 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/15 19:47:28 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/15 23:42:02 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,6 @@ void	minishell(t_data *data, char *cmd, t_env *envp)
 			g_g.l++;
 		}
 		freepath(g_g.tokens);
-
 		infos_without_quotes(g_g.ptr, envp);
 		// print_data(g_g.ptr);
 	}
@@ -138,7 +137,6 @@ void	ft_free_data(t_token **leaks)
 {
 	t_token			*b;
 	t_redirection	*a;
-	// printf("*leaks: %p\n", (*leaks));
 	while ((*leaks))
 	{
 		b = (*leaks);
