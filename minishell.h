@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 19:52:02 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/16 19:30:16 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/16 23:38:13 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ typedef struct s_glob
 	int						signal_check;
 	int						error;
 	int						exp_num;
+	int						max_herdoc;
 }							t_glob;
 
 typedef struct s_expand
