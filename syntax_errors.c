@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 21:30:24 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/17 14:32:45 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/17 19:11:05 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,13 @@ void	pipe_syntax_errors(char *cmd, t_data *data)
 			if ((cmd[i] == '|') && !data->error)
 			{
 				write(2, "bash: syntax error near unexpected token `|'\n", 45);
+				g_g.exit_status = 258;
 				data->error++;
 			}
 			else if (cmd[i] == '\0' && !data->error)
 			{
 				write(2, "minishell: syntax error: unexpected end of file\n", 48);
+				g_g.exit_status = 258;
 				data->error++;
 			}
 		}
@@ -52,6 +54,7 @@ void	infile_errors(char *cmd, int *i, t_data *data)
 	if (cmd[*i] == '<' && !data->error)
 	{
 		write(2, "minishell: syntax error near unexpected token `<'\n", 50);
+		g_g.exit_status = 258;
 		data->error++;
 	}
 	while (cmd[*i] == ' ' || cmd[*i] == '\t')
@@ -60,6 +63,7 @@ void	infile_errors(char *cmd, int *i, t_data *data)
 		&& !data->error)
 	{
 		write(2, "minishell: syntax error near unexpected token `newline'\n", 56);
+		g_g.exit_status = 258;
 		data->error++;
 	}
 }
@@ -105,12 +109,14 @@ void	cotes_syntax_errors(char *cmd, t_data *data)
 		{
 			write(2, "minishell: unexpected EOF while looking for matching `''\n", 57);
 			write(2, "minishell: syntax error: unexpected end of file\n", 48);
+			g_g.exit_status = 258;
 			data->error++;
 		}
 		else if (!cmd[i] && dcotes % 2 == 1 && !data->error)
 		{
 			write(2, "minishell: unexpected EOF while looking for matching `\"'\n", 57);
 			write(2, "minishell: syntax error: unexpected end of file\n", 48);
+			g_g.exit_status = 258;
 			data->error++;
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 13:23:15 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/17 13:29:31 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/17 20:22:58 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ char	*compare_keys(t_env *envp, char *no_quotes, int *i, char *temp)
 	g_g.count = num_dollars(&no_quotes[*i]);
 	while (no_quotes[*i] && no_quotes[(*i) + 1] && no_quotes[*i] == '$')
 		(*i)++;
-	temp = ft_compare(&no_quotes[*i], envp, temp);
+	temp = ft_compare(&no_quotes[*i], envp, temp, i);
 	char *after_exp = after_expand(&no_quotes[*i]);
 	if (!temp)
 	{

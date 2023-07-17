@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 21:53:19 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/16 22:19:16 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/17 19:34:27 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,6 @@ void	minishell(t_data *data, char *cmd, t_env *envp)
 		g_g.l = 0;
 		g_g.expand = 0;
 		g_g.ptr = NULL;
-
 		while (g_g.tokens[g_g.l])
 		{
 			if (g_g.tokens[g_g.l][0] == '$')
@@ -123,14 +122,10 @@ void	minishell(t_data *data, char *cmd, t_env *envp)
 			}
 			replace_space_in_quotes(g_g.tokens[g_g.l]);
 			g_g.words = split_with_space(g_g.tokens[g_g.l]);
-			
-			t_token *leaks = ft_lstnew_token(g_g.words, envp);
-			
-			ft_lstadd_token(&g_g.ptr, leaks);
+			ft_lstadd_token(&g_g.ptr, ft_lstnew_token(g_g.words, envp));
 			freepath(g_g.words);
 			g_g.l++;
 		}
-		
 		freepath(g_g.tokens);
 		infos_without_quotes(&g_g.ptr, envp);
 		// print_data(g_g.ptr);

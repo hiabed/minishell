@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 21:32:29 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/17 14:28:38 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/17 19:11:24 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void	outfile_errors(char *cmd, int *i, t_data *data)
 	if (cmd[*i] == '>' && !data->error)
 	{
 		write(2, "minishell: syntax error near unexpected token `>'\n", 50);
+		g_g.exit_status = 258;
 		data->error++;
 	}
 	while (cmd[*i] && (cmd[*i] == ' ' || cmd[*i] == '\t'))
@@ -46,6 +47,7 @@ void	outfile_errors(char *cmd, int *i, t_data *data)
 		&& !data->error)
 	{
 		write(2, "minishell: syntax error near unexpected token `newline'\n", 56);
+		g_g.exit_status = 258;
 		data->error++;
 	}
 }
