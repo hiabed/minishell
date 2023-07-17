@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 14:26:32 by mkatfi            #+#    #+#             */
-/*   Updated: 2023/07/17 23:36:41 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/17 23:55:03 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,11 @@ void ft_Error(char* s, int i)
         write(2, "minishell: exit: ", 18);
         write(2, s, ft_strlen(s));
         write(2, " : numeric argument required", 29);
+    }
+    if (i == 5)
+    {
+        write(2, "minishell : ", 12);
+        write(2, s, ft_strlen(s));
+        write(2, ": No such file or directory\n", 28);
     }
 }
