@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 21:32:29 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/21 21:53:15 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/17 14:28:38 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,7 @@ void	outfile_errors(char *cmd, int *i, t_data *data)
 		(*i)++;
 	if (cmd[*i] == '>' && !data->error)
 	{
-		write(2, "minishell: syntax error\n", 24);
-		write(2, "red\n", 4);
+		write(2, "minishell: syntax error near unexpected token `>'\n", 50);
 		data->error++;
 	}
 	while (cmd[*i] && (cmd[*i] == ' ' || cmd[*i] == '\t'))
@@ -46,8 +45,7 @@ void	outfile_errors(char *cmd, int *i, t_data *data)
 	if ((cmd[*i] == '\0' || cmd[*i] == '>' || cmd[*i] == '<' || cmd[*i] == '|')
 		&& !data->error)
 	{
-		write(2, "minishell: syntax error\n", 24);
-		write(2, "red\n", 4);
+		write(2, "minishell: syntax error near unexpected token `newline'\n", 56);
 		data->error++;
 	}
 }

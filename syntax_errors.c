@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 21:30:24 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/17 13:31:05 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/17 14:32:45 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,14 @@ void	pipe_syntax_errors(char *cmd, t_data *data)
 			i++;
 			while (cmd[i] == ' ' || cmd[i] == '\t')
 				i++;
-			if ((cmd[i] == '\0' || cmd[i] == '|') && !data->error)
+			if ((cmd[i] == '|') && !data->error)
 			{
-				write(2, "minishell: syntax error\n", 24);
-				write(2, "Pipe2\n", 6);
+				write(2, "bash: syntax error near unexpected token `|'\n", 45);
+				data->error++;
+			}
+			else if (cmd[i] == '\0' && !data->error)
+			{
+				write(2, "minishell: syntax error: unexpected end of file\n", 48);
 				data->error++;
 			}
 		}
@@ -47,8 +51,7 @@ void	infile_errors(char *cmd, int *i, t_data *data)
 		(*i)++;
 	if (cmd[*i] == '<' && !data->error)
 	{
-		write(2, "minishell: syntax error\n", 24);
-		write(2, "red\n", 4);
+		write(2, "minishell: syntax error near unexpected token `<'\n", 50);
 		data->error++;
 	}
 	while (cmd[*i] == ' ' || cmd[*i] == '\t')
@@ -56,8 +59,7 @@ void	infile_errors(char *cmd, int *i, t_data *data)
 	if ((cmd[*i] == '\0' || cmd[*i] == '>' || cmd[*i] == '<' || cmd[*i] == '|')
 		&& !data->error)
 	{
-		write(2, "minishell: syntax error\n", 24);
-		write(2, "red\n", 4);
+		write(2, "minishell: syntax error near unexpected token `newline'\n", 56);
 		data->error++;
 	}
 }
@@ -99,10 +101,16 @@ void	cotes_syntax_errors(char *cmd, t_data *data)
 			d_quotes_errors(&dcotes, &cotes, &i, cmd);
 		if (cmd[i] && cmd[i] == '\'')
 			s_quotes_errors(&dcotes, &cotes, &i, cmd);
-		if (!cmd[i] && (cotes % 2 == 1 || dcotes % 2 == 1) && !data->error)
+		if (!cmd[i] && cotes % 2 == 1 && !data->error)
 		{
-			write(2, "minishell: syntax error\n", 24);
-			write(2, "quotes\n", 7);
+			write(2, "minishell: unexpected EOF while looking for matching `''\n", 57);
+			write(2, "minishell: syntax error: unexpected end of file\n", 48);
+			data->error++;
+		}
+		else if (!cmd[i] && dcotes % 2 == 1 && !data->error)
+		{
+			write(2, "minishell: unexpected EOF while looking for matching `\"'\n", 57);
+			write(2, "minishell: syntax error: unexpected end of file\n", 48);
 			data->error++;
 		}
 	}
