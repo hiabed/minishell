@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 19:52:02 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/16 23:38:13 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/17 13:24:35 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ typedef struct s_env
 
 t_glob						g_g;
 
+int	ft_isalnum_expand(int c);
 void	ctrl_c_herdoc(int sigint);
 char	*ft_strjoin_x(char *s1, char *s2);
 void sig_handler(int sigint);

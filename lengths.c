@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 20:31:36 by mhassani          #+#    #+#             */
-/*   Updated: 2023/06/21 16:39:24 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/17 13:31:41 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int	count_strings(char *words)
 
 	count = 0;
 	i = 0;
-	
 	while (words[i])
 	{
 		if (words[i + 1] && ((words[i] == '\"' && words[i + 1] == '\"')
@@ -85,4 +84,22 @@ int	len(char *words)
 		i++;
 	}
 	return (count);
+}
+
+void	herdocs_count(char *cmd, t_data *data)
+{
+	int i = 0;
+	int count = 0;
+	while(cmd[i])
+	{
+		if(cmd[i + 1] && cmd[i] == '<' && cmd[i + 1] == '<')
+			count++;
+		i++;	
+	}
+	if(count > 16 && !data->error)
+	{
+		write(2, "minishell-3.2: maximum here-document count exceeded\n", 52);
+		g_g.exit_status = 2;
+		exit(g_g.exit_status);
+	}
 }

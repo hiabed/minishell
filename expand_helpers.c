@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 20:35:28 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/15 18:56:09 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/17 13:22:39 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,4 +91,12 @@ char	*after_expand(char *no_quotes)
 		var[exp.j++] = no_quotes[exp.i++];
 	var[exp.j] = '\0';
 	return (var);
+}
+
+int	ft_isalnum_expand(int c)
+{
+	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')
+		|| (c >= '0' && c <= '9') || c == '_')
+		return (1);
+	return (0);
 }

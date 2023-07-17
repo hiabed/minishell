@@ -7,7 +7,7 @@ CFILES = minishell.c syntax_errors.c split.c redirections.c token.c split_spaces
 		./execution/ft_sort.c ./execution/builtins.c ./execution/ft_export_util.c \
 		./execution/ft_cd.c ./execution/ft_unset.c ./execution/ft_exit.c ./execution/ft_env.c \
 		./execution/ft_Error.c ./execution/main_ex.c ./execution/main_ex_continued.c \
-		get_next_line.c get_next_line_utils.c \
+		get_next_line.c get_next_line_utils.c expand_helpers3.c\
 
 LIBFT = ./libft/libft.a
 

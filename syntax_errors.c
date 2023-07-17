@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 21:30:24 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/16 23:40:26 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/17 13:31:05 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,24 +105,6 @@ void	cotes_syntax_errors(char *cmd, t_data *data)
 			write(2, "quotes\n", 7);
 			data->error++;
 		}
-	}
-}
-
-void	herdocs_count(char *cmd, t_data *data)
-{
-	int i = 0;
-	int count = 0;
-	while(cmd[i])
-	{
-		if(cmd[i + 1] && cmd[i] == '<' && cmd[i + 1] == '<')
-			count++;
-		i++;	
-	}
-	if(count > 16 && !data->error)
-	{
-		write(2, "minishell-3.2: maximum here-document count exceeded\n", 52);
-		g_g.exit_status = 2;
-		exit(g_g.exit_status);
 	}
 }
 

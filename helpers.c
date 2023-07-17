@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 18:13:02 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/16 23:40:14 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/17 13:34:12 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,24 +65,25 @@ int	redirections(t_token **ptr, t_env *envp)
 	return (0);
 }
 
+
+
 void	infos_without_quotes(t_token **ptr, t_env *envp)
 {
 	int		i;
 	char *cmd_tmp;
 	t_token	*data;
 	t_token *data2 = *ptr;
-	int ch = 1;
-	data = *ptr;
+	int check = 1;
+	data =    *ptr;
 	while (data2)
 	{
-		int x = redirections(&data2, envp);
-		if(x)
-			ch  = 0;
-		if (!ch)
+		if(redirections(&data2, envp))
+			check = 0;
+		if (!check)
 			break ;
 		data2 = data2->next;
 	}
-	if (ch)
+	if (check)
 	{
 		while (data)
 		{
@@ -110,7 +111,6 @@ void	print_data(t_token *ptr)
 	t_token	*data;
 
 	data = ptr;
-	
 	while (data)
 	{
 		i = 0;
