@@ -6,32 +6,11 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 18:13:02 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/17 13:50:20 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/17 14:11:30 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	empty_string_condition(char *words, int *i)
-{
-	if ((words[*i] == '\"' && words[*i + 1] == '\"') || (words[*i] == '\''
-			&& words[*i + 1] == '\''))
-		return (1);
-	return (0);
-}
-
-int	ft_number_type(char *words)
-{
-	if (words[0] == '<' && words[1] == '<')
-		return (4);
-	else if (words[0] == '>' && words[1] == '>')
-		return (3);
-	else if (words[0] == '<')
-		return (2);
-	else if (words[0] == '>')
-		return (1);
-	return (0);
-}
 
 void	open_files(t_redirection *red, t_token **ptr)
 {
@@ -68,26 +47,11 @@ int	redirections(t_token **ptr, t_env *envp)
 	return (0);
 }
 
-
-
-void	infos_without_quotes(t_token **ptr, t_env *envp)
+void	commands(t_token *data, int signal_check, t_env *envp)
 {
-	int		i;
 	char *cmd_tmp;
-	t_token	*data;
-	t_token *data2 = *ptr;
-	int check = 1;
-	data =    *ptr;
-	while (data2)
-	{
-		if(redirections(&data2, envp))
-			check = 0;
-		if (!check)
-			break ;
-		data2 = data2->next;
-	}
-	// commands(data);
-	if (check)
+	int i = 0;
+	if (!signal_check)
 	{
 		while (data)
 		{
@@ -109,30 +73,47 @@ void	infos_without_quotes(t_token **ptr, t_env *envp)
 	}
 }
 
-void	print_data(t_token *ptr)
+void	infos_without_quotes(t_token **ptr, t_env *envp)
 {
-	int		i;
 	t_token	*data;
-
-	data = ptr;
-	while (data)
+	t_token *data2 = *ptr;
+	int signal_check = 0;
+	data =    *ptr;
+	while (data2)
 	{
-		i = 0;
-		printf("------------------\n");
-		if (data->cmd)
-			printf("cmd: %s\n", data->cmd);
-		while (data->arg[i])
-		{
-			printf("arg: %s\n", data->arg[i]);
-			i++;
-		}
-		while (data->red)
-		{
-			printf("type: %d\n", data->red->type);
-			printf("limiter: %s\n", data->red->limiter);
-			printf("file: %s\n", data->red->file);
-			data->red = data->red->next;
-		}
-		data = data->next;
+		if(redirections(&data2, envp))
+			signal_check = 1;
+		if (signal_check)
+			break ;
+		data2 = data2->next;
 	}
+	commands(data, signal_check, envp);
 }
+
+// void	print_data(t_token *ptr)
+// {
+// 	int		i;
+// 	t_token	*data;
+
+// 	data = ptr;
+// 	while (data)
+// 	{
+// 		i = 0;
+// 		printf("------------------\n");
+// 		if (data->cmd)
+// 			printf("cmd: %s\n", data->cmd);
+// 		while (data->arg[i])
+// 		{
+// 			printf("arg: %s\n", data->arg[i]);
+// 			i++;
+// 		}
+// 		while (data->red)
+// 		{
+// 			printf("type: %d\n", data->red->type);
+// 			printf("limiter: %s\n", data->red->limiter);
+// 			printf("file: %s\n", data->red->file);
+// 			data->red = data->red->next;
+// 		}
+// 		data = data->next;
+// 	}
+// }
