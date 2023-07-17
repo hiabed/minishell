@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 22:39:28 by mkatfi            #+#    #+#             */
-/*   Updated: 2023/07/17 13:55:43 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/17 23:37:09 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ void	ft_cd(char **s, t_env **p)
 	char	*path_pwd;
 	char	*old_pwd;
 	char	*home;
-	char	*bag;
 
 	if (!s[0])
 	{
@@ -57,7 +56,7 @@ void	ft_cd(char **s, t_env **p)
 		free(path_pwd);
 		if (chdir(home) == -1)
 		{
-			ft_Error(" HOME ", 2);
+			ft_Error(" HOME ", 3);
 			g_g.exit_status = 1;
 		}
 		home = ft_pwd(0,0);
@@ -66,7 +65,6 @@ void	ft_cd(char **s, t_env **p)
 		free(home);
 		return ;
 	}
-
 	if (s != NULL)
 	{
 		path_pwd = ft_pwd(0, 0);
@@ -77,12 +75,9 @@ void	ft_cd(char **s, t_env **p)
 		}
 		else
 		{
-			if (s[0][0] != '/' && s[0][1] != '\0')
-				bag = ft_strjoin("/", *s);
-			else
-				bag = ft_strdup(*s);
-			path_pwd = ft_strjoin_f(path_pwd, bag);
-			free(bag);
+			free(path_pwd);
+			path_pwd= ft_strdup(*s);
+			
 		}
 		old_pwd = ft_pwd(0,0);
 		chaeck(p, "OLDPWD", old_pwd);

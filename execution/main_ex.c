@@ -162,6 +162,8 @@ void main_ex(t_env** p, t_token* ptr)
             write(1, "Quit: 3\n", 8);
             g_g.exit_status = 131;
         }
+        else if (WTERMSIG(status) == 2)
+            g_g.exit_status = 130;
     }
     else
         g_g.exit_status =  WEXITSTATUS(status);
