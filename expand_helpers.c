@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 20:35:28 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/17 13:22:39 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/17 14:00:18 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,7 @@ char	*after_expand(char *no_quotes)
 	exp.k = 0;
 	exp.len = 0;
 	exp.j = 0;
-	while (no_quotes[exp.i] && no_quotes[exp.i] != '\''
-		&& no_quotes[exp.i] != '+' && no_quotes[exp.i] != '.'
-		&& no_quotes[exp.i] != '$' && no_quotes[exp.i] != ' ')
+	while (no_quotes[exp.i] && ft_isalnum_expand(no_quotes[exp.i]))
 	{
 		exp.k++;
 		exp.i++;

@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 22:39:28 by mkatfi            #+#    #+#             */
-/*   Updated: 2023/07/14 15:30:18 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/17 13:55:43 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,10 @@ void	ft_cd(char **s, t_env **p)
 			ft_Error(" HOME ", 2);
 			g_g.exit_status = 1;
 		}
+		home = ft_pwd(0,0);
 		chaeck(p, "PWD", home);
 		g_g.exit_status = 0;
+		free(home);
 		return ;
 	}
 

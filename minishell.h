@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 19:52:02 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/17 13:24:35 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/17 13:40:46 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,12 @@ typedef struct s_env
 
 t_glob						g_g;
 
+char	*ft_compare(char *no_quotes, t_env *envp, char *temp);
+void	open_files(t_redirection *red, t_token **ptr);
+char	*compare_keys(t_env *envp, char *no_quotes, int *i, char *temp);
+char	*first_is_number(char *no_quotes);
+char	*ft_extract_key(char *no_q);
+void	herdocs_count(char *cmd, t_data *data);
 int	ft_isalnum_expand(int c);
 void	ctrl_c_herdoc(int sigint);
 char	*ft_strjoin_x(char *s1, char *s2);
