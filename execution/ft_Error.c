@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 14:26:32 by mkatfi            #+#    #+#             */
-/*   Updated: 2023/07/18 18:58:39 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/18 23:04:15 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,5 +49,11 @@ void ft_Error(char* s, int i)
         write(2, "minishell : ", 12);
         write(2, s, ft_strlen(s));
         write(2, ": command not found\n", 20);
+    }
+    if (i == 7)
+    {
+        write(2, "minishell : ", 12);
+        write(2, s, ft_strlen(s));
+        write(2, ": is a directory\n", 17);
     }
 }
