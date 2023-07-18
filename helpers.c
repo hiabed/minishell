@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 18:13:02 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/17 23:58:14 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/18 15:31:39 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,14 @@ void	open_files(t_redirection *red, t_token **ptr)
 		else if (red->type == 2)
 		{
 			(*ptr)->fd = open(red->file, O_RDONLY, 0644);
-			if((*ptr)->fd == -1)
+			if (access((*ptr)->red->file, R_OK) == -1 && !access((*ptr)->red->file, F_OK))
+			{
+				write(2, "permission denied\n", 18);
+			}
+			else if((*ptr)->fd == -1)
+			{
 				ft_Error((*ptr)->red->file, 5);
-			else if (access((*ptr)->red->file, R_OK))
-				write(2, "permission denied\n", 18);	
+			}
 		}
 		red = red->next;
 	}

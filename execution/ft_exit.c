@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 18:31:39 by mkatfi            #+#    #+#             */
-/*   Updated: 2023/07/13 16:32:44 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/18 15:29:24 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,9 @@ int  chaeck_nb(char* s)
     {
         if (s[i] == '-')
             i++;
-        if (!ft_isdigit(s[i]))
+        if (s[i] == 32 || (s[i] >= 9 && s[i] <= 13))
+		    i++;
+        else if (!ft_isdigit(s[i]))
             return(1);
         i++;
     }
