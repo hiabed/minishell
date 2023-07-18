@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 17:59:21 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/18 19:44:11 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/18 23:46:09 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,16 @@
 
 char	*ft_compare(char *no_quotes, t_env *envp, char *temp, int *i)
 {
+	char	*key;
+	char	*status;
+	char	*first_is_num;
+
 	g_g.value = NULL;
 	g_g.result = NULL;
 	g_g.i = 0;
-	char *key = ft_extract_key(no_quotes);
-	char *status = exit_status(no_quotes);
-	char *first_is_num = first_is_number(no_quotes);
+	key = ft_extract_key(no_quotes);
+	status = exit_status(no_quotes);
+	first_is_num = first_is_number(no_quotes);
 	g_g.value = env_value(envp, key);
 	free(key);
 	if (!g_g.value && g_g.count == 1 && status)
@@ -29,7 +33,7 @@ char	*ft_compare(char *no_quotes, t_env *envp, char *temp, int *i)
 	}
 	else if (!g_g.value && g_g.count == 1 && !ft_isalnum(no_quotes[g_g.i]))
 		g_g.value = ft_strdup("$");
-	else if(!g_g.value && first_is_num)
+	else if (!g_g.value && first_is_num)
 		g_g.value = first_is_number(no_quotes);
 	else if (!g_g.value)
 		g_g.value = ft_strdup("");
@@ -39,13 +43,12 @@ char	*ft_compare(char *no_quotes, t_env *envp, char *temp, int *i)
 	else
 		g_g.result = ft_strjoin(temp, g_g.value);
 	temp = g_g.result;
-	
 	free(g_g.value);
-	
 	return (temp);
 }
 
-char	*compare_keys_without_q(t_env *envp, char *no_quotes, int *i, char *temp)
+char	*compare_keys_without_q(t_env *envp, char *no_quotes, int *i,
+		char *temp)
 {
 	g_g.chars = fst_chars(no_quotes, 0);
 	g_g.dollars = print_expanded_dollars(&no_quotes[*i]);
@@ -87,6 +90,7 @@ char	*not_compare_keys(char *no_quotes, int *i, char *temp)
 char	*ft_expand_value(char *no_q, t_env *envp)
 {
 	char	*temp;
+	char	*tmp;
 	int		i;
 
 	i = 0;
@@ -97,13 +101,13 @@ char	*ft_expand_value(char *no_q, t_env *envp)
 		{
 			if (num_dollars(&no_q[i]) % 2 != 0)
 			{
-				char *tmp = temp;
+				tmp = temp;
 				temp = compare_keys(envp, no_q, &i, temp);
 				free(tmp);
 			}
 			else
 			{
-				char *tmp = temp;
+				tmp = temp;
 				temp = not_compare_keys(no_q, &i, temp);
 				free(tmp);
 			}
@@ -116,8 +120,9 @@ char	*ft_expand_value(char *no_q, t_env *envp)
 
 char	*ft_expand_value_without_q(char *no_q, t_env *envp)
 {
-	char	*temp;
-	int		i;
+	char *temp;
+	char *tmp;
+	int i;
 
 	i = 0;
 	temp = NULL;
@@ -127,13 +132,13 @@ char	*ft_expand_value_without_q(char *no_q, t_env *envp)
 		{
 			if (num_dollars(&no_q[i]) % 2 != 0)
 			{
-				char *tmp = temp;
+				tmp = temp;
 				temp = compare_keys_without_q(envp, no_q, &i, temp);
 				free(tmp);
 			}
 			else
 			{
-				char *tmp = temp;
+				tmp = temp;
 				temp = not_compare_keys(no_q, &i, temp);
 				free(tmp);
 			}

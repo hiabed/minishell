@@ -83,8 +83,6 @@ int first_cmd(t_env* p, t_token* ptr, int* pip)
             g_g.exit_status = 127;
             exit(g_g.exit_status);
         }
-        // if(!ptr->cmd)
-        //     exit(0);
         execve(path, cmd, ev);
         perror("execve");
         g_g.exit_status = 1;

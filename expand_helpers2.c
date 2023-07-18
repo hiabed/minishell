@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 20:44:34 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/17 20:50:48 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/18 23:40:49 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,12 +81,14 @@ char	*fst_chars(char *no_quotes, int i)
 
 char	*exit_status(char *no_q)
 {
-	int j = 0;
-	int len; 
+	int		j;
+	int		len;
+	char	*status;
+	char	*rest_signs;
+	char	*exit;
+
+	j = 0;
 	len = 0;
-	char *status;
-	char *rest_signs;
-	char *exit;
 	if (no_q[j] == '?' && (no_q[j + 1] == ' ' || !no_q[j + 1]))
 	{
 		status = ft_itoa(g_g.exit_status);
@@ -94,7 +96,7 @@ char	*exit_status(char *no_q)
 	}
 	else if (no_q[j] == '?' && no_q[j + 1] && no_q[j + 1] != ' ')
 	{
-		while(no_q[j] && no_q[j] != ' ')
+		while (no_q[j] && no_q[j] != ' ')
 		{
 			len++;
 			j++;
@@ -103,7 +105,7 @@ char	*exit_status(char *no_q)
 		exit = ft_itoa(g_g.exit_status);
 		status = ft_strjoin_f(exit, rest_signs);
 		free(rest_signs);
-		return status;
+		return (status);
 	}
 	return (NULL);
 }

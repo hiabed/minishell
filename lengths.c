@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 20:31:36 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/17 13:31:41 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/18 23:42:42 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,15 +88,18 @@ int	len(char *words)
 
 void	herdocs_count(char *cmd, t_data *data)
 {
-	int i = 0;
-	int count = 0;
-	while(cmd[i])
+	int	i;
+	int	count;
+
+	i = 0;
+	count = 0;
+	while (cmd[i])
 	{
-		if(cmd[i + 1] && cmd[i] == '<' && cmd[i + 1] == '<')
+		if (cmd[i + 1] && cmd[i] == '<' && cmd[i + 1] == '<')
 			count++;
-		i++;	
+		i++;
 	}
-	if(count > 16 && !data->error)
+	if (count > 16 && !data->error)
 	{
 		write(2, "minishell-3.2: maximum here-document count exceeded\n", 52);
 		g_g.exit_status = 2;

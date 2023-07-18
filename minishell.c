@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 21:53:19 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/18 22:18:54 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/18 23:42:47 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,9 @@
 
 char	**strings_without_quotes(char *words, t_env *envp)
 {
-	int	i;
-	char **str;
+	int		i;
+	char	**str;
+
 	str = malloc((count_strings(words) + 1) * sizeof(char *));
 	g_g.k = 0;
 	i = 0;
@@ -79,7 +80,6 @@ char	*join_heredoc_to_be_one(char *words)
 	i = 0;
 	joined_string = words;
 	to_be_joined = heredoc_without_quotes(words);
-	
 	if (to_be_joined[i])
 	{
 		joined_string = to_be_joined[i];
@@ -97,13 +97,14 @@ char	*join_heredoc_to_be_one(char *words)
 
 void	minishell(t_data *data, char *cmd, t_env *envp)
 {
+	char	*token;
+
 	data->error = 0;
 	data->flag = 0;
 	syntax_errors(cmd, data);
-	
 	if (!data->error)
 	{
-		if(g_g.command)
+		if (g_g.command)
 			free(g_g.command);
 		g_g.command = space_arround_red(cmd);
 		replace_pipe_in_quotes(g_g.command);
@@ -115,7 +116,7 @@ void	minishell(t_data *data, char *cmd, t_env *envp)
 		{
 			if (g_g.tokens[g_g.l][0] == '$')
 			{
-				char *token = g_g.tokens[g_g.l];
+				token = g_g.tokens[g_g.l];
 				g_g.tokens[g_g.l] = ft_expand_value(g_g.tokens[g_g.l], envp);
 				g_g.expand = 1;
 				free(token);
@@ -136,13 +137,14 @@ void	ft_free_data(t_token **leaks)
 {
 	t_token			*b;
 	t_redirection	*a;
+
 	while ((*leaks))
 	{
 		b = (*leaks);
 		while ((*leaks)->red)
 		{
 			a = (*leaks)->red;
-			if(g_g.signal_check == 0)
+			if (g_g.signal_check == 0)
 				free(a->file);
 			free(a->limiter);
 			(*leaks)->red = (*leaks)->red->next;
@@ -189,7 +191,7 @@ int	main(int ac, char **av, char **envp)
 		if (ft_strlen(g_g.cmd) > 0)
 			add_history(g_g.cmd);
 		minishell(g_g.data, g_g.cmd, env);
-		if(g_g.signal_check == 0)
+		if (g_g.signal_check == 0)
 			chaeck_builtins1(&env, g_g.ptr);
 		ft_free_data(&g_g.ptr);
 		free(g_g.cmd);

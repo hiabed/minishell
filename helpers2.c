@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 14:07:50 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/18 16:35:12 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/18 23:42:31 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,21 +35,22 @@ int	ft_number_type(char *words)
 
 void	pipe_error(t_data *data, int i)
 {
-	if(i == 0)
+	if (i == 0)
 	{
 		write(2, "bash: syntax error near unexpected token `|'\n", 45);
 		g_g.exit_status = 258;
 		data->error++;
 	}
-	if(i == 1)
+	if (i == 1)
 	{
 		write(2, "minishell: syntax error: unexpected end of file\n", 48);
 		g_g.exit_status = 258;
 		data->error++;
 	}
-	if(i == 2)
+	if (i == 2)
 	{
-		write(2, "minishell: unexpected EOF while looking for matching `''\n", 57);
+		write(2, "minishell: unexpected EOF while looking for matching `''\n",
+				57);
 		write(2, "minishell: syntax error: unexpected end of file\n", 48);
 		g_g.exit_status = 258;
 		data->error++;

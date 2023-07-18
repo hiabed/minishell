@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 18:13:02 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/18 18:48:24 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/18 23:42:29 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,27 @@
 
 void	open_files(t_redirection *red, t_token **ptr)
 {
-	while(red)
+	while (red)
 	{
 		if (red->type == 3)
 		{
 			(*ptr)->out = open(red->file, O_CREAT | O_RDWR | O_APPEND, 0644);
-			if((*ptr)->out == -1)
+			if ((*ptr)->out == -1)
 				ft_Error((*ptr)->red->file, 5);
 		}
 		else if (red->type == 1)
 		{
 			(*ptr)->out = open(red->file, O_CREAT | O_RDWR | O_TRUNC, 0644);
-			if((*ptr)->out == -1)
+			if ((*ptr)->out == -1)
 				ft_Error((*ptr)->red->file, 5);
 		}
 		else if (red->type == 2)
 		{
 			(*ptr)->fd = open(red->file, O_RDONLY, 0644);
-			if (access((*ptr)->red->file, R_OK) == -1 && !access((*ptr)->red->file, F_OK))
+			if (access((*ptr)->red->file, R_OK) == -1
+				&& !access((*ptr)->red->file, F_OK))
 				write(2, "permission denied\n", 18);
-			else if((*ptr)->fd == -1)
+			else if ((*ptr)->fd == -1)
 				ft_Error((*ptr)->red->file, 5);
 		}
 		red = red->next;
@@ -42,10 +43,12 @@ void	open_files(t_redirection *red, t_token **ptr)
 
 int	redirections(t_token **ptr, t_env *envp)
 {
-	t_redirection	*red1 = (*ptr)->red;
-	t_redirection 	*red = (*ptr)->red;
-	t_env 	*temp;
+	t_redirection	*red1;
+	t_redirection	*red;
+	t_env			*temp;
 
+	red1 = (*ptr)->red;
+	red = (*ptr)->red;
 	temp = envp;
 	(*ptr)->out = 1;
 	(*ptr)->fd = 0;
@@ -63,14 +66,17 @@ int	redirections(t_token **ptr, t_env *envp)
 
 void	commands(t_token *data, int signal_check, t_env *envp)
 {
-	char *cmd_tmp;
-	int i = 0;
+	char	*cmd_tmp;
+	int		i;
+
+	i = 0;
 	if (!signal_check)
 	{
 		while (data)
 		{
 			i = 0;
-			if (data->cmd){
+			if (data->cmd)
+			{
 				cmd_tmp = data->cmd;
 				data->cmd = join_strings_to_be_one(data->cmd, envp);
 				free(cmd_tmp);
@@ -90,12 +96,15 @@ void	commands(t_token *data, int signal_check, t_env *envp)
 void	infos_without_quotes(t_token **ptr, t_env *envp)
 {
 	t_token	*data;
-	t_token *data2 = *ptr;
-	int signal_check = 0;
-	data =    *ptr;
+	t_token	*data2;
+	int		signal_check;
+
+	data2 = *ptr;
+	signal_check = 0;
+	data = *ptr;
 	while (data2)
 	{
-		if(redirections(&data2, envp) == -2)
+		if (redirections(&data2, envp) == -2)
 			signal_check = 1;
 		if (signal_check)
 		{

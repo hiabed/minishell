@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 20:35:28 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/18 19:33:46 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/18 23:40:12 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 
 char	*env_value(t_env *a, char *key)
 {
-	t_env *ptr = a;
+	t_env	*ptr;
+
+	ptr = a;
 	while (ptr)
 	{
 		if (ft_strcmp(ptr->key, key) == 0)
@@ -93,8 +95,8 @@ char	*after_expand(char *no_quotes)
 
 int	ft_isalnum_expand(int c)
 {
-	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')
-		|| (c >= '0' && c <= '9') || c == '_')
+	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0'
+			&& c <= '9') || c == '_')
 		return (1);
 	return (0);
 }

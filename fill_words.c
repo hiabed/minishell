@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 18:05:20 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/16 22:03:46 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/18 23:42:15 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,11 @@ char	*fill_expand(char *str, t_env *envp)
 	int		i;
 	int		j;
 	int		size;
-	char *expand = NULL;
-	char *exp = ft_expand_value(str, envp);
+	char	*expand;
+	char	*exp;
 
+	expand = NULL;
+	exp = ft_expand_value(str, envp);
 	if (exp)
 	{
 		i = 0;
@@ -92,9 +94,11 @@ char	*fill_expand_without_q(char *str, t_env *envp)
 	int		i;
 	int		j;
 	int		size;
-	char	*expand = NULL;
-	char *exp = ft_expand_value_without_q(str, envp);
+	char	*expand;
+	char	*exp;
 
+	expand = NULL;
+	exp = ft_expand_value_without_q(str, envp);
 	if (exp)
 	{
 		i = 0;
