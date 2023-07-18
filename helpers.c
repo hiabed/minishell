@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 18:13:02 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/18 15:31:39 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/18 18:21:45 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,9 @@ void	open_files(t_redirection *red, t_token **ptr)
 		{
 			(*ptr)->fd = open(red->file, O_RDONLY, 0644);
 			if (access((*ptr)->red->file, R_OK) == -1 && !access((*ptr)->red->file, F_OK))
-			{
 				write(2, "permission denied\n", 18);
-			}
 			else if((*ptr)->fd == -1)
-			{
 				ft_Error((*ptr)->red->file, 5);
-			}
 		}
 		red = red->next;
 	}
@@ -57,8 +53,8 @@ int	redirections(t_token **ptr, t_env *envp)
 	{
 		if (red1->type == 4)
 			(*ptr)->fd = here_doc(red1->limiter, temp);
-		if ((*ptr)->fd == 1)
-			return (1);
+		if ((*ptr)->fd == -2)
+			return (-2);
 		red1 = red1->next;
 	}
 	open_files(red, ptr);
@@ -99,10 +95,13 @@ void	infos_without_quotes(t_token **ptr, t_env *envp)
 	data =    *ptr;
 	while (data2)
 	{
-		if(redirections(&data2, envp))
+		if(redirections(&data2, envp) == -2)
 			signal_check = 1;
 		if (signal_check)
+		{
+			g_g.signal_check = 1;
 			break ;
+		}
 		data2 = data2->next;
 	}
 	commands(data, signal_check, envp);

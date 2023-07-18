@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 19:52:02 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/18 16:31:12 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/18 18:19:36 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ typedef struct s_glob
 	int						error;
 	int						exp_num;
 	int						max_herdoc;
+	int						signal_free;
 }							t_glob;
 
 typedef struct s_expand
@@ -107,6 +108,8 @@ typedef struct s_env
 
 t_glob						g_g;
 
+void	ft_free_red(t_token **leaks);
+void	ft_free_data(t_token **leaks);
 void	pipe_error(t_data *data, int i);
 char	*ft_compare(char *no_quotes, t_env *envp, char *temp, int *i);
 void	open_files(t_redirection *red, t_token **ptr);

@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 23:32:42 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/16 22:58:58 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/18 17:07:22 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int    here_doc(char *lim, t_env *envp)
 	signal(SIGINT, sig_handler);
 	waitpid(id, &status, 0);
 	if(WIFSIGNALED(status))
-		return 1;
+		return (-2);
 	signal(SIGINT, ctrl_c);
 	signal(SIGQUIT, SIG_IGN);
 	g_g.pipefd = pipefd[0];

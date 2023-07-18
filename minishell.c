@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 21:53:19 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/17 19:34:27 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/18 18:20:25 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,8 @@ void	ft_free_data(t_token **leaks)
 		while ((*leaks)->red)
 		{
 			a = (*leaks)->red;
-			free(a->file);
+			if(g_g.signal_check == 0)
+				free(a->file);
 			free(a->limiter);
 			(*leaks)->red = (*leaks)->red->next;
 			free(a);
@@ -172,9 +173,9 @@ int	main(int ac, char **av, char **envp)
 		h++;
 	}
 	g_g.exit_status = 0;
-	g_g.signal_check = 0;
 	while (1)
 	{
+		g_g.signal_check = 0;
 		signal(SIGINT, ctrl_c);
 		signal(SIGQUIT, SIG_IGN);
 		g_g.cmd = readline("minishell-3.2$ ");
@@ -188,7 +189,8 @@ int	main(int ac, char **av, char **envp)
 		if (ft_strlen(g_g.cmd) > 0)
 			add_history(g_g.cmd);
 		minishell(g_g.data, g_g.cmd, env);
-		chaeck_builtins1(&env, g_g.ptr);
+		if(g_g.signal_check == 0)
+			chaeck_builtins1(&env, g_g.ptr);
 		ft_free_data(&g_g.ptr);
 		free(g_g.cmd);
 		// system("leaks minishell");

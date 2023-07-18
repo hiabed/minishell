@@ -44,9 +44,12 @@ int first_cmd(t_env* p, t_token* ptr, int* pip)
     char* path;
     char** cmd;
     char** ev;
+
     t_token *data = ptr;
     if (id == 0)
     {
+        if(data->fd == -1)
+            exit(0);
         signal(SIGINT, SIG_DFL);
         signal(SIGQUIT, SIG_DFL);
         if (data->fd > 0)
@@ -71,6 +74,9 @@ int first_cmd(t_env* p, t_token* ptr, int* pip)
             g_g.exit_status = 127;
             exit(g_g.exit_status);
         }
+        
+        if(!ptr->cmd)
+            exit(0);
         execve(path, cmd, ev);
         perror("execve");
         g_g.exit_status = 1;

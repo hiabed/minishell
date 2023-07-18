@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 15:45:14 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/17 19:36:09 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/18 17:52:37 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,13 +96,12 @@ void	ft_lstadd_token(t_token **lst, t_token *new)
 
 t_token	*ft_lstnew_token(char **words, t_env *envp)
 {
-	t_token	*head;
+	t_token	*head = NULL;
 	char **ptr = words;
-
+	
 	head = malloc(sizeof(t_token));
 	if (!head)
 		return (NULL);
-	
 	head->cmd = ft_cmd(ptr);
 	head->arg = ft_arg(ptr);
 	head->red = ft_redirections(ptr, envp);
