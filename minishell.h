@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 19:52:02 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/17 20:38:14 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/18 16:31:12 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ typedef struct s_env
 
 t_glob						g_g;
 
+void	pipe_error(t_data *data, int i);
 char	*ft_compare(char *no_quotes, t_env *envp, char *temp, int *i);
 void	open_files(t_redirection *red, t_token **ptr);
 char	*compare_keys(t_env *envp, char *no_quotes, int *i, char *temp);

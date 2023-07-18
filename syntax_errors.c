@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 21:30:24 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/17 19:11:05 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/18 16:35:27 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,10 @@ void	pipe_syntax_errors(char *cmd, t_data *data)
 	int	i;
 
 	i = 0;
+	while(cmd[i] && (cmd[i] == ' ' || cmd[i] == '\t'))
+		i++;
+	if ((cmd[i] == '|') && !data->error)
+		pipe_error(data, 0);
 	while (cmd[i])
 	{
 		if (cmd[i] == '\"')
@@ -29,20 +33,11 @@ void	pipe_syntax_errors(char *cmd, t_data *data)
 			while (cmd[i] == ' ' || cmd[i] == '\t')
 				i++;
 			if ((cmd[i] == '|') && !data->error)
-			{
-				write(2, "bash: syntax error near unexpected token `|'\n", 45);
-				g_g.exit_status = 258;
-				data->error++;
-			}
+				pipe_error(data, 0);
 			else if (cmd[i] == '\0' && !data->error)
-			{
-				write(2, "minishell: syntax error: unexpected end of file\n", 48);
-				g_g.exit_status = 258;
-				data->error++;
-			}
+				pipe_error(data, 1);
 		}
-		else
-			i++;
+		i++;
 	}
 }
 
@@ -106,12 +101,7 @@ void	cotes_syntax_errors(char *cmd, t_data *data)
 		if (cmd[i] && cmd[i] == '\'')
 			s_quotes_errors(&dcotes, &cotes, &i, cmd);
 		if (!cmd[i] && cotes % 2 == 1 && !data->error)
-		{
-			write(2, "minishell: unexpected EOF while looking for matching `''\n", 57);
-			write(2, "minishell: syntax error: unexpected end of file\n", 48);
-			g_g.exit_status = 258;
-			data->error++;
-		}
+			pipe_error(data, 2);
 		else if (!cmd[i] && dcotes % 2 == 1 && !data->error)
 		{
 			write(2, "minishell: unexpected EOF while looking for matching `\"'\n", 57);

@@ -51,8 +51,6 @@ int first_cmd(t_env* p, t_token* ptr, int* pip)
         signal(SIGQUIT, SIG_DFL);
         if (data->fd > 0)
             dup2(data->fd, 0);
-        else
-            exit(0);
         if (data->out == 1 && data->next) 
             dup2(pip[1], 1);
         else 
