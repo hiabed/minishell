@@ -70,11 +70,11 @@ int first_cmd(t_env* p, t_token* ptr, int* pip)
         ev = get_envrment(p);
         if (path == NULL || data->cmd[0] == '\0')
         {
-            ft_Error(data->cmd,3);
+            ft_Error(data->cmd,6);
             g_g.exit_status = 127;
             exit(g_g.exit_status);
         }
-        
+
         if(!ptr->cmd)
             exit(0);
         execve(path, cmd, ev);

@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 17:59:21 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/17 20:38:32 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/18 19:44:11 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,8 @@ char	*ft_expand_value(char *no_q, t_env *envp)
 				free(tmp);
 			}
 		}
-		i++;
+		else
+			i++;
 	}
 	return (temp);
 }
@@ -137,7 +138,8 @@ char	*ft_expand_value_without_q(char *no_q, t_env *envp)
 				free(tmp);
 			}
 		}
-		i++;
+		else
+			i++;
 	}
 	return (temp);
 }
