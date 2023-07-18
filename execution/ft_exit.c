@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 18:31:39 by mkatfi            #+#    #+#             */
-/*   Updated: 2023/07/18 15:29:24 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/18 22:32:08 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void ft_exit( char** s)
     {
         printf("minishell: exit: %s : numeric argument required\n", *s);
         g_g.exit_status = 255;
-        return ;
+        exit(g_g.exit_status);
     }
     else if (ft_isdigit(s[0][0]) && s[1])
     {

@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 19:52:02 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/18 18:19:36 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/18 22:29:14 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -218,7 +218,7 @@ void						ft_echo(char **cmd, int fd);
 void						ft_env(t_env *p, t_token *ptr);
 char						*ft_pwd(int k, int i);
 void						ft_cd(char **s, t_env **p);
-void						ft_export(char **s, t_env *p, int fd);
+void						ft_export(char **s, t_env **p, int fd);
 // void						ft_env(t_env *p);
 char						**key_valu(char *s);
 void						ft_unset(t_env **p, char **s);

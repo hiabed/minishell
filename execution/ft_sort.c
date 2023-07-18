@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_sort.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkatfi <mkatfi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 13:44:32 by mkatfi            #+#    #+#             */
-/*   Updated: 2023/06/24 17:11:01 by mkatfi           ###   ########.fr       */
+/*   Updated: 2023/07/18 22:27:43 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void aray(t_env* a , int i)
 void writor(t_env* ptr1, int fd)
 {
     ft_putstr_fd("declare -x ", fd);
+    
     ft_putstr_fd(ptr1->key, fd);
     if (ptr1->valuer != NULL)
     {
@@ -56,6 +57,11 @@ void continued_sort_nb(int i, t_env* ptr, t_env* a, int fd)
     
     i = 0;
     ptr = a;
+    // if(!ptr)
+    // {
+    //     ft_lstadd_back_env(&ptr, ft_lstnew_env(s[i]));
+    //     writor(ptr, fd);
+    // }
     while (ptr)
     {
         ptr1 = a;

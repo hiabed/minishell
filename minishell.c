@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 21:53:19 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/18 19:24:57 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/18 22:18:54 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,7 +167,7 @@ int	main(int ac, char **av, char **envp)
 		return (0);
 	env = NULL;
 	h = 0;
-	while (envp[h])
+	while (envp && envp[h])
 	{
 		ft_lstadd_back_env(&env, ft_lstnew_env(envp[h]));
 		h++;

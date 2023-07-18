@@ -68,12 +68,12 @@ int first_cmd(t_env* p, t_token* ptr, int* pip)
         path = get_path_cmd(p, data->cmd, data->arg);
         cmd = join_cmd(data->cmd, data->arg);
         ev = get_envrment(p);
-        if (path == NULL || data->cmd[0] == '\0')
-        {
-            ft_Error(data->cmd,6);
-            g_g.exit_status = 127;
-            exit(g_g.exit_status);
-        }
+        // if (path == NULL || data->cmd[0] == '\0')
+        // {
+        //     ft_Error(data->cmd,6);
+        //     g_g.exit_status = 127;
+        //     exit(g_g.exit_status);
+        // }
 
         if(!ptr->cmd)
             exit(0);
