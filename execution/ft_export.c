@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 16:40:11 by mkatfi            #+#    #+#             */
-/*   Updated: 2023/07/16 23:53:00 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/18 21:12:36 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,15 +44,25 @@ void to_be_contined(int i, t_env *p, char **s)
     else if (is_he_in_env(p, a[0]) == 0)
     {
         if (icale(s[i]) == 1 || icale(s[i]) == 2)
+        {
+            printf("HERE1\n");
             ft_lstadd_back_env(&p, ft_lstnew_env(s[i]));
+        }
         else if (icale(s[i]) == 0)
         {
+            printf("HERE2\n");
+            printf("before\n");
+            printf("p: %p\n", p);
             ft_lstadd_back_env(&p, ft_lstnew_env(s[i]));
+            printf("after\n");
+            printf("p: %p\n", p);
+            printf("key: %s val: %s\n", p->key, p->valuer);
             free(a[1]);
             a[1] = NULL;
             riblce_v(p, a[0], a[1]);
         }
     }
+    // printf("p: %p\n", p);
     freepath(a);
 }
 

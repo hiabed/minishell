@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 21:30:24 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/18 16:35:27 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/18 21:17:24 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ void	pipe_syntax_errors(char *cmd, t_data *data)
 			else if (cmd[i] == '\0' && !data->error)
 				pipe_error(data, 1);
 		}
-		i++;
+		else
+			i++;
 	}
 }
 
