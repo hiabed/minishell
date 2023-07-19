@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 18:13:02 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/19 14:44:00 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/19 17:03:08 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,15 @@ void	infos_without_quotes(t_token **ptr, t_env *envp)
 		data2 = data2->next;
 	}
 	commands(data, signal_check, envp);
+}
+
+void	increment_i(char *cmd, int *i)
+{
+	(*i)++;
+	while (cmd[*i] && cmd[*i] != '\"')
+		(*i)++;
+	if (cmd[*i] && cmd[*i + 1] && cmd[*i] == '\"')
+		(*i)++;
 }
 
 // void	print_data(t_token *ptr)

@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 16:55:59 by mkatfi            #+#    #+#             */
-/*   Updated: 2023/07/18 23:42:16 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/19 16:40:12 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 int	ft_strcmp(char *str1, char *str2)
 {
-	size_t i;
-	unsigned char *s1;
-	unsigned char *s2;
+	size_t			i;
+	unsigned char	*s1;
+	unsigned char	*s2;
 
 	s1 = (unsigned char *)str1;
 	s2 = (unsigned char *)str2;

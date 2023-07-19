@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 21:32:29 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/18 23:40:09 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/19 16:06:18 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	outfile_errors(char *cmd, int *i, t_data *data)
 		&& !data->error)
 	{
 		write(2, "minishell: syntax error near unexpected token `newline'\n",
-				56);
+			56);
 		g_g.exit_status = 258;
 		data->error++;
 	}

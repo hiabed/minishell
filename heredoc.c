@@ -6,39 +6,46 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 23:32:42 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/18 23:42:36 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/19 17:03:21 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	here_doc(char *lim, t_env *envp)
+void	read_herdoc(t_env *envp, char *lim, int *pipefd)
 {
 	char	*line;
 	char	*line2;
-	int		status;
-	int		pipefd[2];
-	int		id;
+
+	while (1)
+	{
+		line = readline("> ");
+		line2 = ft_expand_value(line, envp);
+		if (!line || !ft_strcmp(lim, line))
+		{
+			g_g.exit_status = 0;
+			free(line);
+			break ;
+		}
+		else if (!g_g.check && line2)
+			line = ft_expand_value(line, envp);
+		ft_putendl_fd(line, pipefd[1]);
+		free(line);
+	}
+}
+
+int	here_doc(char *lim, t_env *envp)
+{
+	int	status;
+	int	pipefd[2];
+	int	id;
 
 	pipe(pipefd);
 	id = fork();
 	if (id == 0)
 	{
 		signal(SIGINT, SIG_DFL);
-		while (1)
-		{
-			line = readline("> ");
-			if (!line || !ft_strcmp(lim, line))
-			{
-				g_g.exit_status = 0;
-				free(line);
-				break ;
-			}
-			else if (!g_g.check && (line2 = ft_expand_value(line, envp)))
-				line = ft_expand_value(line, envp);
-			ft_putendl_fd(line, pipefd[1]);
-			free(line);
-		}
+		read_herdoc(envp, lim, pipefd);
 		exit(0);
 	}
 	signal(SIGINT, sig_handler);
@@ -50,14 +57,6 @@ int	here_doc(char *lim, t_env *envp)
 	g_g.pipefd = pipefd[0];
 	close(pipefd[1]);
 	return (pipefd[0]);
-}
-
-void	lim_check(char *words)
-{
-	if (words[0] == '\'' || words[0] == '\"')
-		g_g.check = 1;
-	else
-		g_g.check = 0;
 }
 
 char	**heredoc_without_quotes(char *words)
@@ -106,13 +105,4 @@ void	skip_s_quotes(char *words, int *i, int *count)
 	if (words[*i])
 		(*i)++;
 	(*count)++;
-}
-
-void	increment_i(char *cmd, int *i)
-{
-	(*i)++;
-	while (cmd[*i] && cmd[*i] != '\"')
-		(*i)++;
-	if (cmd[*i] && cmd[*i + 1] && cmd[*i] == '\"')
-		(*i)++;
 }

@@ -6,19 +6,19 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 20:40:42 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/17 22:44:49 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/19 16:05:34 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"libft.h"
+#include "libft.h"
 
 size_t	ft_strlen(const char *s)
 {
 	size_t	i;
 
 	i = 0;
-	if(!s || !s[0])
-		return 0;
+	if (!s || !s[0])
+		return (0);
 	while (s[i])
 		i++;
 	return (i);
@@ -28,5 +28,5 @@ size_t	ft_strlen(const char *s)
 // {
 // 	char a[] = "hello";
 // 	printf("%zu", ft_strlen(a));
-// 	return 0;
+// 	return (0);
 // }

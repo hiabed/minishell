@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 19:52:02 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/19 16:01:01 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/19 17:41:38 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,10 @@ typedef struct s_token
 
 typedef struct s_glob
 {
+	char					*temp;
+	char					*tmp;
+	char					*rest_signs;
+	char					*exit;
 	int						id;
 	t_token					*dataa;
 	char					*path;
@@ -86,6 +90,8 @@ typedef struct s_glob
 	int						j;
 	int						expand;
 	int						k;
+	int						t;
+	int						index;
 	int						cmd_check;
 	int						check;
 	int						count;
@@ -121,7 +127,12 @@ typedef struct s_env
 
 t_glob						g_g;
 
+void						write_error(void);
+char						*join_heredoc_to_be_one(char *words);
 void						ft_free_data(t_token **leaks);
+void						export_expand_case(t_env *envp);
+void						lim_check(char *words);
+char						*if_not_value(char *no_quotes, char *value, int *i);
 void						pipe_error(t_data *data, int i);
 char						*ft_compare(char *no_quotes, t_env *envp,
 								char *temp, int *i);
@@ -149,7 +160,6 @@ char						*ft_expand_value_without_q(char *no_q, t_env *envp);
 void						cmd_signal(int sigint);
 void						ctrl_c(int sigint);
 void						rl_replace_line(const char *text, int clear_undo);
-void						lim_check(char *words);
 void						pipe_syntax_errors(char *cmd, t_data *data);
 void						red_syntax_errors(char *cmd, t_data *data);
 void						cotes_syntax_errors(char *cmd, t_data *data);
@@ -165,8 +175,8 @@ char						**ft_arg(char **words);
 char						*ft_cmd(char **words);
 t_token						*ft_lstnew_token(char **words, t_env *envp);
 void						ft_lstadd_token(t_token **lst, t_token *new);
-void	ft_lstadd_red(t_redirection **lst,
-					t_redirection *new);
+void						ft_lstadd_red(t_redirection **lst,
+								t_redirection *new);
 char						*ft_file_name(char *words, t_env *envp, int type);
 char						*ft_limiter_name(char *words, int type);
 int							ft_number_type(char *words);
@@ -203,7 +213,7 @@ char						*fill_word_without_q(char *str, char *words,
 								int *i);
 char						*fill_word_with_d_q(char *str, char *words, int *i);
 char						*fill_word_with_s_q(char *str, char *words, int *i);
-char	*fill_expand(char *str, t_env *envp); //here
+char						*fill_expand(char *str, t_env *envp); //here
 // char						**fill_expand(char *str, t_env *envp);
 int							empty_string_condition(char *words, int *i);
 void						p_in_double_quotes(char *cmd);

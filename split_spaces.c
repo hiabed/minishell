@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 19:01:48 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/18 23:43:13 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/19 17:35:56 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ char	**fill_array(char **tab, char const *s, int i)
 //wc :<<words count>>
 char	**ft_split_space(char const *s)
 {
-	char **tab;
+	char	**tab;
 
 	if (!s)
 		return (NULL);

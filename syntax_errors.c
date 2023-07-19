@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 21:30:24 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/18 23:43:16 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/19 17:41:59 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,31 +14,29 @@
 
 void	pipe_syntax_errors(char *cmd, t_data *data)
 {
-	int	i;
-
-	i = 0;
-	while (cmd[i] && (cmd[i] == ' ' || cmd[i] == '\t'))
-		i++;
-	if ((cmd[i] == '|') && !data->error)
+	g_g.index = 0;
+	while (cmd[g_g.index] && (cmd[g_g.index] == ' ' || cmd[g_g.index] == '\t'))
+		g_g.index++;
+	if ((cmd[g_g.index] == '|') && !data->error)
 		pipe_error(data, 0);
-	while (cmd[i])
+	while (cmd[g_g.index])
 	{
-		if (cmd[i] == '\"')
-			skip_db_quotes(&i, cmd);
-		else if (cmd[i] == '\'')
-			skip_sin_quotes(&i, cmd);
-		else if (cmd[i] == '|')
+		if (cmd[g_g.index] == '\"')
+			skip_db_quotes(&g_g.index, cmd);
+		else if (cmd[g_g.index] == '\'')
+			skip_sin_quotes(&g_g.index, cmd);
+		else if (cmd[g_g.index] == '|')
 		{
-			i++;
-			while (cmd[i] == ' ' || cmd[i] == '\t')
-				i++;
-			if ((cmd[i] == '|') && !data->error)
+			g_g.index++;
+			while (cmd[g_g.index] == ' ' || cmd[g_g.index] == '\t')
+				g_g.index++;
+			if ((cmd[g_g.index] == '|') && !data->error)
 				pipe_error(data, 0);
-			else if (cmd[i] == '\0' && !data->error)
+			else if (cmd[g_g.index] == '\0' && !data->error)
 				pipe_error(data, 1);
 		}
 		else
-			i++;
+			g_g.index++;
 	}
 }
 
@@ -59,7 +57,7 @@ void	infile_errors(char *cmd, int *i, t_data *data)
 		&& !data->error)
 	{
 		write(2, "minishell: syntax error near unexpected token `newline'\n",
-				56);
+			56);
 		g_g.exit_status = 258;
 		data->error++;
 	}
@@ -106,10 +104,7 @@ void	cotes_syntax_errors(char *cmd, t_data *data)
 			pipe_error(data, 2);
 		else if (!cmd[i] && dcotes % 2 == 1 && !data->error)
 		{
-			write(2,
-					"minishell: unexpected EOF while looking for matching `\"'\n",
-					57);
-			write(2, "minishell: syntax error: unexpected end of file\n", 48);
+			write_error();
 			g_g.exit_status = 258;
 			data->error++;
 		}

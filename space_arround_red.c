@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 14:15:26 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/18 23:43:06 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/19 17:35:12 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ int	cmd_lenght(char *s)
 {
 	int	i;
 	int	count;
-	int	len;
 
 	i = 0;
 	count = 0;
@@ -38,8 +37,7 @@ int	cmd_lenght(char *s)
 			count++;
 		i++;
 	}
-	len = (count * 2) + i;
-	return (len);
+	return ((count * 2) + i);
 }
 
 void	fill_inside_d_quotes(int *i, int *j, char *ptr, char *s1)

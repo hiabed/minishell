@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 18:14:51 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/17 20:49:24 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/19 16:05:28 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,6 @@ char	*ft_strjoin_f2(char *s1, char *s2)
 	free(s2);
 	return (newstr);
 }
-
 
 // int	main(void)
 // {

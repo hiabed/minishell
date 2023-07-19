@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 13:23:15 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/18 23:41:29 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/19 16:36:12 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 char	*first_is_number(char *no_quotes)
 {
-	int	i;
-	int	j;
-		char *str;
+	int		i;
+	int		j;
+	char	*str;
 
 	if (ft_isdigit(no_quotes[0]))
 	{
@@ -76,4 +76,29 @@ char	*compare_keys(t_env *envp, char *no_quotes, int *i, char *temp)
 	free(g_g.chars);
 	free(g_g.dollars);
 	return (temp);
+}
+
+char	*if_not_value(char *no_quotes, char *value, int *i)
+{
+	char	*first_is_num;
+	char	*status;
+
+	g_g.i = 0;
+	first_is_num = first_is_number(no_quotes);
+	status = exit_status(no_quotes);
+	if (!value && g_g.count == 1 && status)
+	{
+		(*i)++;
+		value = status;
+	}
+	else if (!value && g_g.count == 1 && !ft_isalnum(no_quotes[g_g.i + 1]))
+	{
+		(*i)++;
+		value = ft_strdup("$");
+	}
+	else if (!value && first_is_num)
+		value = first_is_number(no_quotes);
+	else if (!value)
+		value = ft_strdup("");
+	return (value);
 }

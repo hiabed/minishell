@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 20:44:34 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/18 23:40:49 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/19 16:09:35 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,6 @@ char	*exit_status(char *no_q)
 	int		j;
 	int		len;
 	char	*status;
-	char	*rest_signs;
-	char	*exit;
 
 	j = 0;
 	len = 0;
@@ -101,10 +99,10 @@ char	*exit_status(char *no_q)
 			len++;
 			j++;
 		}
-		rest_signs = ft_substr(no_q, 1, len - j);
-		exit = ft_itoa(g_g.exit_status);
-		status = ft_strjoin_f(exit, rest_signs);
-		free(rest_signs);
+		g_g.rest_signs = ft_substr(no_q, 1, len - j);
+		g_g.exit = ft_itoa(g_g.exit_status);
+		status = ft_strjoin_f(g_g.exit, g_g.rest_signs);
+		free(g_g.rest_signs);
 		return (status);
 	}
 	return (NULL);
