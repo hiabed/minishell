@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 13:23:15 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/19 16:36:12 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/19 17:45:51 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,11 @@ char	*first_is_number(char *no_quotes)
 		j = 0;
 		while (no_quotes[i] && (no_quotes[i] != ' ' && no_quotes[i] != '\t'))
 			i++;
-		str = malloc(i);
+		str = malloc(i + 1);
 		i = 1;
 		while (no_quotes[i] && (no_quotes[i] != ' ' && no_quotes[i] != '\t'))
 			str[j++] = no_quotes[i++];
-		str[i] = '\0';
+		str[i - 1] = '\0';
 		return (str);
 	}
 	return (NULL);
