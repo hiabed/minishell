@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 19:52:02 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/19 17:41:38 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/19 23:13:34 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ typedef struct s_glob
 	int						expand;
 	int						k;
 	int						t;
+	int						z;
 	int						index;
 	int						cmd_check;
 	int						check;
@@ -175,8 +176,8 @@ char						**ft_arg(char **words);
 char						*ft_cmd(char **words);
 t_token						*ft_lstnew_token(char **words, t_env *envp);
 void						ft_lstadd_token(t_token **lst, t_token *new);
-void						ft_lstadd_red(t_redirection **lst,
-								t_redirection *new);
+void	ft_lstadd_red(t_redirection **lst,
+					t_redirection *new);
 char						*ft_file_name(char *words, t_env *envp, int type);
 char						*ft_limiter_name(char *words, int type);
 int							ft_number_type(char *words);
@@ -213,7 +214,7 @@ char						*fill_word_without_q(char *str, char *words,
 								int *i);
 char						*fill_word_with_d_q(char *str, char *words, int *i);
 char						*fill_word_with_s_q(char *str, char *words, int *i);
-char						*fill_expand(char *str, t_env *envp); //here
+char	*fill_expand(char *str, t_env *envp); //here
 // char						**fill_expand(char *str, t_env *envp);
 int							empty_string_condition(char *words, int *i);
 void						p_in_double_quotes(char *cmd);
@@ -272,5 +273,6 @@ int							first_cmd(t_env *p, t_token *ptr, int *pip);
 int							any_next_cmd(t_env *p, t_token *ptr, int last_fd,
 								int *pipe_2);
 int							ft_lstsize_1(t_token *lst);
+void						ft_error_3(char *s, int i);
 
 #endif

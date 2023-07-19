@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 13:33:58 by mkatfi            #+#    #+#             */
-/*   Updated: 2023/07/19 16:02:48 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/19 23:51:03 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,26 +79,24 @@ char	**join_cmd(char *d, char **s)
 
 char	*get_path_cmd(t_env *p, char *d, char **s)
 {
-	int	i;
-
 	g_g.g = get_path(p);
 	g_g.c = ft_split(g_g.g, ':');
 	g_g.jo = join_cmd(d, s);
 	g_g.gv = get_envrment(p);
 	if (access(d, X_OK) == 0)
 		execve(d, g_g.jo, g_g.gv);
-	i = 0;
+	g_g.z = 0;
 	if (g_g.c == NULL || *g_g.c == NULL)
 		return (NULL);
-	while (g_g.c && g_g.c[i])
+	while (g_g.c && g_g.c[g_g.z])
 	{
-		g_g.syt = ft_strjoin(g_g.c[i], "/");
+		g_g.syt = ft_strjoin(g_g.c[g_g.z], "/");
 		g_g.buff = ft_strjoin(g_g.syt, d);
 		if (access(g_g.buff, F_OK) == 0)
 			return (g_g.buff);
 		free(g_g.buff);
 		free(g_g.syt);
-		i++;
+		g_g.z++;
 	}
 	return (NULL);
 }

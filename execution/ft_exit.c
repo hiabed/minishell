@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 18:31:39 by mkatfi            #+#    #+#             */
-/*   Updated: 2023/07/19 16:02:38 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/19 20:25:14 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,14 +69,14 @@ void	ft_exit(char **s)
 		exit(g_g.exit_status);
 	else if (chaeck_nb(*s) == 1)
 	{
-		ft_error(*s, 4);
+		ft_error_2(*s, 4);
 		g_g.exit_status = 255;
 		exit(g_g.exit_status);
 	}
 	else if (ft_isdigit(s[0][0]) && s[1])
 	{
 		g_g.exit_status = 1;
-		write(2, "too many arguments\n", 19);
+		ft_error(*s, 8);
 	}
 	else if (chaeck_nb(s[0]) == 0)
 	{

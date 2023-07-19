@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 14:26:32 by mkatfi            #+#    #+#             */
-/*   Updated: 2023/07/19 16:03:13 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/19 20:19:41 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,12 @@ void	ft_error(char *s, int i)
 		write(2, s, ft_strlen(s));
 		write(2, " No set\n", 8);
 	}
+	if (i == 8)
+    {
+        write(2, "minishell : exit: ", 18);
+        write(2, s, ft_strlen(s));
+        write(2, " too many arguments\n", 20);
+    }
 }
 
 void	ft_error_2(char *s, int i)
@@ -61,3 +67,14 @@ void	ft_error_2(char *s, int i)
 		write(2, ": is a directory\n", 17);
 	}
 }
+
+void    ft_error_3(char* s, int i)
+{
+      if (i == 1)
+    {
+        write(2, "minishell: unset: `", 20);
+        write(2, s, ft_strlen(s));
+        write(2, "': not a valid identifier\n", 26);
+    }
+}
+

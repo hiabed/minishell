@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 16:45:57 by mkatfi            #+#    #+#             */
-/*   Updated: 2023/07/19 16:02:45 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/19 22:56:33 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,7 @@ int	cheack_arg_unset(char *s)
 	while (s[i])
 	{
 		if (ft_isalnum(s[i]) == 0 && (s[i] != '_'))
-		{
 			return (0);
-		}
 		i++;
 	}
 	return (1);
@@ -79,7 +77,7 @@ void	ft_unset(t_env **p, char **s)
 	{
 		if (!cheack_arg_unset(s[i]))
 		{
-			write(2, "not a valid identifier\n", 24);
+			ft_error_3(s[i], 1);
 			g_g.exit_status = 1;
 		}
 		i++;

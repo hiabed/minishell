@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 16:40:11 by mkatfi            #+#    #+#             */
-/*   Updated: 2023/07/19 16:03:26 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/19 22:39:06 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,12 @@ void	ft_export(char **s, t_env **p, int fd)
 	{
 		while (s && s[i])
 		{
+			if (s[i][0] == '=')
+			{
+				ft_error(s[i], 1);
+				g_g.exit_status = 1;
+				return ;
+			}
 			if (!cheack_arg(s[i]))
 			{
 				i++;
