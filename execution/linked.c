@@ -6,20 +6,20 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 19:41:33 by mkatfi            #+#    #+#             */
-/*   Updated: 2023/07/18 22:42:53 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/19 16:02:46 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"../minishell.h"
+#include "../minishell.h"
 
-void continue_key_valu(char **g, char *s)
+void	continue_key_valu(char **g, char *s)
 {
-	int j;
-	int k;
-	
+	int	j;
+	int	k;
+
 	j = 0;
 	k = 0;
-	while (s[j] && s[j] != '=' && s[j] !='+')
+	while (s[j] && s[j] != '=' && s[j] != '+')
 		g[0][k++] = s[j++];
 	g[0][k] = '\0';
 	k = 0;
@@ -29,7 +29,7 @@ void continue_key_valu(char **g, char *s)
 		while (s[j])
 			g[1][k++] = s[j++];
 		g[1][k] = '\0';
-	}	
+	}
 	if (s[j] == '=')
 	{
 		j++;
@@ -39,32 +39,32 @@ void continue_key_valu(char **g, char *s)
 	g[1][k] = '\0';
 }
 
-char **key_valu(char* s)
+char	**key_valu(char *s)
 {
 	int		i;
 	char	**g;
+
 	if (!s)
-		return(NULL);
-	g = malloc(sizeof(char*) * 3);
+		return (NULL);
+	g = malloc(sizeof(char *) * 3);
 	if (g == NULL)
-		return NULL;
+		return (NULL);
 	g[2] = NULL;
 	i = 0;
-	while (s[i] && s[i] != '=' && s[i] !='+')
+	while (s[i] && s[i] != '=' && s[i] != '+')
 		i++;
 	g[0] = malloc(i + 1);
 	g[1] = malloc(ft_strlen(s) - i + 1);
 	continue_key_valu(g, s);
 	if (g[0] != NULL || g[1] != NULL)
-		return(g);
-	return(NULL);
+		return (g);
+	return (NULL);
 }
 
-
-t_env* ft_lstnew_env(char* content)
+t_env	*ft_lstnew_env(char *content)
 {
-	t_env		*head;
-	char** s;
+	t_env	*head;
+	char	**s;
 
 	s = key_valu(content);
 	head = malloc(sizeof(t_env));
@@ -93,4 +93,3 @@ void	ft_lstadd_back_env(t_env **lst, t_env *new)
 		ptr = ptr->next;
 	ptr->next = new;
 }
-

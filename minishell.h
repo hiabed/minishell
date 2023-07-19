@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 19:52:02 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/18 22:29:14 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/19 16:01:01 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,19 @@ typedef struct s_token
 
 typedef struct s_glob
 {
+	int						id;
+	t_token					*dataa;
+	char					*path;
+	char					**cmdd;
+	int						last_fd;
+	int						pip[2];
+	int						pid;
+	char					*g;
+	char					**c;
+	char					*syt;
+	char					*buff;
+	char					**jo;
+	char					**gv;
 	char					*expandd;
 	char					*value;
 	char					*result;
@@ -108,30 +121,31 @@ typedef struct s_env
 
 t_glob						g_g;
 
-void	ft_free_red(t_token **leaks);
-void	ft_free_data(t_token **leaks);
-void	pipe_error(t_data *data, int i);
-char	*ft_compare(char *no_quotes, t_env *envp, char *temp, int *i);
-void	open_files(t_redirection *red, t_token **ptr);
-char	*compare_keys(t_env *envp, char *no_quotes, int *i, char *temp);
-char	*first_is_number(char *no_quotes);
-char	*ft_extract_key(char *no_q);
-void	herdocs_count(char *cmd, t_data *data);
-int	ft_isalnum_expand(int c);
-void	ctrl_c_herdoc(int sigint);
-char	*ft_strjoin_x(char *s1, char *s2);
-void sig_handler(int sigint);
-void	*ft_calloc(size_t count, size_t size);
-int		ft_newline(char *s);
-void	ft_free(char *s1, char *s2);
-char	*line(char *s);
-char	*left_str(char *s);
-char	*read_line(int fd, int i, char *s);
-char	*get_next_line(int fd);
-void	ctrl_ccc(int sigint);
-void	infos_without_quotes(t_token **ptr, t_env *envp);
-char	*fill_expand_without_q(char *str, t_env *envp);
-char	*ft_expand_value_without_q(char *no_q, t_env *envp);
+void						ft_free_data(t_token **leaks);
+void						pipe_error(t_data *data, int i);
+char						*ft_compare(char *no_quotes, t_env *envp,
+								char *temp, int *i);
+void						open_files(t_redirection *red, t_token **ptr);
+char						*compare_keys(t_env *envp, char *no_quotes, int *i,
+								char *temp);
+char						*first_is_number(char *no_quotes);
+char						*ft_extract_key(char *no_q);
+void						herdocs_count(char *cmd, t_data *data);
+int							ft_isalnum_expand(int c);
+void						ctrl_c_herdoc(int sigint);
+char						*ft_strjoin_x(char *s1, char *s2);
+void						sig_handler(int sigint);
+void						*ft_calloc(size_t count, size_t size);
+int							ft_newline(char *s);
+void						ft_free(char *s1, char *s2);
+char						*line(char *s);
+char						*left_str(char *s);
+char						*read_line(int fd, int i, char *s);
+char						*get_next_line(int fd);
+void						ctrl_ccc(int sigint);
+void						infos_without_quotes(t_token **ptr, t_env *envp);
+char						*fill_expand_without_q(char *str, t_env *envp);
+char						*ft_expand_value_without_q(char *no_q, t_env *envp);
 void						cmd_signal(int sigint);
 void						ctrl_c(int sigint);
 void						rl_replace_line(const char *text, int clear_undo);
@@ -163,7 +177,7 @@ char						*join_strings_to_be_one(char *words, t_env *envp);
 char						*space_arround_red(char *s1);
 void						ft_fill_ptr(char *s1, char *ptr, int i, int j);
 int							cmd_lenght(char *s);
-char	*env_value(t_env *a, char *key);
+char						*env_value(t_env *a, char *key);
 char						*ft_expand_value(char *no_quotes, t_env *envp);
 int							before_dollar_len(char *no_quotes);
 int							ft_strcmp(char *s1, char *s2);
@@ -196,7 +210,7 @@ void						p_in_double_quotes(char *cmd);
 void						s_in_double_quotes(char *token);
 void						increment_i(char *cmd, int *i);
 char						*ft_expand_value(char *no_q, t_env *envp);
-int						redirections(t_token **ptr, t_env *envp); //here;
+int							redirections(t_token **ptr, t_env *envp); //here;
 void						d_quotes_errors(int *dcotes, int *cotes, int *i,
 								char *cmd);
 void						s_quotes_errors(int *dcotes, int *cotes, int *i,
@@ -228,7 +242,8 @@ int							cheack_arg(char *s);
 char						*str_join(char *s1, char *s2);
 int							is_he_in_env(t_env *a, char *s);
 void						riblce_v(t_env *a, char *s, char *c);
-void						ft_Error(char *s, int i);
+void						ft_error(char *s, int i);
+void						ft_error_2(char *s, int i);
 void						sort_nb(t_env *a, int fd);
 void						main_ex(t_env **p, t_token *ptr);
 void						chaeck_builtins(t_env **p, t_token *ptr);
@@ -240,5 +255,12 @@ char						*get_env(t_env **ptr, char *s);
 void						freepath(char **ptr);
 int							is_builtin_command(char *command);
 void						chaeck_builtins1(t_env **p, t_token *ptr);
+void						any_next_cmd_shorter(t_env *p, t_token *data);
+void						main_ex_shorter(t_env **p, t_token *ptr);
+void						first_cmd_shorter(t_env *p, t_token *data);
+int							first_cmd(t_env *p, t_token *ptr, int *pip);
+int							any_next_cmd(t_env *p, t_token *ptr, int last_fd,
+								int *pipe_2);
+int							ft_lstsize_1(t_token *lst);
 
 #endif
