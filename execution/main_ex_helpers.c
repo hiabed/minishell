@@ -68,20 +68,42 @@ void	any_next_cmd_shorter(t_env *p, t_token *data)
 	exit(g_g.exit_status);
 }
 
+void	first_cmd_shorter2(t_token *data)
+{
+	g_g.y = 0;
+	while (g_g.cmdd[0][g_g.y] && g_g.cmdd[0][g_g.y] == '/')
+	{
+		if (ft_isalnum(g_g.cmdd[0][g_g.y]))
+		{
+			ft_error_2(data->cmd, 6);
+			g_g.exit_status = 127;
+			exit(g_g.exit_status);
+		}
+		g_g.y++;
+	}
+	if (!g_g.cmdd[0][g_g.y])
+	{
+		ft_error_2(data->cmd, 7);
+		g_g.exit_status = 126;
+		exit(g_g.exit_status);
+	}
+	if ((g_g.cmdd[0][0] == '.' && g_g.cmdd[0][1] == '/')
+		|| g_g.cmdd[0][0] == '/')
+	{
+		ft_error_2(data->cmd, 5);
+		g_g.exit_status = 127;
+		exit(g_g.exit_status);
+	}
+}
+
 void	first_cmd_shorter(t_env *p, t_token *data)
 {
 	char	**ev;
 
 	g_g.path = get_path_cmd(p, data->cmd, data->arg);
 	g_g.cmdd = join_cmd(data->cmd, data->arg);
-	if (g_g.cmdd[0][0] == '/' && (g_g.cmdd[0][1] == '/' || g_g.cmdd[0][1] == ' '
-			|| g_g.cmdd[0][1] == '\0'))
-	{
-		ft_error_2(data->cmd, 7);
-		g_g.exit_status = 126;
-		exit(g_g.exit_status);
-	}
 	ev = get_envrment(p);
+	first_cmd_shorter2(data);
 	if (g_g.path == NULL || data->cmd[0] == '\0')
 	{
 		if (data->cmd[0] == '/')

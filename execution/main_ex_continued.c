@@ -84,7 +84,7 @@ char	*get_path_cmd(t_env *p, char *d, char **s)
 	g_g.jo = join_cmd(d, s);
 	g_g.gv = get_envrment(p);
 	if (access(d, X_OK) == 0)
-		execve(d, g_g.jo, g_g.gv);
+		execve(d, g_g.jo, g_g.gv); // ---> "/"  dir = open_dir(d) != NULL ==>is a directory // ---> "/" dir == NULL ==> no such file or directory
 	g_g.z = 0;
 	if (g_g.c == NULL || *g_g.c == NULL)
 		return (NULL);

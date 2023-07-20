@@ -20,6 +20,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
+#include <dirent.h>
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 10
@@ -92,6 +93,7 @@ typedef struct s_glob
 	int						k;
 	int						t;
 	int						z;
+	int						y;
 	int						index;
 	int						cmd_check;
 	int						check;

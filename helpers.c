@@ -20,22 +20,36 @@ void	open_files(t_redirection *red, t_token **ptr)
 		{
 			(*ptr)->out = open(red->file, O_CREAT | O_RDWR | O_APPEND, 0644);
 			if ((*ptr)->out == -1)
-				ft_error_2((*ptr)->red->file, 5);
+			{
+				ft_error_2(red->file, 5);
+				return ;
+			}
 		}
 		else if (red->type == 1)
 		{
 			(*ptr)->out = open(red->file, O_CREAT | O_RDWR | O_TRUNC, 0644);
 			if ((*ptr)->out == -1)
-				ft_error_2((*ptr)->red->file, 5);
+			{
+				ft_error_2(red->file, 5);
+				return ;
+			}
 		}
 		else if (red->type == 2)
 		{
 			(*ptr)->fd = open(red->file, O_RDONLY, 0644);
 			if (access((*ptr)->red->file, R_OK) == -1
-				&& !access((*ptr)->red->file, F_OK))
+				&& !access(red->file, F_OK))
+				{
 				write_error_2();
+					return;
+				}
 			else if ((*ptr)->fd == -1)
-				ft_error_2((*ptr)->red->file, 5);
+			{
+				ft_error_2(red->file, 5);
+				return ;
+			}
+				
+
 		}
 		red = red->next;
 	}

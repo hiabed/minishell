@@ -44,7 +44,7 @@ int	first_cmd(t_env *p, t_token *ptr, int *pip)
 	g_g.dataa = ptr;
 	if (g_g.id == 0)
 	{
-		if (g_g.dataa->fd == -1)
+		if (g_g.dataa->fd == -1 || g_g.dataa->out == -1)
 			exit(0);
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
@@ -77,6 +77,8 @@ int	any_next_cmd(t_env *p, t_token *ptr, int last_fd, int *pipe_2)
 	{
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
+		if (g_g.dataa->fd == -1 || g_g.dataa->out == -1)
+			exit(0);
 		if (data->fd > 0)
 			dup2(data->fd, 0);
 		else

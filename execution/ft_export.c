@@ -86,7 +86,7 @@ void	ft_export(char **s, t_env **p, int fd)
 				g_g.exit_status = 1;
 				return ;
 			}
-			if (!cheack_arg(s[i]))
+			else if (!cheack_arg(s[i]))
 			{
 				i++;
 				continue ;
