@@ -82,3 +82,9 @@ void	write_error(void)
 		57);
 	write(2, "minishell: syntax error: unexpected end of file\n", 48);
 }
+
+void	write_error_2(void)
+{
+	write(2, "permission denied\n", 18);
+	g_g.exit_status = 1;
+}

@@ -33,10 +33,7 @@ void	open_files(t_redirection *red, t_token **ptr)
 			(*ptr)->fd = open(red->file, O_RDONLY, 0644);
 			if (access((*ptr)->red->file, R_OK) == -1
 				&& !access((*ptr)->red->file, F_OK))
-			{
-				write(2, "permission denied\n", 18);
-				g_g.exit_status = 1;
-			}
+				write_error_2();
 			else if ((*ptr)->fd == -1)
 				ft_error_2((*ptr)->red->file, 5);
 		}

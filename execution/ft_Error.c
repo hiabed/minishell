@@ -33,11 +33,11 @@ void	ft_error(char *s, int i)
 		write(2, " No set\n", 8);
 	}
 	if (i == 8)
-    {
-        write(2, "minishell : exit: ", 18);
-        write(2, s, ft_strlen(s));
-        write(2, " too many arguments\n", 20);
-    }
+	{
+		write(2, "minishell : exit: ", 18);
+		write(2, s, ft_strlen(s));
+		write(2, " too many arguments\n", 20);
+	}
 }
 
 void	ft_error_2(char *s, int i)
@@ -68,13 +68,12 @@ void	ft_error_2(char *s, int i)
 	}
 }
 
-void    ft_error_3(char* s, int i)
+void	ft_error_3(char *s, int i)
 {
-      if (i == 1)
-    {
-        write(2, "minishell: unset: `", 20);
-        write(2, s, ft_strlen(s));
-        write(2, "': not a valid identifier\n", 26);
-    }
+	if (i == 1)
+	{
+		write(2, "minishell: unset: `", 20);
+		write(2, s, ft_strlen(s));
+		write(2, "': not a valid identifier\n", 26);
+	}
 }
-

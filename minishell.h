@@ -128,6 +128,7 @@ typedef struct s_env
 
 t_glob						g_g;
 
+void						write_error_2(void);
 void						write_error(void);
 char						*join_heredoc_to_be_one(char *words);
 void						ft_free_data(t_token **leaks);
@@ -176,8 +177,8 @@ char						**ft_arg(char **words);
 char						*ft_cmd(char **words);
 t_token						*ft_lstnew_token(char **words, t_env *envp);
 void						ft_lstadd_token(t_token **lst, t_token *new);
-void	ft_lstadd_red(t_redirection **lst,
-					t_redirection *new);
+void						ft_lstadd_red(t_redirection **lst,
+								t_redirection *new);
 char						*ft_file_name(char *words, t_env *envp, int type);
 char						*ft_limiter_name(char *words, int type);
 int							ft_number_type(char *words);
@@ -206,7 +207,7 @@ int							count_strings(char *words);
 int							word_len(char *words);
 int							word_len_single(char *words);
 int							len(char *words);
-int							here_doc(char *lim, t_env *envp); //here;
+int							here_doc(char *lim, t_env *envp);
 char						*fst_chars(char *no_quotes, int i);
 char						*exit_status(char *no_q);
 char						*empty_string(char *str, int *i);
@@ -214,14 +215,13 @@ char						*fill_word_without_q(char *str, char *words,
 								int *i);
 char						*fill_word_with_d_q(char *str, char *words, int *i);
 char						*fill_word_with_s_q(char *str, char *words, int *i);
-char	*fill_expand(char *str, t_env *envp); //here
-// char						**fill_expand(char *str, t_env *envp);
+char						*fill_expand(char *str, t_env *envp);
 int							empty_string_condition(char *words, int *i);
 void						p_in_double_quotes(char *cmd);
 void						s_in_double_quotes(char *token);
 void						increment_i(char *cmd, int *i);
 char						*ft_expand_value(char *no_q, t_env *envp);
-int							redirections(t_token **ptr, t_env *envp); //here;
+int							redirections(t_token **ptr, t_env *envp);
 void						d_quotes_errors(int *dcotes, int *cotes, int *i,
 								char *cmd);
 void						s_quotes_errors(int *dcotes, int *cotes, int *i,
@@ -244,7 +244,6 @@ void						ft_env(t_env *p, t_token *ptr);
 char						*ft_pwd(int k, int i);
 void						ft_cd(char **s, t_env **p);
 void						ft_export(char **s, t_env **p, int fd);
-// void						ft_env(t_env *p);
 char						**key_valu(char *s);
 void						ft_unset(t_env **p, char **s);
 int							icale(char *s);
@@ -274,5 +273,6 @@ int							any_next_cmd(t_env *p, t_token *ptr, int last_fd,
 								int *pipe_2);
 int							ft_lstsize_1(t_token *lst);
 void						ft_error_3(char *s, int i);
+void						first_cmd_shorter1(t_token *data);
 
 #endif
