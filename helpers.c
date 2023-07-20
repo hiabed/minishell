@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 18:13:02 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/19 23:21:36 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/20 19:01:12 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	open_files(t_redirection *red, t_token **ptr)
 {
+	g_g.red_check = 0;
 	while (red)
 	{
 		if (red->type == 3)
@@ -40,19 +41,20 @@ void	open_files(t_redirection *red, t_token **ptr)
 			if (access((*ptr)->red->file, R_OK) == -1
 				&& !access(red->file, F_OK))
 				{
-				write_error_2();
+					write_error_2();
+					g_g.red_check = 1;
 					return;
 				}
 			else if ((*ptr)->fd == -1)
 			{
 				ft_error_2(red->file, 5);
+				g_g.red_check = 1;
 				return ;
 			}
-				
-
 		}
 		red = red->next;
 	}
+	
 }
 
 int	redirections(t_token **ptr, t_env *envp)

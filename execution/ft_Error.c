@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 14:26:32 by mkatfi            #+#    #+#             */
-/*   Updated: 2023/07/19 20:19:41 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/20 19:28:39 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	ft_error(char *s, int i)
 	{
 		write(2, "minishell : cd: ", 16);
 		write(2, s, ft_strlen(s));
-		write(2, " No set\n", 8);
+		write(2, " Not set\n", 9);
 	}
 	if (i == 8)
 	{
@@ -75,5 +75,13 @@ void	ft_error_3(char *s, int i)
 		write(2, "minishell: unset: `", 20);
 		write(2, s, ft_strlen(s));
 		write(2, "': not a valid identifier\n", 26);
+	}
+	if (i == 2)
+	{
+		write(2, "minishell: ", 11);
+		write(2, s, ft_strlen(s));
+		write(2, ": Permission denied\n", 20);
+		g_g.exit_status = 126;
+		exit(g_g.exit_status);
 	}
 }

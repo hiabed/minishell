@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 19:52:02 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/19 23:13:34 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/20 18:58:32 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 # define MINISHELL_H
 
 # include "./libft/libft.h"
+# include <dirent.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <signal.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
-#include <dirent.h>
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 10
@@ -56,6 +56,7 @@ typedef struct s_token
 
 typedef struct s_glob
 {
+	int						red_check;
 	char					*temp;
 	char					*tmp;
 	char					*rest_signs;
@@ -94,6 +95,7 @@ typedef struct s_glob
 	int						t;
 	int						z;
 	int						y;
+	int						o;
 	int						index;
 	int						cmd_check;
 	int						check;

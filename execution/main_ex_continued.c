@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 13:33:58 by mkatfi            #+#    #+#             */
-/*   Updated: 2023/07/19 23:51:03 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/20 19:23:47 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,10 @@ char	*get_path_cmd(t_env *p, char *d, char **s)
 	g_g.c = ft_split(g_g.g, ':');
 	g_g.jo = join_cmd(d, s);
 	g_g.gv = get_envrment(p);
-	if (access(d, X_OK) == 0)
-		execve(d, g_g.jo, g_g.gv); // ---> "/"  dir = open_dir(d) != NULL ==>is a directory // ---> "/" dir == NULL ==> no such file or directory
+	if (access(d, X_OK) == -1 && access(d, F_OK) == 0)
+		ft_error_3(d, 2);
+	else if (access(d, X_OK) == 0)
+		execve(d, g_g.jo, g_g.gv);
 	g_g.z = 0;
 	if (g_g.c == NULL || *g_g.c == NULL)
 		return (NULL);

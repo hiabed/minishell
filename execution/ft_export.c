@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 16:40:11 by mkatfi            #+#    #+#             */
-/*   Updated: 2023/07/19 22:39:06 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/20 18:53:14 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,30 +70,28 @@ void	to_be_contined(int i, t_env **p, char **s)
 
 void	ft_export(char **s, t_env **p, int fd)
 {
-	int	i;
-
-	i = 0;
+	g_g.o = 0;
 	g_g.exit_status = 0;
 	if (s == NULL || *s == NULL)
 		sort_nb(*p, fd);
 	else
 	{
-		while (s && s[i])
+		while (s && s[g_g.o])
 		{
-			if (s[i][0] == '=')
+			if (s[g_g.o][0] == '=')
 			{
-				ft_error(s[i], 1);
+				ft_error(s[g_g.o], 1);
 				g_g.exit_status = 1;
 				return ;
 			}
-			else if (!cheack_arg(s[i]))
+			else if (!cheack_arg(s[g_g.o]))
 			{
-				i++;
+				g_g.o++;
 				continue ;
 			}
-			else if (cheack_arg(s[i]))
-				to_be_contined(i, p, s);
-			i++;
+			else if (cheack_arg(s[g_g.o]))
+				to_be_contined(g_g.o, p, s);
+			g_g.o++;
 		}
 	}
 }

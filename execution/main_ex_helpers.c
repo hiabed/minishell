@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 15:55:39 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/19 23:50:43 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/20 19:30:41 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	any_next_cmd_shorter(t_env *p, t_token *data)
 	}
 	else if (path == NULL || data->cmd[0] == '\0')
 	{
-		ft_error(data->cmd, 3);
+		ft_error_2(data->cmd, 6);
 		g_g.exit_status = 127;
 		exit(g_g.exit_status);
 	}
