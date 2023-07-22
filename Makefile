@@ -13,9 +13,9 @@ LIBFT = ./libft/libft.a
 
 OBJ = ${CFILES:.c=.o}
 
-CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g3
+CFLAGS = -Wall -Wextra -Werror #-fsanitize=address -g3
 
-LIB = -lreadline -L /Users/mhassani/Desktop/.brew/opt/readline/lib -I /Users/mhassani/Desktop/.brew/opt/readline/lib
+LIB = -lreadline -L /Users/mhassani/goinfre/.brew/opt/readline/lib -I /Users/mhassani/goinfre/.brew/opt/readline/lib
 
 CC = cc
 

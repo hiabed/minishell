@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 20:35:28 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/19 16:07:24 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/22 16:22:32 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,7 @@ char	*env_value(t_env *a, char *key)
 	while (ptr)
 	{
 		if (ft_strcmp(ptr->key, key) == 0)
-		{
-			free(key);
 			return (ft_strdup(ptr->valuer));
-		}
 		ptr = ptr->next;
 	}
 	return (NULL);
