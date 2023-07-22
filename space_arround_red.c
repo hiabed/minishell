@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 14:15:26 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/19 17:35:12 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/22 16:01:33 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,8 +99,3 @@ char	*space_arround_red(char *s1)
 	ft_fill_ptr(s1, ptr, i, j);
 	return (ptr);
 }
-
-// int	main(void)
-// {
-// 	printf("%s\n", ft_strdup(">hello>>wo<rld<<"));
-// }
