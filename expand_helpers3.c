@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 13:23:15 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/19 17:45:51 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/21 16:35:32 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,12 +86,12 @@ char	*if_not_value(char *no_quotes, char *value, int *i)
 	g_g.i = 0;
 	first_is_num = first_is_number(no_quotes);
 	status = exit_status(no_quotes);
-	if (!value && g_g.count == 1 && status)
+	if (!value && g_g.count % 2 != 0 && status)
 	{
 		(*i)++;
 		value = status;
 	}
-	else if (!value && g_g.count == 1 && !ft_isalnum(no_quotes[g_g.i + 1]))
+	else if (!value && g_g.count % 2 != 0 && !ft_isalnum(no_quotes[g_g.i + 1]))
 	{
 		(*i)++;
 		value = ft_strdup("$");

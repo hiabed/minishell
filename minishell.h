@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 19:52:02 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/20 18:58:32 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/20 20:41:00 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,7 @@ typedef struct s_env
 
 t_glob						g_g;
 
+void						open_errors(int out, char *file, int i);
 void						write_error_2(void);
 void						write_error(void);
 char						*join_heredoc_to_be_one(char *words);

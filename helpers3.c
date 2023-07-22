@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 17:17:01 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/19 17:42:42 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/20 20:23:46 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,4 +87,6 @@ void	write_error_2(void)
 {
 	write(2, "permission denied\n", 18);
 	g_g.exit_status = 1;
+	g_g.red_check = 1;
+	return ;
 }

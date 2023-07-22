@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 17:59:21 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/19 17:00:52 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/21 16:19:36 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ char	*ft_compare(char *no_quotes, t_env *envp, char *temp, int *i)
 	g_g.result = NULL;
 	key = ft_extract_key(no_quotes);
 	g_g.value = env_value(envp, key);
+	free(key);
 	g_g.value = ft_strjoin_f2(g_g.dollars, g_g.value);
 	if (!g_g.value)
 		g_g.value = if_not_value(no_quotes, g_g.value, i);
@@ -42,9 +43,7 @@ char	*compare_keys_without_q(t_env *envp, char *no_quotes, int *i,
 		(*i)++;
 	temp = ft_compare(&no_quotes[*i], envp, temp, i);
 	if (!temp)
-	{
 		temp = ft_strjoin(g_g.chars, g_g.dollars);
-	}
 	free(g_g.chars);
 	free(g_g.dollars);
 	return (temp);
@@ -53,15 +52,15 @@ char	*compare_keys_without_q(t_env *envp, char *no_quotes, int *i,
 char	*not_compare_keys(char *no_quotes, int *i, char *temp)
 {
 	char	*dollars;
-	char	*value;
+	char	*ext_key;
 	char	*result;
 	char	*chars;
 
+	dollars = print_not_expanded_dollars(&no_quotes[*i]);
+	ext_key = ft_extract_key(&no_quotes[*i]);
 	chars = fst_chars(no_quotes, 0);
-	value = NULL;
 	result = NULL;
-	dollars = ft_strjoin(print_not_expanded_dollars(&no_quotes[*i]),
-			ft_extract_key(&no_quotes[*i]));
+	dollars = ft_strjoin_f(dollars, ext_key);
 	if (!temp)
 		result = ft_strjoin(chars, dollars);
 	else
@@ -69,6 +68,9 @@ char	*not_compare_keys(char *no_quotes, int *i, char *temp)
 	temp = result;
 	while (no_quotes[*i] && no_quotes[*i + 1] && no_quotes[*i] == '$')
 		(*i)++;
+	free(ext_key);
+	free(chars);
+	free(dollars);
 	return (temp);
 }
 

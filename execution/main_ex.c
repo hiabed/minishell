@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 20:12:43 by mkatfi            #+#    #+#             */
-/*   Updated: 2023/07/20 19:02:54 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/21 15:10:06 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void	main_ex(t_env **p, t_token *ptr)
 	int	pid;
 
 	pid = 0;
-	if(!g_g.red_check)
+	if (!g_g.red_check)
 		main_ex_shorter(p, ptr);
 	signal(SIGINT, cmd_signal);
 	waitpid(pid, &status, 0);

@@ -6,7 +6,7 @@
 /*   By: mhassani <mhassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 21:53:19 by mhassani          #+#    #+#             */
-/*   Updated: 2023/07/19 17:32:30 by mhassani         ###   ########.fr       */
+/*   Updated: 2023/07/21 16:04:43 by mhassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	**strings_without_quotes(char *words, t_env *envp)
 		else if (words[g_g.t] != '\"' && words[g_g.t] != '\'')
 		{
 			str[g_g.k] = fill_word_without_q(str[g_g.k], words, &g_g.t);
-			str[g_g.k] = fill_expand(str[g_g.k], envp);
+			str[g_g.k] = fill_expand_without_q(str[g_g.k], envp);
 		}
 		g_g.k++;
 	}
